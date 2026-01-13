@@ -15,7 +15,6 @@
     max-width: 380px;
     border: 1px solid #eaeaea;
     text-align: center;
-    /* Asegura que el contenido interno se alinee bien */
 }
 
 .login-header {
@@ -26,7 +25,6 @@
 
 .login-logo {
     width: 60px;
-    /* Tamaño ideal para logos verticales según tu diseño */
     height: auto;
     object-fit: contain;
 }
@@ -34,7 +32,6 @@
 .form-group {
     margin-bottom: 1.5rem;
     text-align: left;
-    /* Mantiene los labels a la izquierda */
 }
 
 .form-group label {
@@ -42,10 +39,8 @@
     margin-bottom: 0.5rem;
     color: #333;
     font-weight: 700;
-    /* Negrita más marcada para coincidir con el diseño */
     font-size: 0.85rem;
     text-transform: lowercase;
-    /* Mantiene el estilo "correo" en minúsculas */
 }
 
 .input-wrapper {
@@ -61,7 +56,6 @@
     border-radius: 8px;
     font-size: 0.95rem;
     background-color: #f1f4f8;
-    /* El gris suave del diseño */
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.2s;
@@ -69,7 +63,6 @@
 
 .input-control:focus {
     border-color: #2D466B;
-    /* Resalte con el azul corporativo */
 }
 
 .input-icon {
@@ -78,7 +71,6 @@
     color: #99aab5;
     font-size: 1.1rem;
     pointer-events: none;
-    /* Evita que el icono interfiera con el clic */
 }
 
 .btn-login {
@@ -114,42 +106,77 @@
     border-radius: 4px;
 }
 
-/* MOBILE SCALING - Using screen-based media query */
+/* --- PROFESSIONAL MOBILE LOGIN (v1.6.0) --- */
 @media (max-width: 768px) {
+    .login-container {
+        padding: 20px;
+        background: radial-gradient(circle at top, #ffffff 0%, #f1f4f8 100%);
+    }
+
     .login-card {
-        padding: 3rem 2.5rem;
-        max-width: 420px;
+        padding: 3.5rem 2rem;
+        max-width: 450px;
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        border: none;
+    }
+
+    .login-header {
+        margin-bottom: 2.5rem;
     }
 
     .login-logo {
-        width: 80px;
+        width: 100px;
         height: auto;
     }
 
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
     .form-group label {
-        font-size: 0.95rem;
-        margin-bottom: 0.6rem;
+        font-size: 1.05rem;
+        margin-bottom: 0.8rem;
+        letter-spacing: 0.5px;
+        color: #1a2b45;
+        font-weight: 700;
     }
 
     .input-control {
-        padding: 14px 45px 14px 14px;
-        font-size: 1.05rem;
-        border-radius: 10px;
+        padding: 16px 50px 16px 18px;
+        font-size: 1.15rem;
+        border-radius: 12px;
+        background-color: #f8fafc;
+        border: 2px solid #e2e8f0;
+    }
+
+    .input-control:focus {
+        border-color: #0066cc;
+        background-color: #fff;
     }
 
     .input-icon {
-        font-size: 1.3rem;
-        right: 18px;
+        font-size: 1.4rem;
+        right: 20px;
     }
 
     .btn-login {
-        padding: 16px;
-        font-size: 1.1rem;
-        border-radius: 10px;
+        padding: 18px;
+        font-size: 1.25rem;
+        font-weight: 800;
+        border-radius: 12px;
+        margin-top: 2rem;
+        background-color: #0066cc;
+        box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .error-msg {
-        font-size: 1rem;
-        padding: 10px;
+        font-size: 1.1rem;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 10px;
     }
 }

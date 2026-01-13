@@ -49,18 +49,30 @@ table {
         font-size: 1.6rem;
     }
 
-    /* --- MODALES RESPONSIVOS --- */
-    .modal-overlay {
-        padding: 10px !important;
+    /* --- HI-FI MODALS (App-style bottom sheet) --- */
+    .modal-overlay,
+    .modal-bg {
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.75) !important;
+        backdrop-filter: blur(4px);
+        display: flex !important;
+        align-items: flex-end !important;
+        justify-content: center !important;
+        z-index: 3000 !important;
     }
 
     .modal-content,
     .modal-box {
-        width: 95% !important;
-        max-width: 95% !important;
-        max-height: 90vh !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 92vh !important;
+        border-radius: 24px 24px 0 0 !important;
+        padding: 30px 20px (30px + var(--safe-bottom)) !important;
+        margin: 0 !important;
         overflow-y: auto !important;
-        margin: auto !important;
+        transform: translateY(0);
+        animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: #ffffff !important;
     }
 
     .modal-actions,
@@ -74,45 +86,75 @@ table {
         width: 100% !important;
     }
 
-    /* --- FORMS RESPONSIVOS --- */
+    /* --- TOUCH OPTIMIZED FORMS --- */
     .form-row {
         flex-direction: column !important;
-        gap: 15px !important;
+        gap: 20px !important;
     }
 
     .form-group {
         width: 100% !important;
+        margin-bottom: 20px !important;
     }
 
-    /* --- CARDS Y PANELES --- */
-    .card,
-    .panel,
-    .kpi-card {
-        margin-bottom: 15px !important;
+    input,
+    select,
+    textarea {
+        min-height: 52px !important;
+        font-size: 16px !important;
+        border-radius: 12px !important;
+        padding: 0 15px !important;
+        background: #f8fafc !important;
+        border: 2px solid #e2e8f0 !important;
     }
 
-    /* --- BOTONES TÁCTILES --- */
-    button,
+    /* --- PREMIUM TACTILE BUTTONS --- */
     .btn,
-    .btn-primary,
-    .btn-secondary {
-        padding: 16px 24px !important;
-        font-size: 18px !important;
-        min-width: 140px !important;
+    button:not(.btn-close):not(.menu-btn) {
+        min-height: 56px !important;
+        padding: 0 25px !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        border-radius: 14px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 5px;
     }
 
-    /* --- GRID LAYOUTS --- */
-    .grid-top {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
+    .btns,
+    .modal-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding-top: 15px;
     }
 
-    /* --- ADMIN TABLE CONTAINERS --- */
+    /* --- ADMINISTRATIVE TABLE PORTABILITY --- */
     .table-container,
     .table-responsive {
         width: 100%;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
         display: block;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        background: #fff;
+        margin-bottom: 25px;
+        border: 1px solid #e2e8f0;
+    }
+
+    table th {
+        font-size: 13px !important;
+        padding: 18px 12px !important;
+        text-transform: uppercase;
+        background: #f1f5f9 !important;
+    }
+
+    table td {
+        padding: 18px 12px !important;
+        font-size: 14px !important;
     }
 }
