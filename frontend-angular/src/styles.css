@@ -1,0 +1,118 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+}
+
+/* --- MOBILE INPUTS --- */
+input,
+select,
+textarea,
+button {
+    font-size: 16px !important;
+    /* Prevents iOS zoom */
+    min-height: 44px;
+    /* Touch target size */
+}
+
+/* --- RESPONSIVE TABLES --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+table {
+    white-space: nowrap;
+}
+
+/* --- MOBILE HELPERS --- */
+@media (max-width: 768px) {
+    .h-mobile-hide {
+        display: none !important;
+    }
+
+    /* Ajuste de fuentes para móvil */
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.9rem;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+    }
+
+    /* --- MODALES RESPONSIVOS --- */
+    .modal-overlay {
+        padding: 10px !important;
+    }
+
+    .modal-content,
+    .modal-box {
+        width: 95% !important;
+        max-width: 95% !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        margin: auto !important;
+    }
+
+    .modal-actions,
+    .btns {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .modal-actions button,
+    .btns button {
+        width: 100% !important;
+    }
+
+    /* --- FORMS RESPONSIVOS --- */
+    .form-row {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    .form-group {
+        width: 100% !important;
+    }
+
+    /* --- CARDS Y PANELES --- */
+    .card,
+    .panel,
+    .kpi-card {
+        margin-bottom: 15px !important;
+    }
+
+    /* --- BOTONES TÁCTILES --- */
+    button,
+    .btn,
+    .btn-primary,
+    .btn-secondary {
+        padding: 16px 24px !important;
+        font-size: 18px !important;
+        min-width: 140px !important;
+    }
+
+    /* --- GRID LAYOUTS --- */
+    .grid-top {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    /* --- ADMIN TABLE CONTAINERS --- */
+    .table-container,
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        display: block;
+    }
+}

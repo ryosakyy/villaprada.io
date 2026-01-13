@@ -1,0 +1,55 @@
+<div class="main-container">
+    <div class="top-bar">
+        <h1>Gestión de Paquetes</h1>
+        <button class="btn-add" (click)="abrirModalCrear()">+ Nuevo Paquete</button>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Capacidad</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of paquetes">
+                    <td><strong>{{ p.nombre }}</strong></td>
+                    <td>S/ {{ p.precio }}</td>
+                    <td>{{ p.capacidad }} Pers.</td>
+                    <td><span class="status-badge">{{ p.estado }}</span></td>
+                    <td>
+                        <button class="btn-edit" (click)="abrirModalEditar(p)">Editar</button>
+                        <button class="btn-delete" (click)="borrar(p)">Borrar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal-bg" *ngIf="showModal">
+        <div class="modal-box">
+            <h2>{{ modoEditar ? 'Editar Paquete' : 'Nuevo Paquete' }}</h2>
+            <div class="form-grid">
+                <label>Nombre del Paquete</label>
+                <input [(ngModel)]="formPaquete.nombre" placeholder="Ej. Premium">
+
+                <label>Precio (S/)</label>
+                <input type="number" [(ngModel)]="formPaquete.precio">
+
+                <label>Capacidad Máxima</label>
+                <input type="number" [(ngModel)]="formPaquete.capacidad">
+
+                <label>Servicios Incluidos</label>
+                <textarea [(ngModel)]="formPaquete.servicios" rows="3"></textarea>
+            </div>
+            <div class="btns">
+                <button class="btn-save" (click)="guardar()">Guardar</button>
+                <button class="btn-close" (click)="showModal = false">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

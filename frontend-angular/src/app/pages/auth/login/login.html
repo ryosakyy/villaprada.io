@@ -1,0 +1,33 @@
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <img src="assets/img/logo_villa.png" alt="Logo Villa Prada" class="login-logo">
+        </div>
+
+        <form (ngSubmit)="ingresar()">
+            <div class="form-group">
+                <label>correo</label>
+                <div class="input-wrapper">
+                    <input type="email" name="email" [(ngModel)]="email" required class="input-control" placeholder="Ingrese su usuario">
+                    <span class="input-icon">👤</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-wrapper">
+                    <input type="password" name="password" [(ngModel)]="password" required class="input-control" placeholder="*********">
+                    <span class="input-icon">🔒</span>
+                </div>
+            </div>
+
+            <div class="error-msg" *ngIf="error">
+                {{ error }}
+            </div>
+
+            <button type="submit" [disabled]="cargando" class="btn-login">
+                {{ cargando ? 'Verificando...' : 'Iniciar Sesión' }}
+            </button>
+        </form>
+    </div>
+</div>

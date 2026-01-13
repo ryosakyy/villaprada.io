@@ -1,0 +1,70 @@
+.admin-shell {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.sidebar-area {
+    width: 250px;
+    background: #2D466B;
+    flex-shrink: 0;
+}
+
+.main-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-header {
+    height: 60px;
+    background: #2D466B;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    /* Divisor sutil */
+}
+
+.content-view {
+    flex: 1;
+    padding: 15px;
+    /* Reducido de 20px */
+    background-color: #f4f7f6;
+    overflow-y: auto;
+}
+
+/* --- OVERLAY PARA MÓVIL --- */
+.sidebar-overlay {
+    display: none;
+}
+
+/* --- RESPONSIVE SIDEBAR --- */
+@media (max-width: 768px) {
+    .sidebar-area {
+        position: fixed;
+        left: -260px;
+        /* Oculto por defecto */
+        width: 260px;
+        /* Reducido de 300px para que no tape toda la pantalla */
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar-area.mobile-open {
+        left: 0;
+        /* Visible */
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+}

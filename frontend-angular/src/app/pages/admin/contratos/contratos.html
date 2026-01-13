@@ -1,0 +1,245 @@
+<div class="contratos-page">
+    <div class="page-head">
+        <div>
+            <h2>Gestión de Contratos</h2>
+            <p>Registra tus eventos y genera los documentos legales.</p>
+        </div>
+        <button class="btn-gold" type="button" disabled>Modo Administrador</button>
+    </div>
+
+    <div class="grid-top">
+
+        <section class="card">
+            <div class="card-title">Registrar Nuevo Contrato</div>
+
+            <div class="form">
+
+                <div class="form-group">
+                    <label class="label">Cliente: *</label>
+                    <div class="input-group">
+                        <select class="input" [(ngModel)]="nuevoContrato.clienteId">
+                            <option value="">-- Seleccione Cliente --</option>
+                            <option *ngFor="let c of listaClientes" [value]="c.id">
+                                {{ c.dni }} - {{ c.nombres || c.nombre || c.name || 'Sin Nombre' }} {{ c.apellidos ||
+                                c.apellido || '' }}
+                            </option>
+                        </select>
+                        <button class="btn-primary" (click)="abrirModalCliente()"
+                            title="Agregar Cliente Nuevo">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Nombre del Paquete / Evento: *</label>
+                    <input class="input" [(ngModel)]="nuevoContrato.paqueteStr"
+                        placeholder="Ej. Boda de Juan y Maria..." />
+
+                    <div class="helper-box">
+                        <label class="helper-label">📦 Cargar Paquete Base:</label>
+                        <div class="input-group">
+                            <select class="input" style="font-size: 0.9rem;" (change)="usarPaquete($event)">
+                                <option value="">-- Selecciona un Paquete --</option>
+                                <option *ngFor="let p of listaPaquetes" [value]="p.id">
+                                    {{ p.nombre }} - S/. {{ p.precio }}
+                                </option>
+                            </select>
+                            <button class="btn-primary" (click)="abrirModalPaquete()"
+                                title="Crear Nuevo Paquete">+</button>
+                        </div>
+                    </div>
+
+                    <div class="helper-box" style="margin-top: 10px; background: #f0fdf4; border: 1px dashed #4ade80;">
+                        <label class="helper-label" style="color: #15803d;">➕ Agregar Servicio Adicional:</label>
+
+                        <div class="input-group">
+                            <select class="input" style="font-size: 0.9rem;" (change)="agregarServicio($event)">
+                                <option value="">-- Selecciona un Servicio --</option>
+                                <option *ngFor="let s of listaServicios" [value]="s.id">
+                                    {{ s.nombre }} (+ S/. {{ s.precio }})
+                                </option>
+                            </select>
+                            <button class="btn-primary" (click)="abrirModalServicio()"
+                                title="Crear Nuevo Servicio">+</button>
+                        </div>
+
+                        <small style="color: #15803d; font-size: 0.8rem;">* Al seleccionar, se suma al precio y se añade
+                            al nombre.</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="label">Fecha del Evento: *</label>
+                        <input class="input" type="date" [(ngModel)]="nuevoContrato.fecha" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Hora Inicio:</label>
+                        <input class="input" type="time" [(ngModel)]="nuevoContrato.horaIni" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Hora Fin:</label>
+                        <input class="input" type="time" [(ngModel)]="nuevoContrato.horaFin" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="label">Monto Total (S/.): *</label>
+                        <input class="input" type="number" placeholder="0.00" [(ngModel)]="nuevoContrato.montoTotal" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Adelanto (S/.):</label>
+                        <input class="input" type="number" placeholder="0.00" [(ngModel)]="nuevoContrato.adelanto" />
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-cancel" type="button" (click)="limpiarForm()">Limpiar</button>
+                    <button class="btn-save" type="button" (click)="guardarContrato()">
+                        💾 Guardar Contrato
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-title">Vista Previa / Info</div>
+            <div class="pdf-body">
+                <div class="pdf-icon">📄</div>
+                <div class="pdf-text">
+                    Aquí podrás descargar el contrato una vez guardado.<br> Asegúrate de que el cliente firme el
+                    documento.
+                </div>
+                <button class="btn-download" disabled>Descargar Modelo</button>
+            </div>
+        </section>
+    </div>
+
+    <section class="card">
+        <div class="card-title">Listado de Contratos Activos</div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Detalle Evento</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Saldo (Por Pagar)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="cargando">
+                        <td colspan="7" class="empty">Cargando datos...</td>
+                    </tr>
+                    <tr *ngFor="let c of contratos">
+                        <td><b>#{{ c.id }}</b></td>
+                        <td>{{ c.cliente?.nombres || c.cliente?.nombre || obtenerNombreCliente(c.cliente_id) }}</td>
+                        <td>{{ c.paquete }}</td>
+                        <td>{{ c.fecha_evento }}</td>
+                        <td>S/. {{ c.monto_total }}</td>
+                        <td>
+                            <span [style.color]="(c.monto_total - (c.adelanto || 0)) > 0 ? '#ef4444' : '#10b981'"
+                                style="font-weight: bold;">
+                                <ng-container *ngIf="(c.monto_total - (c.adelanto || 0)) > 0">
+                                    Falta: S/. {{ (c.monto_total - (c.adelanto || 0)).toFixed(2) }}
+                                </ng-container>
+                                <ng-container *ngIf="(c.monto_total - (c.adelanto || 0)) <= 0">
+                                    ✔ ¡Cancelado!
+                                </ng-container>
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-gold" (click)="descargarPDF(c.id)" title="Descargar PDF">📄</button>
+                            <button class="btn-cancel" style="margin-left:5px; padding: 5px 10px;"
+                                (click)="eliminar(c.id)" title="Eliminar">🗑️</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="contratos.length === 0 && !cargando">
+                        <td colspan="7" class="empty">No hay contratos registrados aún.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<div class="modal-overlay" *ngIf="mostrarModalCliente" (click.self)="cerrarModalCliente()">
+    <div class="modal-content">
+        <button class="btn-close-x" (click)="cerrarModalCliente()">×</button>
+        <h3>Registrar Nuevo Cliente</h3>
+        <div class="form-body">
+            <div class="form-group"><label class="label">DNI *</label><input class="input" #dniNew maxlength="8"></div>
+            <div class="form-group"><label class="label">Nombres *</label><input class="input" #nombreNew></div>
+            <div class="form-group"><label class="label">Teléfono</label><input class="input" #telNew></div>
+            <div class="form-group"><label class="label">Correo</label><input class="input" #emailNew type="email">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" (click)="cerrarModalCliente()">Cancelar</button>
+                <button class="btn-primary"
+                    (click)="guardarClienteRapido(dniNew.value, nombreNew.value, telNew.value, emailNew.value)">Guardar
+                    Cliente</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="mostrarModalPaquete" (click.self)="cerrarModalPaquete()">
+    <div class="modal-content">
+        <button class="btn-close-x" (click)="cerrarModalPaquete()">×</button>
+        <h3>Crear Nuevo Paquete Base</h3>
+        <div class="form-body">
+            <div class="form-group"><label class="label">Nombre Paquete *</label><input class="input" #nomPaqNew
+                    placeholder="Ej. Boda Premium"></div>
+            <div class="form-group"><label class="label">Precio Base (S/.) *</label><input class="input" type="number"
+                    #precioPaqNew placeholder="0.00"></div>
+            <div class="form-row">
+                <div class="form-group"><label class="label">Capacidad</label><input class="input" type="number"
+                        #capPaqNew value="100"></div>
+            </div>
+            <div class="form-group"><label class="label">Servicios Incluidos</label><input class="input" #servPaqNew
+                    placeholder="Ej. Local, Sillas, Sonido"></div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" (click)="cerrarModalPaquete()">Cancelar</button>
+                <button class="btn-primary"
+                    (click)="guardarPaqueteRapido(nomPaqNew.value, precioPaqNew.value, capPaqNew.value, servPaqNew.value)">Guardar
+                    Paquete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="mostrarModalServicio" (click.self)="cerrarModalServicio()">
+    <div class="modal-content">
+        <button class="btn-close-x" (click)="cerrarModalServicio()">×</button>
+        <h3>Crear Nuevo Servicio</h3>
+        <div class="form-body">
+            <div class="form-group">
+                <label class="label">Nombre del Servicio *</label>
+                <input class="input" [(ngModel)]="nuevoServicio.nombre" placeholder="Ej. Hora Loca, Mozos extra...">
+            </div>
+
+            <div class="form-group">
+                <label class="label">Precio (S/.) *</label>
+                <input class="input" type="number" [(ngModel)]="nuevoServicio.precio" placeholder="0.00">
+            </div>
+
+            <div class="form-group">
+                <label class="label">Descripción (Opcional)</label>
+                <textarea class="input" rows="2" [(ngModel)]="nuevoServicio.descripcion"
+                    placeholder="Detalles del servicio..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" (click)="cerrarModalServicio()">Cancelar</button>
+                <button class="btn-primary" (click)="guardarServicioRapido()">
+                    Guardar Servicio
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

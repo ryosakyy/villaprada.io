@@ -69,6 +69,22 @@ def listar_galeria(db: Session = Depends(get_db)):
 
 
 # ================================================================
+# GALERÍA LIGERA (SÓLO MINI DATOS PARA PÁGINA PÚBLICA)
+# ================================================================
+@router.get("/light-list")
+def galeria_light(db: Session = Depends(get_db)):
+    return GaleriaService.galeria_light(db)
+
+
+# ================================================================
+# BUSCAR (debe ir antes de /{id})
+# ================================================================
+@router.get("/buscar/{texto}", response_model=List[GaleriaResponse])
+def buscar(texto: str, db: Session = Depends(get_db)):
+    return GaleriaService.buscar(db, texto)
+
+
+# ================================================================
 # OBTENER POR ID
 # ================================================================
 @router.get("/{id}", response_model=GaleriaResponse)
@@ -171,20 +187,7 @@ def paginado(page: int = 1, limit: int = 12, db: Session = Depends(get_db)):
     return GaleriaService.paginado(db, page, limit)
 
 
-# ================================================================
-# BUSCAR
-# ================================================================
-@router.get("/buscar/{texto}", response_model=List[GaleriaResponse])
-def buscar(texto: str, db: Session = Depends(get_db)):
-    return GaleriaService.buscar(db, texto)
 
-
-# ================================================================
-# GALERÍA LIGERA (SÓLO MINI DATOS PARA PÁGINA PÚBLICA)
-# ================================================================
-@router.get("/light")
-def galeria_light(db: Session = Depends(get_db)):
-    return GaleriaService.galeria_light(db)
 
 
 # ================================================================

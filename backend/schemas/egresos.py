@@ -1,8 +1,10 @@
-# backend/schemas/egresos.py
-
 from pydantic import BaseModel
 from datetime import date
 from typing import Optional
+
+# ==========================================
+# ESQUEMAS BÁSICOS (CRUD)
+# ==========================================
 
 class EgresoBase(BaseModel):
     descripcion: str
@@ -25,11 +27,15 @@ class EgresoUpdate(BaseModel):
 
 class EgresoResponse(EgresoBase):
     id: int
+    comprobante_url: Optional[str] = None  # <--- ESTE ES EL NUEVO CAMPO
+    
     class Config:
         from_attributes = True
 
 
-# ---------- RESÚMENES FINANCIEROS ----------
+# ==========================================
+# ESQUEMAS DE RESÚMENES (ESTOS FALTABAN)
+# ==========================================
 
 class ResumenEgresosContrato(BaseModel):
     contrato_id: int

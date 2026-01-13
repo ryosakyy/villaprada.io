@@ -1,5 +1,3 @@
-# backend/services/egresos_service.py
-
 from sqlalchemy.orm import Session
 from sqlalchemy import func, extract
 
@@ -7,6 +5,7 @@ from models.egresos import Egreso
 from models.contratos import Contrato
 from models.pagos import Pago
 
+# Aquí importamos TODO lo necesario para evitar el ImportError
 from schemas.egresos import (
     EgresoCreate, EgresoUpdate,
     ResumenMensual, ResumenAnual, ResumenEgresosContrato,
@@ -19,6 +18,8 @@ class EgresoService:
 
     @staticmethod
     def crear(data: EgresoCreate, db: Session):
+        # Nota: El router usa su propia lógica para crear cuando hay fotos,
+        # pero mantenemos esto para creaciones simples si fuera necesario.
         egreso = Egreso(**data.dict())
         db.add(egreso)
         db.commit()
@@ -102,7 +103,6 @@ class EgresoService:
 
     @staticmethod
     def utilidad_contrato(contrato_id: int, db: Session):
-
         contrato = db.query(Contrato).filter(Contrato.id == contrato_id).first()
         if not contrato:
             return None

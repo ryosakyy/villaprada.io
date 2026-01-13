@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import date, time
 
 # Base compartida
 class DisponibilidadBase(BaseModel):

@@ -7,6 +7,7 @@ from typing import List
 from core.database import get_db
 from core.security import get_current_user
 from models.disponibilidad import Disponibilidad
+from models.reservas import Reserva
 from schemas.disponibilidad import DisponibilidadCreate, DisponibilidadOut, DisponibilidadUpdate
 
 import calendar
@@ -15,6 +16,59 @@ router = APIRouter(
     prefix="/disponibilidad",
     tags=["Disponibilidad"]
 )
+
+# ============================================================
+# 0. Endpoint PÚBLICO para landing page (SIN TOKEN)
+# ============================================================
+@router.get("/publico/fechas-ocupadas")
+def fechas_ocupadas_publico(anio: int = None, mes: int = None, db: Session = Depends(get_db)):
+    """
+    Retorna fechas ocupadas con detalle de horarios para la landing page.
+    Si no se especifica mes/anio, retorna todo (o se podría limitar a hoy en adelante).
+    """
+    query = db.query(Disponibilidad).filter(Disponibilidad.estado.in_(["ocupado", "bloqueado"]))
+
+    if anio and mes:
+        # Filtrar por mes específico
+        from sqlalchemy import extract
+        query = query.filter(
+            extract('year', Disponibilidad.fecha) == anio,
+            extract('month', Disponibilidad.fecha) == mes
+        )
+    
+    registros_disponibilidad = query.all()
+
+    # Query Reservas (Events)
+    query_reservas = db.query(Reserva).filter(Reserva.estado.in_(["confirmado", "pendiente"]))
+    if anio and mes:
+        query_reservas = query_reservas.filter(
+            extract('year', Reserva.fecha_evento) == anio,
+            extract('month', Reserva.fecha_evento) == mes
+        )
+    registros_reservas = query_reservas.all()
+    
+    # Merge results
+    resultados = []
+
+    # Add manual blocks
+    for r in registros_disponibilidad:
+        resultados.append({
+            "fecha": r.fecha,
+            "estado": r.estado
+        })
+
+    # Add reservations (as "ocupado")
+    for r in registros_reservas:
+        resultados.append({
+            "fecha": r.fecha_evento,
+            "estado": "ocupado"
+        })
+    
+    # Sort by date
+    resultados.sort(key=lambda x: x['fecha'])
+
+    return resultados
+
 
 # ============================================================
 # 1. Crear / Bloquear fecha (PROTEGIDO)

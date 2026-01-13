@@ -1,0 +1,24 @@
+config:
+  target: "http://127.0.0.1:8000"
+  phases:
+    - duration: 10
+      arrivalRate: 2
+      name: "Calentamiento"
+    - duration: 20
+      arrivalRate: 5
+      rampTo: 20
+      name: "Carga Pesada"
+  defaults:
+    headers:
+      Authorization: "Bearer <TU_TOKEN_LARGO_AQUI>"
+      Content-Type: "application/json"
+
+scenarios:
+  - flow:
+      - log: "Usuario solicitando clientes..."
+      - get:
+          url: "/clientes/"
+      - think: 1
+      - log: "Usuario solicitando contratos..."
+      - get:
+          url: "/contratos/"

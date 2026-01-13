@@ -1,0 +1,65 @@
+<div class="main-container">
+    <div class="top-bar">
+        <h1>Administración de Usuarios</h1>
+        <button class="btn-add" (click)="abrirModalCrear()">+ Nuevo Usuario</button>
+    </div>
+
+    <div class="table-container table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let u of usuarios">
+                    <td><strong>{{ u.nombres }}</strong></td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.rol }}</td>
+                    <td><span class="status-on">Activo</span></td>
+                    <td>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-save" style="padding: 6px 14px; font-size: 0.85rem;"
+                                (click)="abrirModalEditar(u)">Editar</button>
+                            <button class="btn-delete" (click)="borrarUsuario(u)">Borrar</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal-bg" *ngIf="showCrear || showEditar">
+        <div class="modal-box">
+            <h2>{{ showCrear ? 'Nuevo Usuario' : 'Editar Usuario' }}</h2>
+            <div class="form">
+                <ng-container
+                    *ngTemplateOutlet="formFields; context: { data: showCrear ? nuevo : edit }"></ng-container>
+            </div>
+            <div class="btns">
+                <button class="btn-save" (click)="showCrear ? registrar() : actualizar()">
+                    {{ showCrear ? 'Registrar' : 'Guardar Cambios' }}
+                </button>
+                <button class="btn-close" (click)="showCrear = false; showEditar = false">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #formFields let-data="data">
+    <label>Nombre Completo</label>
+    <input [(ngModel)]="data.nombres" placeholder="Ej. Juan Pérez">
+    <label>Email</label>
+    <input [(ngModel)]="data.email" placeholder="correo@ejemplo.com">
+    <label>Rol</label>
+    <select [(ngModel)]="data.rol">
+        <option value="admin">Administrador</option>
+        <option value="empleado">Empleado</option>
+    </select>
+    <label>{{ showCrear ? 'Contraseña' : 'Nueva Contraseña (Opcional)' }}</label>
+    <input type="password" [(ngModel)]="data.password" placeholder="********">
+</ng-template>

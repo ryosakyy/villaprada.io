@@ -1,5 +1,3 @@
-# backend/schemas/pagos.py
-
 from pydantic import BaseModel
 from datetime import date
 from typing import Optional
@@ -10,6 +8,8 @@ class PagoBase(BaseModel):
     monto: float
     metodo: str
     observacion: Optional[str] = None
+    # Agregamos esto aquí para que sea parte base
+    comprobante_url: Optional[str] = None 
 
 class PagoCreate(PagoBase):
     pass
@@ -19,13 +19,14 @@ class PagoUpdate(BaseModel):
     monto: Optional[float] = None
     metodo: Optional[str] = None
     observacion: Optional[str] = None
+    # También permitimos actualizar la foto si quisieras a futuro
+    comprobante_url: Optional[str] = None
 
 class PagoResponse(PagoBase):
     id: int
 
     class Config:
         from_attributes = True
-
 
 class PagoResumen(BaseModel):
     contrato_id: int

@@ -1,0 +1,159 @@
+.dash {
+  padding: 18px 22px;
+}
+
+.dash-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 6px 0 14px;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.kpi-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  border-left: 4px solid #d5a514;
+  min-height: 74px;
+}
+
+.kpi-label {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.kpi-value {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  min-height: 320px;
+}
+
+.panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.panel-body {
+  min-height: 280px;
+}
+
+@media (max-width: 1100px) {
+  .kpis {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash {
+    padding: 10px 15px;
+  }
+
+  .dash-title {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  .kpis {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .kpi-card {
+    padding: 12px;
+    min-height: 60px;
+  }
+
+  .kpi-value {
+    font-size: 22px;
+    /* Aún más pequeño */
+  }
+
+  .panel-title {
+    font-size: 11px;
+    padding: 10px;
+  }
+}
+
+/* === NUEVOS ESTILOS === */
+.lista-reservas {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.reserva-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.reserva-item:last-child {
+  border-bottom: none;
+}
+
+.reserva-fecha {
+  font-weight: 600;
+  color: #475569;
+}
+
+.reserva-cant {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.balance-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #334155;
+  align-items: center;
+}
+
+.balance-row.total {
+  background: #f8fafc;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.text-green {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.text-red {
+  color: #ef4444;
+  font-weight: 600;
+}

@@ -1,0 +1,100 @@
+<div class="reportes-page">
+    <div class="page-header">
+        <h2>📊 Centro de Reportes y Exportación</h2>
+        <p>Genera reportes detallados y exporta la información contable.</p>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filters-card">
+        <div class="filter-group">
+            <label>Desde:</label>
+            <input type="date" [(ngModel)]="fechaInicio" class="input-date">
+        </div>
+        <div class="filter-group">
+            <label>Hasta:</label>
+            <input type="date" [(ngModel)]="fechaFin" class="input-date">
+        </div>
+        <button class="btn-generate" (click)="generarReporteVisual()">🔄 Generar Reporte</button>
+    </div>
+
+    <!-- BOTONES DE EXPORTACIÓN -->
+    <div class="export-grid">
+        <div class="export-card excel" (click)="descargarExcelIngresos()">
+            <div class="icon">📈</div>
+            <div class="title">Reporte de Ingresos</div>
+            <div class="fmt">Excel (.xlsx)</div>
+        </div>
+
+        <div class="export-card excel" (click)="descargarExcelEgresos()">
+            <div class="icon">📉</div>
+            <div class="title">Reporte de Egresos</div>
+            <div class="fmt">Excel (.xlsx)</div>
+        </div>
+
+        <div class="export-card excel" (click)="descargarExcelContratos()">
+            <div class="icon">📄</div>
+            <div class="title">Reporte de Contratos</div>
+            <div class="fmt">Excel (.xlsx)</div>
+        </div>
+
+        <div class="export-card pdf" (click)="descargarPDFFlujo()">
+            <div class="icon">💰</div>
+            <div class="title">Flujo de Caja</div>
+            <div class="fmt">PDF (Oficial)</div>
+        </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="summary-section">
+        <h3>Resumen Financiero</h3>
+
+        <div class="summary-totals">
+            <div class="tot-card green">
+                <span>Total Ingresos</span>
+                <strong>S/ {{ totalIngresos | number:'1.2-2' }}</strong>
+            </div>
+            <div class="tot-card red">
+                <span>Total Egresos</span>
+                <strong>S/ {{ totalEgresos | number:'1.2-2' }}</strong>
+            </div>
+            <div class="tot-card blue">
+                <span>Balance / Utilidad</span>
+                <strong>S/ {{ totalSaldo | number:'1.2-2' }}</strong>
+            </div>
+        </div>
+
+        <!-- TABLA -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Ingresos</th>
+                    <th>Egresos</th>
+                    <th>Saldo Diario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of datosFinanzas">
+                    <td>{{ d.fecha | date:'dd/MM/yyyy' }}</td>
+                    <td class="text-green">S/ {{ d.ingresos | number:'1.2-2' }}</td>
+                    <td class="text-red">S/ {{ d.egresos | number:'1.2-2' }}</td>
+                    <td [style.font-weight]="'bold'" [style.color]="d.saldo >= 0 ? '#10b981' : '#ef4444'">
+                        S/ {{ d.saldo | number:'1.2-2' }}
+                    </td>
+                </tr>
+                <tr *ngIf="datosFinanzas.length === 0 && !cargando">
+                    <td colspan="4" class="empty">Haz clic en "Generar Reporte" para ver los datos.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" *ngIf="cargando">
+        <div class="spinner"></div>
+        <p>Consultando datos del servidor...</p>
+        <p style="font-size: 0.9rem; color: #64748b; margin-top: 10px;">
+            Si esto tarda más de 15 segundos, aparecerá un mensaje de error.
+        </p>
+    </div>
+</div>

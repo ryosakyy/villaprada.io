@@ -1,0 +1,284 @@
+.disp-page {
+  padding: 0;
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.page-head h2 {
+  margin: 0;
+  font-weight: 900;
+  color: #0f172a;
+  font-size: 26px;
+}
+
+.page-head p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.month-pill {
+  min-width: 140px;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.legend-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-weight: 700;
+}
+
+.tag i {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.tag.green i {
+  background: #10b981;
+}
+
+.tag.red i {
+  background: #ef4444;
+}
+
+.tag.orange i {
+  background: #f59e0b;
+}
+
+.tag.gray i {
+  background: #cbd5e1;
+}
+
+.legend-note {
+  color: #94a3b8;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.calendar .week-head {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #2D466B;
+  color: #fff;
+  font-weight: 900;
+  font-size: 12px;
+}
+
+.calendar .week-head div {
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.calendar .grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  padding: 12px;
+  background: #f4f6fb;
+}
+
+.day {
+  height: 72px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  position: relative;
+  padding: 8px 10px;
+  overflow: hidden;
+}
+
+.day .n {
+  font-weight: 900;
+  color: #0f172a;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 14px;
+}
+
+.small {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.day.green {
+  background: #10b981;
+  border-color: #10b981;
+}
+
+.day.red {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+.day.orange {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.day.other {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.day.other .n {
+  color: #94a3b8;
+}
+
+.bottom {
+  padding: 12px 14px 14px;
+}
+
+.bottom-title {
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.chip {
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.chip.red {
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+.chip.orange {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.chip-title {
+  font-weight: 900;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.chip-sub {
+  color: #64748b;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+@media (max-width: 1100px) {
+  .chips {
+    grid-template-columns: 1fr;
+  }
+
+  .legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .legend-note {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .calendar .week-head,
+  .calendar .grid {
+    min-width: 700px;
+    /* Fuerza el scroll para que las celdas se vean bien */
+  }
+
+  .day {
+    height: 60px;
+    padding: 5px;
+  }
+
+  .day .n {
+    font-size: 12px;
+  }
+
+  .small {
+    font-size: 9px;
+    margin-top: 15px;
+  }
+
+  .page-head h2 {
+    font-size: 1.5rem;
+  }
+}

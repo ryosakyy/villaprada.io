@@ -1,0 +1,18 @@
+<div class="admin-shell">
+    <aside class="sidebar-area" [class.mobile-open]="isSidebarOpen">
+        <app-sidebar></app-sidebar>
+    </aside>
+
+    <!-- Overlay para cerrar sidebar al hacer click fuera en móvil -->
+    <div class="sidebar-overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+    <div class="main-body">
+        <header class="top-header">
+            <app-navbar (toggleSidebar)="toggleSidebar()"></app-navbar>
+        </header>
+
+        <main class="content-view">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

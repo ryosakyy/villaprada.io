@@ -1,0 +1,134 @@
+<div class="egresos-page">
+    <div class="page-head">
+        <div>
+            <h2>Registro de Egresos</h2>
+            <p>Gestión de gastos operativos y costos por evento</p>
+        </div>
+        <button class="btn-red" (click)="cargarEgresos()">🔄 Actualizar Lista</button>
+    </div>
+
+    <div class="grid-top">
+        <section class="card">
+            <div class="card-title">Registrar Nuevo Gasto</div>
+
+            <div class="form">
+                <div class="form-group">
+                    <label class="label">Descripción del Gasto: *</label>
+                    <input class="input" [(ngModel)]="nuevoEgreso.descripcion" placeholder="Ej: Flores, Pago Personal..." />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="label">Categoría: *</label>
+                        <select class="input" [(ngModel)]="nuevoEgreso.categoria">
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="Mantenimiento">Mantenimiento Local</option>
+                            <option value="Servicios">Servicios Básicos</option>
+                            <option value="Limpieza">Limpieza</option>
+                            <option value="Insumos">Insumos / Catering</option>
+                            <option value="Personal">Personal / Planilla</option>
+                            <option value="Decoracion">Decoración</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Asociar a Evento:</label>
+                        <select class="input" [(ngModel)]="nuevoEgreso.contrato_id">
+                            <option [ngValue]="null">-- Gasto General --</option>
+                            <option *ngFor="let c of listaContratos" [ngValue]="c.id">
+                                #{{ c.id }} - {{ c.nombre_cliente }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="label">Monto (S/): *</label>
+                        <input type="number" class="input" [(ngModel)]="nuevoEgreso.monto" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Fecha: *</label>
+                        <input type="date" class="input" [(ngModel)]="nuevoEgreso.fecha" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Comprobante (Imagen):</label>
+                    <input type="file" id="fileInput" class="input" (change)="onFileSelected($event)" accept="image/*" />
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Observaciones:</label>
+                    <input class="input" [(ngModel)]="nuevoEgreso.observacion" placeholder="Detalles extra..." />
+                </div>
+
+                <div class="actions">
+                    <button class="btn-cancel" (click)="limpiarFormulario()">Limpiar</button>
+                    <button class="btn-save" (click)="registrarEgreso()">Registrar Salida</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card categorias">
+            <div class="card-title">Resumen del Mes</div>
+            <div class="cats">
+                <div class="cat" *ngFor="let item of resumenCategorias">
+                    <div>
+                        <div class="cat-title">{{ item.nombre }}</div>
+                        <div class="cat-sub">{{ item.count }} movs.</div>
+                    </div>
+                    <div class="cat-money">{{ item.total | currency:'PEN':'S/ ' }}</div>
+                </div>
+                <div class="total">
+                    <span>Total:</span>
+                    <strong>{{ totalGeneral | currency:'PEN':'S/ ' }}</strong>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="card table-card">
+        <div class="table-head">
+            <div class="table-title">Historial de Egresos</div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Comprobante</th>
+                    <th>Contrato</th>
+                    <th>Monto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listaEgresos">
+                    <td>{{ item.fecha | date:'dd/MM' }}</td>
+                    <td>{{ item.descripcion }}</td>
+                    <td><span class="badge">{{ item.categoria }}</span></td>
+
+                    <td style="text-align: center;">
+                        <a *ngIf="item.comprobante_url" [href]="'http://127.0.0.1:8000/' + item.comprobante_url" target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Foto">
+                            🖼️
+                        </a>
+                        <span *ngIf="!item.comprobante_url" style="color: #ccc;">-</span>
+                    </td>
+
+                    <td style="font-size: 0.85rem;">
+                        <span *ngIf="item.contrato_id" style="color:#2563eb; font-weight:bold">#{{ item.contrato_id }}</span>
+                        <span *ngIf="!item.contrato_id" style="color:#94a3b8">Gral.</span>
+                    </td>
+                    <td class="money">- {{ item.monto | currency:'PEN':'S/ ' }}</td>
+                    <td>
+                        <button class="icon-btn" style="color:#ef4444;" (click)="eliminarEgreso(item.id)">🗑</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

@@ -1,0 +1,61 @@
+<div class="dash">
+  <h2 class="dash-title">Dashboard General</h2>
+
+  <div class="kpis">
+    <div class="kpi-card">
+      <div class="kpi-label">Clientes</div>
+      <div class="kpi-value">{{ totalClientes }}</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Contratos</div>
+      <div class="kpi-value">{{ totalContratos }}</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Ingresos</div>
+      <div class="kpi-value">S/ {{ totalIngresos | number:'1.2-2' }}</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Egresos</div>
+      <div class="kpi-value">S/ {{ totalEgresos | number:'1.2-2' }}</div>
+    </div>
+  </div>
+
+  <div class="panels">
+    <div class="panel">
+      <div class="panel-title">📅 Próximos Eventos (Top 5)</div>
+      <div class="panel-body">
+        <ul class="lista-reservas">
+          <li *ngFor="let r of reservasPorDia" class="reserva-item">
+            <span class="reserva-fecha">{{ r.fecha | date:'dd/MM/yyyy' }}:</span>
+            <span class="reserva-cant">{{ r.cantidad }} eventos</span>
+          </li>
+          <li *ngIf="reservasPorDia.length === 0" style="color: #888;">No hay eventos próximos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">💰 Balance Financiero</div>
+      <div class="panel-body">
+        <div class="balance-row">
+          <span>Total Ingresos:</span>
+          <span class="text-green">S/ {{ totalIngresos | number:'1.2-2' }}</span>
+        </div>
+        <div class="balance-row">
+          <span>Total Egresos:</span>
+          <span class="text-red">S/ {{ totalEgresos | number:'1.2-2' }}</span>
+        </div>
+        <hr style="border-top: 1px dashed #ccc; margin: 10px 0;">
+        <div class="balance-row total">
+          <span>BALANCE FINAL:</span>
+          <span [style.color]="balance >= 0 ? '#10b981' : '#ef4444'" style="font-weight: bold; font-size: 1.2rem;">
+            S/ {{ balance | number:'1.2-2' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

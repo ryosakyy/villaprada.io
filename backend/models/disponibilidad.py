@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Date, String, Boolean
+from sqlalchemy import Column, Integer, Date, String, Boolean, Time
 from core.database import Base
 
 class Disponibilidad(Base):

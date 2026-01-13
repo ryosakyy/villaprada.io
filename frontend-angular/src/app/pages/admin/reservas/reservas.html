@@ -1,0 +1,123 @@
+<div class="main-container">
+
+    <div class="header-wrapper">
+        <div class="title-group">
+            <h2>Agenda Villa Prada</h2>
+            <p>Visualización de Contratos</p>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" (click)="cambiarMes(-1)">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div class="current-month">{{ displayMonth }}</div>
+            <button class="nav-btn" (click)="cambiarMes(1)">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="calendar-card">
+        <div class="week-header">
+            <div class="week-day">Lun</div>
+            <div class="week-day">Mar</div>
+            <div class="week-day">Mié</div>
+            <div class="week-day">Jue</div>
+            <div class="week-day">Vie</div>
+            <div class="week-day">Sáb</div>
+            <div class="week-day">Dom</div>
+        </div>
+
+        <div class="calendar-grid">
+            <div *ngFor="let dia of daysInMonth" [class]="dia.num ? 'day-cell' : 'day-cell other-month'">
+
+                <ng-container *ngIf="dia.num">
+                    <span class="day-number">{{ dia.num }}</span>
+
+                    <div class="events-container">
+                        <div *ngFor="let ev of dia.eventos" class="event-chip"
+                            [ngClass]="ev.deuda > 0 ? 'chip-pendiente' : 'chip-pagado'"
+                            (click)="abrirModalEvento(ev, $event)" title="{{ ev.cliente }} - {{ ev.paquete }}">
+
+                            <div class="chip-client">{{ ev.cliente }}</div>
+                            <div class="chip-pack">{{ ev.paquete }}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showModal && selectedEvent" (click)="cerrarModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+
+        <div class="modal-header"
+            [style.background]="selectedEvent.deuda > 0 ? 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)'">
+            <div class="modal-title-group">
+                <h3>Contrato #{{ selectedEvent.id }}</h3>
+                <h2 class="modal-event-name">{{ selectedEvent.paquete }}</h2>
+            </div>
+            <button class="close-btn" (click)="cerrarModal()">✕</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="detail-row">
+                <div class="detail-group">
+                    <span class="label">Cliente</span>
+                    <span class="value" style="font-size: 1.2rem; font-weight:bold; color:#1f2937;">
+                        {{ selectedEvent.cliente }}
+                    </span>
+                </div>
+                <div class="detail-group" style="text-align: right;">
+                    <span class="label">Fecha Evento</span>
+                    <span class="value">{{ selectedEvent.fecha | date:'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-group">
+                    <span class="label">Hora Inicio</span>
+                    <span class="value">{{ selectedEvent.hora_inicio }} hrs</span>
+                </div>
+                <div class="detail-group" style="text-align: right;">
+                    <span class="label">Hora Fin</span>
+                    <span class="value">{{ selectedEvent.hora_fin }} hrs</span>
+                </div>
+            </div>
+
+            <!-- SOLO ADMIN VE ESTO -->
+            <div *ngIf="userRole === 'admin'"
+                style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-top: 10px; border: 1px solid #e2e8f0;">
+                <div class="detail-row" style="border:none; margin-bottom: 5px;">
+                    <span class="label">Costo Total:</span>
+                    <span class="value">S/ {{ selectedEvent.total | number:'1.2-2' }}</span>
+                </div>
+                <div class="detail-row" style="border:none; margin-bottom: 5px;">
+                    <span class="label">Adelanto:</span>
+                    <span class="value" style="color:#15803d;">- S/ {{ selectedEvent.adelanto | number:'1.2-2' }}</span>
+                </div>
+                <hr style="border-top: 1px dashed #cbd5e1; margin: 5px 0 10px 0;">
+
+                <div class="detail-row" style="border:none;">
+                    <span class="label" style="align-self: center;">ESTADO DE PAGO:</span>
+                    <div style="text-align: right;">
+                        <span *ngIf="selectedEvent.deuda > 0"
+                            style="color: #b91c1c; font-weight: 800; font-size: 1.2rem;">
+                            Falta: S/ {{ selectedEvent.deuda | number:'1.2-2' }}
+                        </span>
+                        <span *ngIf="selectedEvent.deuda <= 0"
+                            style="color: #15803d; font-weight: 800; font-size: 1.2rem;">
+                            ✔ ¡CANCELADO!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

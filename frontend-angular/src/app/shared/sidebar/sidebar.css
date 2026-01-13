@@ -1,0 +1,38 @@
+.side-brand {
+    display: flex;
+    align-items: center;
+    padding: 20px 15px;
+    gap: 10px;
+    background: #2D466B;
+    /* Azul oscuro de tus fotos */
+}
+
+.brand-logo {
+    width: 38px;
+    height: auto;
+    object-fit: contain;
+}
+
+.brand-title {
+    color: #D4AC0D;
+    /* El amarillo/dorado de la imagen 42d706 */
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.side-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.side-menu a.active {
+    background: rgba(255, 255, 255, 0.15);
+    /* Efecto de selección de la imagen 427dcb */
+    border-radius: 8px;
+    margin: 0 10px;
+}

@@ -1,0 +1,10 @@
+<div class="side-brand">
+    <img src="assets/img/logo_villa.png" alt="Logo" class="brand-logo">
+    <div class="brand-title">Villa Prada</div>
+</div>
+
+<nav class="side-menu">
+    <a *ngFor="let item of visibleMenuItems" [routerLink]="item.route" routerLinkActive="active">
+        {{item.icon}} {{item.label}}
+    </a>
+</nav>

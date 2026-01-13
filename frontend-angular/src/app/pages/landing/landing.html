@@ -1,0 +1,412 @@
+<div class="landing-villa">
+    <nav class="navbar-villa">
+        <div class="nav-container">
+            <div class="brand">
+                <img src="assets/logo-villa.png" alt="Villa Prada Logo" class="nav-logo">
+                <div class="brand-text">
+                    <span class="brand-title">EVENTOS VILLA PRADA</span>
+                    <span class="brand-tagline">TU EVENTO PERFECTO</span>
+                </div>
+            </div>
+
+            <!-- Hamburger Button (Mobile Only) -->
+            <button class="hamburger-btn" (click)="toggleMobileMenu()" [class.active]="mobileMenuOpen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" [class.mobile-open]="mobileMenuOpen">
+                <li><a href="#inicio" (click)="closeMobileMenu()">INICIO</a></li>
+                <li><a href="#acerca" (click)="closeMobileMenu()">NOSOTROS</a></li>
+                <li><a href="#paquetes" (click)="closeMobileMenu()">PAQUETES</a></li>
+                <li><a href="#servicios" (click)="closeMobileMenu()">SERVICIOS</a></li>
+                <li><a href="#galeria" (click)="closeMobileMenu()">GALERÍA</a></li>
+                <li><a href="#contacto" (click)="closeMobileMenu()">CONTACTO</a></li>
+                <li><a routerLink="/login" class="nav-login-btn" (click)="closeMobileMenu()">INICIAR SESIÓN</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero" id="inicio">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title">EL LUGAR PERFECTO...<br><span class="hero-highlight">PARA TU EVENTO</span></h1>
+                <p class="hero-subtitle">Celebra momentos inolvidables en nuestro exclusivo espacio</p>
+                <button class="btn-wa-main" (click)="abrirWhatsapp()">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png"
+                        class="btn-icon-wa">
+                    RESERVA POR WHATSAPP
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="wa-float" (click)="abrirWhatsapp()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon">
+    </div>
+
+    <section class="section-white" id="acerca">
+        <h2 class="section-title-center">Acerca de Villa Prada</h2>
+        <div class="about-container-pro">
+            <!-- Columna Izquierda: Imagen con Fondo Dorado -->
+            <div class="about-image-wrapper">
+                <div class="gold-backdrop"></div>
+                <img src="assets/about-venue.jpg" alt="Salón Villa Prada" class="about-main-img">
+            </div>
+
+            <!-- Columna Derecha: Texto y Grid -->
+            <div class="about-content-pro">
+                <h3 class="pro-subtitle">Tu Celebración Merece el<br>Mejor Escenario</h3>
+                <p class="pro-description">
+                    Somos el lugar de ensueño para celebrar tus momentos más importantes.
+                    En Villa Prada, combinamos elegancia, modernidad y un servicio excepcional
+                    para que tu boda, quinceañero o evento corporativo sea inolvidable.
+                    Cada detalle está pensado para superar tus expectativas.
+                </p>
+
+                <div class="pro-features-grid">
+                    <div class="feature-item">
+                        <div class="feat-icon-circle">👥</div>
+                        <div class="feat-info">
+                            <strong>Aforo 200+</strong>
+                            <span>Capacidad Ideal</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feat-icon-circle">✨</div>
+                        <div class="feat-info">
+                            <strong>Decoración</strong>
+                            <span>Estilo Personalizado</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feat-icon-circle">📍</div>
+                        <div class="feat-info">
+                            <strong>Ubicación</strong>
+                            <span>Zona Exclusiva</span>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feat-icon-circle">💎</div>
+                        <div class="feat-info">
+                            <strong>Garantía</strong>
+                            <span>Calidad Total</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- TIPOS DE EVENTOS (Nuevo Diseño) -->
+    <section class="section-white" id="eventos">
+        <h2 class="section-title-center">Tipos de Eventos</h2>
+        <p class="section-subtitle-center">Llevamos todo tipo de celebración al siguiente nivel</p>
+
+        <div class="event-types-grid">
+            <!-- Card 1 -->
+            <div class="event-type-card gradient-gray">
+                <div class="card-icon-top">🍸</div>
+                <div class="card-content-bottom">
+                    <h3>Bodas</h3>
+                    <p>Tu historia de amor comienza aquí</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="event-type-card gradient-gray">
+                <div class="card-icon-top">👑</div>
+                <div class="card-content-bottom">
+                    <h3>Matrimonios</h3>
+                    <p>Momentos únicos e irrepetibles</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="event-type-card gradient-gray">
+                <div class="card-icon-top">🎓</div>
+                <div class="card-content-bottom">
+                    <h3>Graduaciones</h3>
+                    <p>Celebra tus logros a lo grande</p>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="event-type-card gradient-gray">
+                <div class="card-icon-top">🎂</div>
+                <div class="card-content-bottom">
+                    <h3>Cumpleaños</h3>
+                    <p>Festeja un año más de vida</p>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="event-type-card gradient-gray">
+                <div class="card-icon-top">👶</div>
+                <div class="card-content-bottom">
+                    <h3>Baby Showers</h3>
+                    <p>La bienvenida más dulce</p>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="event-type-card gradient-gray">
+                <div class="card-icon-top">💼</div>
+                <div class="card-content-bottom">
+                    <h3>Corporativos</h3>
+                    <p>Eventos empresariales de nivel</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS ADICIONALES (Nuevo Diseño) -->
+    <section class="section-white" id="servicios">
+        <h2 class="section-title-center">Servicios Adicionales</h2>
+        <p class="section-subtitle-center">Todo lo que necesitas para que tu evento sea perfecto</p>
+
+        <div class="services-grid-pro">
+            <!-- Card 1 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">🍽️</div>
+                <h4>Catering Premium</h4>
+                <p>Menús personalizados con ingredientes de primera calidad y presentación impecable.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">🎵</div>
+                <h4>Música y DJ</h4>
+                <p>Equipos de sonido profesionales y DJs experimentados para amenizar tu evento.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">📷</div>
+                <h4>Fotografía y Video</h4>
+                <p>Captura cada momento especial con nuestros fotógrafos y videógrafos profesionales.</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">🌸</div>
+                <h4>Decoración Floral</h4>
+                <p>Arreglos florales exclusivos y decoración personalizada según tu estilo.</p>
+            </div>
+            <!-- Card 5 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">💡</div>
+                <h4>Iluminación Ambiental</h4>
+                <p>Iluminación para crear la atmósfera perfecta en tu evento.</p>
+            </div>
+            <!-- Card 6 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">🍸</div>
+                <h4>Barra de Bebidas</h4>
+                <p>Servicio de bartenders profesionales y variedad de bebidas premium.</p>
+            </div>
+            <!-- Card 7 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">🚗</div>
+                <h4>Valet Parking</h4>
+                <p>Servicio de estacionamiento para la comodidad de tus invitados.</p>
+            </div>
+            <!-- Card 8 -->
+            <div class="service-card-gold-border">
+                <div class="svc-icon-circle-blue">🎤</div>
+                <h4>Animación</h4>
+                <p>Maestros de ceremonia y entretenimiento profesional para tu evento.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAQUETES PERSONALIZADOS (Mockup Nuevo) -->
+    <section class="section-white" id="paquetes">
+        <div class="banner-blue-rounded">
+            <h2 class="title-paquetes">Paquetes Personalizados</h2>
+            <p class="desc-paquetes">Combinamos nuestros servicios para crear el paquete perfecto según tus necesidades
+                y presupuesto.</p>
+            <button class="btn-gold-mockup" (click)="abrirWhatsapp()">Solicita tu Cotización</button>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="section-white" id="galeria">
+        <h2 class="section-title-center">Galería</h2>
+        <p class="section-subtitle-center">Vive la experiencia Villa Prada</p>
+
+        <div class="gallery-grid-pro">
+            <!-- Imágenes dinámicas desde el backend -->
+            <div class="gallery-item-pro" *ngFor="let img of imagenesGaleria.slice(0, 6)"
+                [style.background-image]="'url(' + img.imagen + ')'" [title]="img.titulo || 'Evento Villa Prada'">
+            </div>
+
+            <!-- Mensaje si no hay imágenes -->
+            <div *ngIf="imagenesGaleria.length === 0"
+                style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #64748b;">
+                <p>Las imágenes de la galería se cargarán pronto...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISPONIBILIDAD -->
+    <section class="section-white" id="disponibilidad">
+        <h2 class="section-title-center">Próximas Fechas Reservadas</h2>
+        <p class="section-subtitle-center">Consulta aquí los días que ya están ocupados. Si tu fecha está libre,
+            ¡escríbenos!</p>
+
+        <div class="availability-container">
+            <div *ngFor="let item of fechasOcupadas" class="avail-card">
+                <div class="avail-date">
+                    <span class="day">{{ item.fecha | date:'dd' }}</span>
+                    <span class="month">{{ item.fecha | date:'MMM' | uppercase }}</span>
+                </div>
+                <div class="avail-info">
+                    <span class="status-badge occupied">RESERVADO</span>
+                    <span class="time" *ngIf="item.hora_inicio">{{ item.hora_inicio.substring(0,5) }} - {{
+                        item.hora_fin?.substring(0,5) }}</span>
+                </div>
+            </div>
+
+            <div *ngIf="fechasOcupadas.length === 0" class="no-events">
+                <p>Agenda completamente libre por ahora. ¡Aprovecha!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VERIFICA TU FECHA (CTA Azul) -->
+    <section class="banner-cta-gradient">
+        <div class="cta-content">
+            <h2 class="cta-title">Verifica la fecha de tu evento</h2>
+            <p class="cta-subtitle">Si tienes una fecha pensada, consúltanos ahora y asegura tu día especial.</p>
+            <button class="btn-whatsapp-lg" (click)="abrirWhatsapp()">
+                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png"
+                    class="btn-icon-wa-lg">
+                CONSULTAR WHATSAPP
+            </button>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS (Mencionado por usuario "Las Rallitas") -->
+    <section class="section-testimonials">
+        <h2 class="section-title-center">Testimonios</h2>
+        <div class="testimonials-grid-new">
+            <div class="testimonial-card-new">
+                <div class="stars-gold">★★★★★</div>
+                <p class="testimonio-text">
+                    "Nuestra boda fue perfecta. Decoración espectacular, servicio impecable."
+                </p>
+                <div class="testimonio-line"></div>
+                <div class="testimonio-info">
+                    <h4 class="author-name">María García</h4>
+                    <span class="event-date">Boda</span>
+                </div>
+            </div>
+            <div class="testimonial-card-new">
+                <div class="stars-gold">★★★★★</div>
+                <p class="testimonio-text">
+                    "Los XV años de mi hija fueron mágicos. Todo salió perfecto."
+                </p>
+                <div class="testimonio-line"></div>
+                <div class="testimonio-info">
+                    <h4 class="author-name">Juan Pérez</h4>
+                    <span class="event-date">XV Años</span>
+                </div>
+            </div>
+            <div class="testimonial-card-new">
+                <div class="stars-gold">★★★★★</div>
+                <p class="testimonio-text">
+                    "Instalaciones de primera y servicio profesional. Volveremos."
+                </p>
+                <div class="testimonio-line"></div>
+                <div class="testimonio-info">
+                    <h4 class="author-name">Ana López</h4>
+                    <span class="event-date">Corporativo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTADISTICAS BARRA -->
+    <section class="stats-bar-blue">
+        <div class="stats-container">
+            <div class="stat-box-blue">
+                <h3>500+</h3>
+                <p>Eventos Realizados</p>
+            </div>
+            <div class="stat-box-blue">
+                <h3>98%</h3>
+                <p>Clientes Felices</p>
+            </div>
+            <div class="stat-box-blue">
+                <h3>10+</h3>
+                <p>Años de Experiencia</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO SECCION -->
+    <section class="section-white" id="contacto">
+        <h2 class="section-title-center">Contáctanos</h2>
+        <div class="contact-form-layout">
+            <div class="info-column">
+                <h3>Información de Contacto</h3>
+                <div class="info-row"><span>📍</span>
+                    <p>Av. La Cultura 450, Cusco</p>
+                </div>
+                <div class="info-row"><span>📞</span>
+                    <p>+51 984 123 456</p>
+                </div>
+                <div class="info-row"><span>✉️</span>
+                    <p>info&#64;villaprada.com</p>
+                </div>
+                <div class="info-row"><span>⏰</span>
+                    <p>Lun - Sab: 9am - 7pm</p>
+                </div>
+            </div>
+            <div class="form-column">
+                <h3>Envíanos un Mensaje</h3>
+                <form class="contact-form">
+                    <input type="text" placeholder="Nombre" class="form-input">
+                    <input type="email" placeholder="Email" class="form-input">
+                    <input type="tel" placeholder="Teléfono" class="form-input">
+                    <textarea placeholder="Mensaje" class="form-textarea"></textarea>
+                    <button type="button" class="btn-gold-block" (click)="abrirWhatsapp()">ENVIAR MENSAJE</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER NAVY -->
+    <footer class="footer-navy">
+        <div class="footer-inner">
+            <div class="footer-brand-col">
+                <img src="assets/logo-villa.png" class="footer-logo">
+                <p>Tu evento perfecto en Cusco.</p>
+                <div class="socials">
+                    <span>f</span> <span>in</span> <span>ig</span>
+                </div>
+            </div>
+            <div class="footer-links-col">
+                <h4>Enlaces Rápidos</h4>
+                <a href="#inicio">Inicio</a>
+                <a href="#eventos">Eventos</a>
+                <a href="#galeria">Galería</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Servicios</h4>
+                <a href="#">Bodas</a>
+                <a href="#">Corporativos</a>
+                <a href="#">Catering</a>
+            </div>
+            <div class="footer-contact-col">
+                <h4>Contacto</h4>
+                <p>+51 984 123 456</p>
+                <p>info&#64;villaprada.com</p>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Eventos Villa Prada. Todos los derechos reservados.</p>
+            <div class="footer-legals">
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+            </div>
+        </div>
+    </footer>
+</div>

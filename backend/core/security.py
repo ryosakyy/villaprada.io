@@ -1,5 +1,3 @@
-# backend/core/security.py
-
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -8,30 +6,44 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 
-from core.config import settings
+# ELIMINAMOS LA DEPENDENCIA DE SETTINGS PARA EVITAR ERRORES
+# from core.config import settings 
+
+# ---------- CONFIGURACIÓN FIJA (LA SOLUCIÓN) ----------
+# Al poner esto fijo, el token NO muere si reinicias el servidor
+SECRET_KEY = "clave_super_secreta_villa_prada_fija_123" 
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 480 # 8 horas
 
 # ---------- Configuración bcrypt ----------
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-# ---------- Configuración JWT ----------
-SECRET_KEY = settings.JWT_SECRET_KEY
-ALGORITHM = settings.JWT_ALGORITHM
-ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+import bcrypt
 
 # Middleware de seguridad para rutas protegidas
+from fastapi.security import HTTPBearer
 oauth2_scheme = HTTPBearer()
-
 
 # ================== CONTRASEÑAS ==================
 
 def hash_password(password: str) -> str:
-    """Encripta una contraseña usando bcrypt."""
-    return pwd_context.hash(password)
+    """Encripta una contraseña usando bcrypt directamente."""
+    # Bcrypt tiene un límite de 72 caracteres
+    pwd_bytes = password[:72].encode('utf-8')
+    # Generar salt y hash
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(pwd_bytes, salt)
+    return hashed.decode('utf-8')
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifica si una contraseña en texto plano coincide con su hash."""
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        # Bcrypt requiere bytes
+        pwd_bytes = plain_password.encode('utf-8')
+        hashed_bytes = hashed_password.encode('utf-8')
+        return bcrypt.checkpw(pwd_bytes, hashed_bytes)
+    except Exception as e:
+        print(f"❌ Error verificando password: {e}")
+        return False
 
 
 # ================== TOKENS JWT ==================
@@ -39,12 +51,14 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def create_access_token(data: dict, expires_delta: Optional[int] = None) -> str:
     """
     Crea un token JWT con los datos enviados.
-    Ejemplo de data:
-    {"sub": 1, "email": "admin@x.com"}
     """
     to_encode = data.copy()
+    
+    # Convierte 'sub' a string para evitar problemas de compatibilidad JWT
+    if "sub" in to_encode:
+        to_encode["sub"] = str(to_encode["sub"])
 
-    expire = datetime.utcnow() + timedelta(
+    expire = datetime.now() + timedelta(
         minutes=expires_delta if expires_delta else ACCESS_TOKEN_EXPIRE_MINUTES
     )
     to_encode.update({"exp": expire})
@@ -73,6 +87,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(o
     payload = verify_token(token)
 
     if payload is None:
+        print(f"❌ TOKEN RECHAZADO: {token[:15]}...") # Log para ver en consola Python
         raise HTTPException(
             status_code=401,
             detail="Token inválido o expirado",

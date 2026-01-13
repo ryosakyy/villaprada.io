@@ -30,4 +30,4 @@ class ContratoResponse(ContratoBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Esto arregla el Warning amarillo

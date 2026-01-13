@@ -1,0 +1,115 @@
+<div class="disp-page">
+  <div class="page-head">
+    <div>
+      <h2>Calendario de Disponibilidad</h2>
+      <p>Consulta las fechas disponibles y ocupadas del local</p>
+    </div>
+
+    <div class="month-nav">
+      <button class="nav-btn" type="button">◀</button>
+      <div class="month-pill">Diciembre 2024</div>
+      <button class="nav-btn" type="button">▶</button>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="legend">
+      <div class="legend-left">
+        <strong>Leyenda:</strong>
+        <span class="tag green"><i></i> Disponible</span>
+        <span class="tag red"><i></i> Reservado</span>
+        <span class="tag orange"><i></i> Pendiente</span>
+        <span class="tag gray"><i></i> Mes anterior/posterior</span>
+      </div>
+
+      <div class="legend-note">
+        💡 Las fechas se bloquean automáticamente al registrar un contrato
+      </div>
+    </div>
+  </section>
+
+  <section class="card calendar">
+    <div class="calendar-scroll-wrapper">
+      <div class="week-head">
+        <div>Lun</div>
+        <div>Mar</div>
+        <div>Mié</div>
+        <div>Jue</div>
+        <div>Vie</div>
+        <div>Sáb</div>
+        <div>Dom</div>
+      </div>
+
+      <div class="grid">
+        <!-- fila 1 -->
+        <div class="day other"><span class="n">30</span></div>
+        <div class="day other"></div>
+        <div class="day other"></div>
+        <div class="day other"></div>
+        <div class="day other"></div>
+        <div class="day other"></div>
+        <div class="day red">
+          <span class="n">1</span>
+          <div class="small">Boda</div>
+          <div class="small">Juan J. Pérez</div>
+        </div>
+
+        <!-- fila 2 -->
+        <div class="day green"><span class="n">2</span>
+          <div class="small">Disponible</div>
+        </div>
+        <div class="day green"><span class="n">3</span>
+          <div class="small">Disponible</div>
+        </div>
+        <div class="day green"><span class="n">4</span>
+          <div class="small">Disponible</div>
+        </div>
+        <div class="day green"><span class="n">5</span>
+          <div class="small">Disponible</div>
+        </div>
+        <div class="day green"><span class="n">6</span>
+          <div class="small">Disponible</div>
+        </div>
+        <div class="day red"><span class="n">7</span>
+          <div class="small">XV años</div>
+        </div>
+        <div class="day green"><span class="n">8</span>
+          <div class="small">Disponible</div>
+        </div>
+
+        <!-- fila 3 -->
+        <div class="day green"><span class="n">9</span></div>
+        <div class="day green"><span class="n">10</span></div>
+        <div class="day green"><span class="n">11</span></div>
+        <div class="day orange"><span class="n">12</span>
+          <div class="small">Pendiente</div>
+        </div>
+        <div class="day green"><span class="n">13</span></div>
+        <div class="day red"><span class="n">14</span>
+          <div class="small">Conferencia</div>
+        </div>
+        <div class="day green"><span class="n">15</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card bottom">
+    <div class="bottom-title">Próximas Reservas</div>
+    <div class="chips">
+      <div class="chip red">
+        <div class="chip-title">01 Dic - Boda</div>
+        <div class="chip-sub">Cliente: Juan Pérez García</div>
+      </div>
+
+      <div class="chip red">
+        <div class="chip-title">07 Dic - XV Años</div>
+        <div class="chip-sub">Cliente: María López Quispe</div>
+      </div>
+
+      <div class="chip orange">
+        <div class="chip-title">12 Dic - Pendiente</div>
+        <div class="chip-sub">Por confirmar contrato</div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,5 +1,3 @@
-# backend/services/pagos_service.py
-
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from models.pagos import Pago
@@ -9,7 +7,6 @@ from schemas.pagos import PagoCreate, PagoUpdate, PagoResumen
 class PagoService:
 
     # --------- FUNCIONES INTERNAS ---------
-
     @staticmethod
     def _obtener_totales(db: Session, contrato: Contrato) -> PagoResumen:
         total_pagos = db.query(
@@ -68,6 +65,8 @@ class PagoService:
             monto=data.monto,
             metodo=data.metodo,
             observacion=data.observacion,
+            # AQUI: Pasamos la url de la imagen a la BD
+            comprobante_url=data.comprobante_url 
         )
 
         db.add(nuevo)
@@ -134,5 +133,4 @@ class PagoService:
         if not contrato:
             return None
         resumen = PagoService._obtener_totales(db, contrato)
-        # no cambiamos nada en BD aquí, solo devolvemos el resumen
         return resumen

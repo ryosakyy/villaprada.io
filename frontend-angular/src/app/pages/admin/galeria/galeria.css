@@ -1,0 +1,180 @@
+.galeria-page {
+    padding: 0;
+}
+
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.page-head h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 900;
+}
+
+.page-head p {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.btn-purple {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .05);
+    margin-bottom: 14px;
+}
+
+.upload-box {
+    padding: 16px;
+}
+
+.drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    color: #64748b;
+}
+
+.drop-zone .icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.drop-zone span {
+    font-size: 12px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 14px;
+}
+
+.input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 13px;
+}
+
+.search {
+    flex: 1;
+    max-width: 260px;
+}
+
+.small {
+    max-width: 180px;
+}
+
+.total {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.img-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .05);
+}
+
+.img-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.img-body {
+    padding: 10px 12px;
+}
+
+.title {
+    font-weight: 900;
+    font-size: 13px;
+}
+
+.date {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.icon {
+    border: none;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.icon.blue {
+    background: #2563eb;
+    color: white;
+}
+
+.icon.yellow {
+    background: #fbbf24;
+}
+
+.icon.red {
+    background: #ef4444;
+    color: white;
+}
+
+.badge {
+    margin-left: auto;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.badge.green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge.red {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.note {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-top: 12px;
+}
