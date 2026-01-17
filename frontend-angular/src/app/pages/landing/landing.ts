@@ -183,7 +183,7 @@ export class LandingComponent implements OnInit {
 
   getImagenCategoria(slug: string): string {
     const img = this.imagenesGaleria.find(i => i.categoria?.toLowerCase() === slug.toLowerCase());
-    if (img) return img.imagen;
+    if (img && img.imagen_url) return img.imagen_url;
 
     // Fallbacks por defecto si no hay imagenes en BD
     const fallbacks: any = {
