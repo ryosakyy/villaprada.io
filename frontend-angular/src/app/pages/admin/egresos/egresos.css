@@ -276,62 +276,154 @@
   .page-head {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    margin-bottom: 8px;
   }
 
-  .page-head button {
-    width: 100%;
-    text-align: center;
+  .page-head h2 {
+    font-size: 1.3rem !important;
+  }
+
+  .page-head p {
+    font-size: 0.7rem !important;
+  }
+
+  .btn-red {
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 
   .grid-top {
     display: flex;
     flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-title {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+
+  .form {
+    padding: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .label {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
+
+  .input {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    min-height: 40px !important;
   }
 
   .form-row {
     grid-template-columns: 1fr;
-    /* Stack inputs */
+    gap: 8px;
   }
 
-  /* Tabla responsiva - FIX OVERFLOW */
+  .actions {
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    min-height: 44px !important;
+  }
+
+  /* RESUMEN CATEGORIAS - MAS COMPACTO */
+  .categorias .cats {
+    padding: 8px 10px;
+  }
+
+  .cat {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+  }
+
+  .cat-title {
+    font-size: 0.7rem;
+  }
+
+  .cat-sub {
+    font-size: 0.6rem;
+  }
+
+  .cat-money {
+    font-size: 0.75rem;
+  }
+
+  .total {
+    padding-top: 8px;
+    font-size: 0.85rem;
+  }
+
+  /* TABLA HISTORIAL */
   .table-card {
     display: block;
-    /* Importante para que tome ancho */
     width: 100%;
-    /* Ancho completo del contenedor */
     overflow-x: auto;
-    /* Scroll horizontal */
     white-space: nowrap;
-    /* Evitar quiebres de linea feos */
     -webkit-overflow-scrolling: touch;
-    /* Suavidad en iOS */
-    padding-bottom: 15px;
-    /* Espacio para la barra de scroll */
-  }
-
-  /* Ajuste de celdas para que no sean enormes */
-  .table td,
-  .table th {
-    padding: 10px;
-    min-width: 100px;
-    /* Ancho minimo para leer */
+    padding-bottom: 10px;
+    margin-top: 10px;
   }
 
   .table-head {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .table-title {
+    font-size: 0.85rem;
   }
 
   .table-head .input {
-    width: 100%;
+    width: 100% !important;
     margin: 0 !important;
-    max-width: none !important;
   }
 
-  /* Paginación en movil */
+  .table thead th {
+    padding: 8px;
+    font-size: 0.65rem;
+  }
+
+  .table tbody td {
+    padding: 8px;
+    font-size: 0.7rem;
+    min-width: 80px;
+  }
+
+  .badge {
+    font-size: 0.55rem;
+    padding: 2px 4px;
+  }
+
+  .money {
+    font-size: 0.75rem;
+  }
+
   .pagination-bar {
-    justify-content: center !important;
-    flex-wrap: wrap;
+    padding: 8px !important;
+    gap: 10px !important;
+    font-size: 0.7rem !important;
+  }
+
+  .pagination-bar button {
+    padding: 6px 10px !important;
+    font-size: 0.7rem !important;
+    min-height: 36px !important;
   }
 }

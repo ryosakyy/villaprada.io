@@ -252,33 +252,110 @@
 }
 
 @media (max-width: 768px) {
-  .calendar-scroll-wrapper {
+  .page-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .page-head h2 {
+    font-size: 1.3rem !important;
+  }
+
+  /* MES NAV - MAS COMPACTO */
+  .month-nav {
+    justify-content: center;
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  }
+
+  .month-pill {
+    min-width: 110px;
+    padding: 5px;
+    font-size: 0.8rem;
+  }
+
+  /* CALENDARIO ULTRA MINI (Igual que landing) */
+  .calendar-scroll-wrapper {
+    overflow: hidden !important;
+    /* Quitar scroll lateral forzado */
+    width: 100%;
   }
 
   .calendar .week-head,
   .calendar .grid {
-    min-width: 700px;
-    /* Fuerza el scroll para que las celdas se vean bien */
+    min-width: auto !important;
+    /* Quitar el 700px */
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 1.5px !important;
+    padding: 2px !important;
+  }
+
+  .calendar .week-head div {
+    padding: 4px 1px !important;
+    font-size: 0.55rem !important;
   }
 
   .day {
-    height: 60px;
-    padding: 5px;
+    height: 42px !important;
+    padding: 2px !important;
+    border-radius: 4px !important;
+    border: 0.5px solid #eee !important;
   }
 
   .day .n {
-    font-size: 12px;
+    top: 2px !important;
+    right: 3px !important;
+    font-size: 0.6rem !important;
   }
 
   .small {
-    font-size: 9px;
-    margin-top: 15px;
+    display: none !important;
+    /* Esconder textos "Disponible", "Boda", etc en la celda */
   }
 
-  .page-head h2 {
-    font-size: 1.5rem;
+  /* Dots o tags visuales si hay reserva */
+  .day.red::after,
+  .day.orange::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  /* LEYENDA */
+  .legend {
+    padding: 8px !important;
+  }
+
+  .tag {
+    font-size: 0.65rem !important;
+    padding: 4px 8px !important;
+  }
+
+  .legend-note {
+    font-size: 0.6rem !important;
+    margin-top: 5px;
+  }
+
+  /* PROXIMAS RESERVAS - CHIPS */
+  .chips {
+    gap: 8px !important;
+  }
+
+  .chip {
+    padding: 8px !important;
+  }
+
+  .chip-title {
+    font-size: 0.7rem !important;
+  }
+
+  .chip-sub {
+    font-size: 0.65rem !important;
   }
 }
