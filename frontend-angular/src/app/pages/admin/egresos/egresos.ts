@@ -97,6 +97,7 @@ export class Egresos implements OnInit {
     this.egresosService.listarEgresos().subscribe({
       next: (data) => {
         this.listaEgresos = data;
+        this.egresosFiltrados = data; // Inicializar filtrados
         this.actualizarPaginacion();
         this.calcularResumen();
         this.cd.detectChanges();
@@ -197,11 +198,36 @@ export class Egresos implements OnInit {
     if (fileInput) fileInput.value = '';
   }
 
+  // --- FILTROS Y BÚSQUEDA ---
+  textoBusqueda: string = '';
+  egresosFiltrados: Egreso[] = [];
+
+  filtrarEgresos() {
+    const term = this.textoBusqueda.toLowerCase();
+
+    if (!term) {
+      this.egresosFiltrados = this.listaEgresos;
+    } else {
+      this.egresosFiltrados = this.listaEgresos.filter(e => {
+        const desc = e.descripcion.toLowerCase();
+        const cat = e.categoria.toLowerCase();
+        const cliente = e.contrato_id ? this.getNombreClientePorId(e.contrato_id).toLowerCase() : '';
+        const user = e.usuario_nombre ? e.usuario_nombre.toLowerCase() : '';
+
+        return desc.includes(term) || cat.includes(term) || cliente.includes(term) || user.includes(term);
+      });
+    }
+
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
+  }
+
   // Lógica de Paginación
   actualizarPaginacion() {
     const inicio = (this.paginaActual - 1) * this.pageSize;
     const fin = inicio + this.pageSize;
-    this.egresosPaginados = this.listaEgresos.slice(inicio, fin);
+    // IMPORTANTE: Paginar sobre los FILTRADOS, no sobre la lista completa original
+    this.egresosPaginados = this.egresosFiltrados.slice(inicio, fin);
   }
 
   cambiarPagina(nuevaPagina: number) {
@@ -211,6 +237,6 @@ export class Egresos implements OnInit {
   }
 
   get totalPaginas(): number {
-    return Math.ceil(this.listaEgresos.length / this.pageSize) || 1;
+    return Math.ceil(this.egresosFiltrados.length / this.pageSize) || 1;
   }
 }

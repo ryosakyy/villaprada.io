@@ -26,8 +26,11 @@ class ContratoUpdate(BaseModel):
     saldo: Optional[float] = None
     estado: Optional[str] = None
 
+from schemas.clientes import ClienteResponse
+
 class ContratoResponse(ContratoBase):
     id: int
+    cliente: Optional[ClienteResponse] = None
 
     class Config:
         from_attributes = True  # Esto arregla el Warning amarillo

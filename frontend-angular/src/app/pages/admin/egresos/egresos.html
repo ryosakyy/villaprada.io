@@ -95,6 +95,12 @@
     <section class="card table-card">
         <div class="table-head">
             <div class="table-title">Historial de Egresos</div>
+
+            <!-- BUSCADOR -->
+            <div style="flex: 1; max-width: 300px; margin-left: auto;">
+                <input type="text" class="input" placeholder="🔍 Buscar por descripción, cliente..."
+                    [(ngModel)]="textoBusqueda" (input)="filtrarEgresos()" style="padding: 8px; font-size: 0.9rem;">
+            </div>
         </div>
 
         <!-- PAGINACIÓN -->
