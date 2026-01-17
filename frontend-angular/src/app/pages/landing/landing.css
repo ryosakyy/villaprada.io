@@ -154,53 +154,99 @@ html {
 
 /* HERO (LETRAS BLANCAS) */
 
+/* HERO (LETRAS BLANCAS) */
+
 .hero {
-    height: 60vh;
-    /* Reducido de 70vh a 60vh */
-    max-height: 600px;
-    min-height: 450px;
+    height: 70vh;
+    /* Aumentado un poco para dar más presencia */
+    max-height: 700px;
+    min-height: 500px;
     margin-top: 70px;
     background: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2000') center/cover;
     position: relative;
+    overflow: hidden;
+    /* Necesario para el brillo */
+}
+
+/* Efecto Brillo / Shine */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    animation: shine 6s infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 200%;
+    }
+
+    100% {
+        left: 200%;
+    }
 }
 
 .hero-overlay {
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.5);
+    /* Un poco mas claro para que se vea la foto profesional */
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content {
     text-align: center;
     padding: 20px;
+    max-width: 900px;
+    /* Ancho maximo para que el texto no se estire demasiado */
 }
-
 
 /* Forzar color blanco puro */
 
 .hero-title {
     color: #ffffff !important;
-    font-size: 3.5rem;
+    font-size: 4rem;
+    /* Aumentado de 3.5rem */
     font-weight: 900;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    line-height: 1.1;
+    margin-bottom: 25px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .hero-highlight {
-    color: #ffffff !important;
-    font-weight: 300;
+    color: #ffd700 !important;
+    /* Dorado brillante en lugar de blanco para resaltar */
+    font-weight: 400;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    /* Resplandor dorado */
 }
 
 .hero-subtitle {
-    color: #ffffff !important;
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin-bottom: 35px;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    color: #f0f0f0 !important;
+    font-size: 1.4rem;
+    /* Aumentado de 1.2rem */
+    font-weight: 500;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
