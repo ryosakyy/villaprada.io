@@ -18,10 +18,13 @@
 
             <ul class="nav-links" [class.mobile-open]="mobileMenuOpen">
                 <li><a href="#inicio" (click)="closeMobileMenu()">INICIO</a></li>
-                <li><a href="#acerca" (click)="closeMobileMenu()">NOSOTROS</a></li>
-
-                <li><a href="#servicios" (click)="closeMobileMenu()">SERVICIOS</a></li>
+                <li><a href="#nosotros" (click)="closeMobileMenu()">NOSOTROS</a></li>
+                <li><a href="#eventos" (click)="closeMobileMenu()">EVENTOS</a></li>
                 <li><a href="#galeria" (click)="closeMobileMenu()">GALERÍA</a></li>
+                <li><a href="#servicios" (click)="closeMobileMenu()">SERVICIOS</a></li>
+                <li><a href="#disponibilidad" (click)="closeMobileMenu()"
+                        style="color: var(--dorado-villa); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);">DISPONIBILIDAD</a>
+                </li>
                 <li><a href="#contacto" (click)="closeMobileMenu()">CONTACTO</a></li>
                 <li><a routerLink="/login" class="nav-login-btn" (click)="closeMobileMenu()">INICIAR SESIÓN</a></li>
             </ul>

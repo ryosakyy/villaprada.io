@@ -1773,15 +1773,70 @@ html {
     /* Al hacer hover, ademas de subir, flota suavemente */
 }
 
-/* 5. Títulos con gradiente (Opcional, muy moderno) */
+/* 5. Títulos con gradiente DORADO HERMOSO Y CHISPAS */
 .section-title-center {
-    background: linear-gradient(45deg, var(--azul-villa), #2a4a7c);
+    background: linear-gradient(45deg, #b5985a, #ffd700, #b5985a);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
-    /* Necesario para el gradiente en texto */
     text-transform: uppercase;
     letter-spacing: 2px;
+    position: relative;
+    animation: shineText 3s linear infinite;
+    padding: 0 50px;
+    /* Espacio para chispas */
+}
+
+@keyframes shineText {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.section-title-center::before,
+.section-title-center::after {
+    content: '✨';
+    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-text-fill-color: initial;
+    animation: pulseSparkle 1.5s infinite alternate;
+}
+
+.section-title-center::before {
+    left: 0;
+}
+
+.section-title-center::after {
+    right: 0;
+}
+
+@keyframes pulseSparkle {
+    from {
+        opacity: 0.5;
+        transform: translateY(-50%) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+/* 7. Estadísticas Dorado Hermoso */
+.stat-num-new {
+    color: #ffd700 !important;
+    /* Dorado brillante */
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.stat-label-new {
+    color: #ccc;
+    font-weight: 600;
 }
 
 /* 6. Mejoras en Galería */
