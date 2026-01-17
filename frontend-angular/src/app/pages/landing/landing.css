@@ -1518,14 +1518,30 @@ html {
     }
 
     .gallery-item-pro {
-        height: 300px;
-        /* Aumentado para que se vean grandes */
-        margin-bottom: 15px;
+        height: 400px !important;
+        /* Aumentado mas agresivo para celular */
+        margin-bottom: 20px;
     }
 
     .event-type-card {
-        height: 300px;
-        /* Aumentado para mejor visibilidad */
+        height: 350px !important;
+        /* Más grande */
+    }
+
+    /* CALENDARIO MOVIL */
+    .fc-view-harness {
+        min-height: 600px !important;
+        /* Mucho más espacio vertical */
+    }
+
+    /* Ajuste de fuente en calendario movil */
+    .fc {
+        font-size: 0.9rem !important;
+    }
+
+    /* Contenedor del calendario con scroll si es muy ancho */
+    .calendar-container {
+        overflow-x: auto;
     }
 
     .event-types-grid {

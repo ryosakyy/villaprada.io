@@ -293,9 +293,28 @@
     /* Stack inputs */
   }
 
-  /* Tabla responsiva */
+  /* Tabla responsiva - FIX OVERFLOW */
   .table-card {
+    display: block;
+    /* Importante para que tome ancho */
+    width: 100%;
+    /* Ancho completo del contenedor */
     overflow-x: auto;
+    /* Scroll horizontal */
+    white-space: nowrap;
+    /* Evitar quiebres de linea feos */
+    -webkit-overflow-scrolling: touch;
+    /* Suavidad en iOS */
+    padding-bottom: 15px;
+    /* Espacio para la barra de scroll */
+  }
+
+  /* Ajuste de celdas para que no sean enormes */
+  .table td,
+  .table th {
+    padding: 10px;
+    min-width: 100px;
+    /* Ancho minimo para leer */
   }
 
   .table-head {
