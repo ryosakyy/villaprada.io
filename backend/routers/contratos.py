@@ -90,19 +90,19 @@ def descargar_pdf_contrato(id: int, db: Session = Depends(get_db)):
     logo_path = "static/logo.png"
     if os.path.exists(logo_path):
         try:
-            # Dibujar logo (ajusta tamaño y posición)
-            c.drawImage(logo_path, 2.5*cm, h - 3.5*cm, width=2.5*cm, preserveAspectRatio=True, mask='auto')
+            # Dibujar logo (ajusta tamaño y posición) - BAJADO 1.5 cm
+            c.drawImage(logo_path, 2.5*cm, h - 5.0*cm, width=2.5*cm, preserveAspectRatio=True, mask='auto')
         except:
             pass
 
     c.setFont("Times-Bold", 14)
-    # Movemos el título un poco a la derecha/abajo si hay logo
-    c.drawCentredString(w/2 + 1*cm, h - 2.5*cm, "CONTRATO DE PRESTACIÓN DE")
-    c.drawCentredString(w/2 + 1*cm, h - 3.2*cm, "SERVICIOS DE PRODUCCIÓN DE EVENTO")
+    # Movemos el título un poco a la derecha/abajo si hay logo - BAJADO 1.5 cm
+    c.drawCentredString(w/2 + 1*cm, h - 4.0*cm, "CONTRATO DE PRESTACIÓN DE")
+    c.drawCentredString(w/2 + 1*cm, h - 4.7*cm, "SERVICIOS DE PRODUCCIÓN DE EVENTO")
 
     # --- TEXTO PRINCIPAL ---
     c.setFont("Times-Roman", 11)
-    texto_inicio = c.beginText(2.5*cm, h - 5*cm)
+    texto_inicio = c.beginText(2.5*cm, h - 6.5*cm)
     texto_inicio.setLeading(14)
 
     intro = f"""

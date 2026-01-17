@@ -93,7 +93,7 @@ def reporte_ingresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = De
     for p in pagos:
         ws.append([
             p.id,
-            p.fecha_pago,
+            str(p.fecha_pago),
             p.contrato_id,
             float(p.monto),
             p.metodo,
