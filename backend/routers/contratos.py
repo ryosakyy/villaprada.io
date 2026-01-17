@@ -118,7 +118,7 @@ denominará EL CLIENTE; bajo las siguientes cláusulas:
     c.drawText(texto_inicio)
 
     # --- PRIMERA: OBJETO ---
-    y = h - 9*cm
+    y = h - 12*cm  # BAJADO de 9cm a 12cm para evitar superposición
     c.setFont("Times-Bold", 11)
     c.drawString(2.5*cm, y, "PRIMERA: OBJETO DEL CONTRATO")
     
