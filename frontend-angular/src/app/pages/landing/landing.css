@@ -1487,6 +1487,67 @@ html {
         box-shadow: var(--elev);
     }
 
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .about-container-pro {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about-image-wrapper {
+        width: 100%;
+        height: 300px;
+    }
+
+    .pro-features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .services-grid-pro {
+        grid-template-columns: 1fr 1fr;
+        /* 2 columnas en movil */
+    }
+
+    .gallery-grid-pro {
+        grid-template-columns: 1fr;
+        /* 1 columna */
+        grid-template-rows: auto;
+        /* Altura automatica */
+    }
+
+    .gallery-item-pro {
+        height: 300px;
+        /* Aumentado para que se vean grandes */
+        margin-bottom: 15px;
+    }
+
+    .event-type-card {
+        height: 300px;
+        /* Aumentado para mejor visibilidad */
+    }
+
+    .event-types-grid {
+        grid-template-columns: 1fr;
+        /* 1 columna completa */
+    }
+
+    /* CALENDARIO MOVIL */
+    .fc-view-harness {
+        min-height: 500px !important;
+        /* Forzar altura mayor */
+    }
+
+    .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 1.2rem;
+    }
+
     .svc-icon {
         width: 32px;
         height: 32px;

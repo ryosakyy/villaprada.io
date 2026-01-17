@@ -270,12 +270,49 @@
   .grid-top {
     grid-template-columns: 1fr;
   }
+}
 
-  .search {
-    max-width: none;
+@media (max-width: 768px) {
+  .page-head {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .filters {
+  .page-head button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .grid-top {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    /* Stack inputs */
+  }
+
+  /* Tabla responsiva */
+  .table-card {
+    overflow-x: auto;
+  }
+
+  .table-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .table-head .input {
+    width: 100%;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  /* Paginación en movil */
+  .pagination-bar {
+    justify-content: center !important;
     flex-wrap: wrap;
   }
 }

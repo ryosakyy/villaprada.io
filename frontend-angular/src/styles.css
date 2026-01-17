@@ -89,23 +89,27 @@ table {
     /* --- TOUCH OPTIMIZED FORMS --- */
     .form-row {
         flex-direction: column !important;
-        gap: 20px !important;
+        gap: 15px !important;
     }
 
     .form-group {
         width: 100% !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 15px !important;
     }
 
     input,
     select,
     textarea {
-        min-height: 52px !important;
+        min-height: 50px !important;
+        /* Más alto para dedo */
         font-size: 16px !important;
-        border-radius: 12px !important;
-        padding: 0 15px !important;
-        background: #f8fafc !important;
-        border: 2px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        padding: 0 12px !important;
+    }
+
+    /* Search bar fix */
+    .search input {
+        width: 100% !important;
     }
 
     /* --- PREMIUM TACTILE BUTTONS --- */
