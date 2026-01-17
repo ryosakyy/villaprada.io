@@ -57,6 +57,16 @@ export class Egresos implements OnInit {
     return 'Cliente #' + (c.cliente_id || c.id);
   }
 
+  getNombreClientePorId(contratoId: number | null): string {
+    if (!contratoId) return 'Gasto General';
+
+    const contrato = this.listaContratos.find(c => c.id === contratoId);
+    if (contrato) {
+      return this.getNombreCliente(contrato);
+    }
+    return '#' + contratoId;
+  }
+
   ngOnInit(): void {
     const role = this.authService.getUserRole();
     this.isAdmin = role === 'admin';
