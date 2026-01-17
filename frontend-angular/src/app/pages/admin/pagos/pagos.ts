@@ -79,10 +79,29 @@ export class Pagos implements OnInit {
     this.pagosService.obtenerListaContratos().subscribe({
       next: (data) => {
         this.listaContratos = data;
+        this.listaContratosFiltrados = data; // Inicializar filtrados
         this.cd.detectChanges();
       },
       error: (e) => console.error('Error cargando contratos:', e)
     });
+  }
+
+  // --- FILTRO DE CONTRATOS ---
+  textoBusqueda: string = '';
+  listaContratosFiltrados: any[] = [];
+
+  buscarContrato() {
+    const term = this.textoBusqueda.toLowerCase();
+    if (!term) {
+      this.listaContratosFiltrados = this.listaContratos;
+    } else {
+      this.listaContratosFiltrados = this.listaContratos.filter(c => {
+        const nombreCliente = this.getNombreCliente(c).toLowerCase();
+        const id = c.id.toString();
+        // Buscar por nombre o ID
+        return nombreCliente.includes(term) || id.includes(term);
+      });
+    }
   }
 
   getNombreCliente(c: any): string {

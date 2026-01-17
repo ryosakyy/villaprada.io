@@ -26,11 +26,17 @@
 
                 <div class="form-group">
                     <label class="label">Contrato / Cliente: *</label>
-                    <select class="input" [(ngModel)]="nuevoPago.contrato_id" (change)="alSeleccionarContrato()">
-                        <option [value]="0">Seleccione un contrato existente...</option>
 
-                        <option *ngFor="let c of listaContratos" [value]="c.id">
-                            #{{ c.id }} - {{ getNombreCliente(c) }} {{ c.paquete ? '(' + c.paquete + ')' : '' }}
+                    <!-- Buscador integrado -->
+                    <input type="text" class="input" placeholder="🔍 Buscar cliente por nombre o DNI..."
+                        [(ngModel)]="textoBusqueda" (input)="buscarContrato()"
+                        style="margin-bottom: 5px; border: 1px solid #bae6fd; background: #f0f9ff;">
+
+                    <select class="input" [(ngModel)]="nuevoPago.contrato_id" (change)="alSeleccionarContrato()">
+                        <option [value]="0">Seleccione un contrato...</option>
+
+                        <option *ngFor="let c of listaContratosFiltrados" [value]="c.id">
+                            #{{ c.id }} - {{ getNombreCliente(c) }}
                         </option>
                     </select>
                 </div>
