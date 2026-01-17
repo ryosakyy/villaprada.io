@@ -175,14 +175,53 @@ app.include_router(usuarios.router)
 # <--- 2. AGREGADO EL ROUTER DE SERVICIOS
 app.include_router(servicios.router) 
 
+def ensure_admin_exists():
+    """Garantiza que el usuario administrador inicial exista y esté activo."""
+    from core.database import SessionLocal
+    from models.usuarios import Usuario
+    from core.security import hash_password
+    
+    db = SessionLocal()
+    try:
+        admin_email = "admin@villa.com"
+        admin = db.query(Usuario).filter(Usuario.email == admin_email).first()
+        
+        if not admin:
+            print(f"[*] Creando usuario administrador inicial: {admin_email}")
+            nuevo_admin = Usuario(
+                nombres="Administrador Sistema",
+                email=admin_email,
+                password_hash=hash_password("123456"),
+                rol="admin",
+                estado=True
+            )
+            db.add(nuevo_admin)
+            db.commit()
+            print("   [+] Admin creado con éxito.")
+        else:
+            # Forzar estado activo y resetear password para asegurar acceso durante debug
+            print(f"[*] Verificando integridad de admin: {admin_email}")
+            admin.estado = True
+            admin.password_hash = hash_password("123456")
+            db.commit()
+            print("   [+] Admin sincronizado y activo.")
+            
+    except Exception as e:
+        print(f"[!] Error asegurando admin: {e}")
+        db.rollback()
+    finally:
+        db.close()
+
 @app.on_event("startup")
 async def startup_event():
     # 1. Ejecutar reparación profunda de base de datos
-    # Comentar esta línea después del primer despliegue exitoso si se desea optimizar el arranque
     try:
         recreate_tables_preserving_data()
     except Exception as e:
         print(f"[ERROR] Error crítico en migración: {e}")
+
+    # 2. Asegurar que haya un admin para entrar
+    ensure_admin_exists()
 
     # 2. Log de rutas para depuración
     print("\n--- RUTAS REGISTRADAS ---")

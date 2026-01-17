@@ -36,3 +36,29 @@
     border-radius: 8px;
     margin: 0 10px;
 }
+
+/* MOBILE SHRUNK SIDEBAR */
+@media (max-width: 768px) {
+    .side-brand {
+        padding: 12px 10px;
+        gap: 8px;
+    }
+
+    .brand-title {
+        font-size: 1.1rem !important;
+    }
+
+    .brand-logo {
+        width: 30px;
+    }
+
+    .side-menu a {
+        padding: 10px 15px;
+        font-size: 0.85rem !important;
+    }
+
+    .side-menu a i {
+        font-size: 1rem !important;
+        margin-right: 8px !important;
+    }
+}

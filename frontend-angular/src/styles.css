@@ -49,6 +49,17 @@ table {
         font-size: 1.6rem;
     }
 
+    /* CENTRAR TITULOS EN PAGINAS DE ADMIN */
+    .page-head,
+    .card-title {
+        text-align: center !important;
+    }
+
+    .page-head {
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
     /* --- HI-FI MODALS (App-style bottom sheet) --- */
     .modal-overlay,
     .modal-bg {
