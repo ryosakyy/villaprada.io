@@ -183,7 +183,18 @@ export class LandingComponent implements OnInit {
 
   getImagenCategoria(slug: string): string {
     const img = this.imagenesGaleria.find(i => i.categoria?.toLowerCase() === slug.toLowerCase());
-    return img ? img.imagen : '';
+    if (img) return img.imagen;
+
+    // Fallbacks por defecto si no hay imagenes en BD
+    const fallbacks: any = {
+      'bodas': 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000',
+      'matrimonios': 'https://images.unsplash.com/photo-1511285560982-1351cdeb9821?q=80&w=1000',
+      'graduaciones': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1000',
+      'cumpleaños': 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?q=80&w=1000',
+      'babyshower': 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=80&w=1000',
+      'corporativo': 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1000'
+    };
+    return fallbacks[slug.toLowerCase()] || '';
   }
 
   abrirWhatsapp() {
