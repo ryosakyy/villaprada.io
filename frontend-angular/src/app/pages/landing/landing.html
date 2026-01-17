@@ -43,23 +43,22 @@
         </div>
     </header>
 
-    <section class="section-white" id="acerca">
-        <h2 class="section-title-center">Acerca de Villa Prada</h2>
-        <div class="about-container-pro">
-            <!-- Columna Izquierda: Imagen con Fondo Dorado -->
+    <!-- ABOUT SECTION (Nuevo Diseño) -->
+    <section class="section-white" id="nosotros">
+        <h2 class="section-title-center reveal-on-scroll">Acerca de Nosotros</h2>
+
+        <div class="about-container-pro reveal-on-scroll">
             <div class="about-image-wrapper">
                 <div class="gold-backdrop"></div>
-                <img src="assets/about-venue.jpg" alt="Salón Villa Prada" class="about-main-img">
+                <img src="assets/about-venue.jpg" alt="Villa Prada Venue" class="about-main-img">
             </div>
 
-            <!-- Columna Derecha: Texto y Grid -->
             <div class="about-content-pro">
-                <h3 class="pro-subtitle">Tu Celebración Merece el<br>Mejor Escenario</h3>
+                <h3 class="pro-subtitle">Excelencia y Elegancia en Cada Detalle</h3>
                 <p class="pro-description">
-                    Somos el lugar de ensueño para celebrar tus momentos más importantes.
-                    En Villa Prada, combinamos elegancia, modernidad y un servicio excepcional
-                    para que tu boda, quinceañero o evento corporativo sea inolvidable.
-                    Cada detalle está pensado para superar tus expectativas.
+                    En <strong>Villa Prada</strong>, transformamos tus sueños en realidad. Contamos con espacios
+                    diseñados para crear atmósferas mágicas, rodeados de naturaleza y arquitectura moderna.
+                    Nuestro equipo se encarga de todo para que tú solo disfrutes.
                 </p>
 
                 <div class="pro-features-grid">
@@ -96,14 +95,30 @@
         </div>
     </section>
 
-
+    <!-- BANNER ESTADÍSTICAS -->
+    <div class="banner-blue-dark">
+        <div class="stats-row-new reveal-on-scroll" style="max-width: 800px; margin: 0 auto; gap: 40px;">
+            <div class="stat-item-new">
+                <span class="stat-num-new">+500</span>
+                <span class="stat-label-new">Eventos Realizados</span>
+            </div>
+            <div class="stat-item-new">
+                <span class="stat-num-new">100%</span>
+                <span class="stat-label-new">Clientes Felices</span>
+            </div>
+            <div class="stat-item-new">
+                <span class="stat-num-new">+10</span>
+                <span class="stat-label-new">Años de experiencia</span>
+            </div>
+        </div>
+    </div>
 
     <!-- TIPOS DE EVENTOS (Nuevo Diseño) -->
     <section class="section-white" id="eventos">
-        <h2 class="section-title-center">Tipos de Eventos</h2>
-        <p class="section-subtitle-center">Llevamos todo tipo de celebración al siguiente nivel</p>
+        <h2 class="section-title-center reveal-on-scroll">Tipos de Eventos</h2>
+        <p class="section-subtitle-center reveal-on-scroll">Llevamos todo tipo de celebración al siguiente nivel</p>
 
-        <div class="event-types-grid">
+        <div class="event-types-grid reveal-on-scroll">
             <div *ngFor="let item of tiposEventos" class="event-type-card dynamic-bg"
                 [style.background-image]="getImagenCategoria(item.slug) ? 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(' + getImagenCategoria(item.slug) + ')' : ''">
                 <!-- Change: Use <i> tag with class binding -->
@@ -118,10 +133,10 @@
 
     <!-- SERVICIOS ADICIONALES (Nuevo Diseño) -->
     <section class="section-white" id="servicios">
-        <h2 class="section-title-center">Servicios Adicionales</h2>
-        <p class="section-subtitle-center">Todo lo que necesitas para que tu evento sea perfecto</p>
+        <h2 class="section-title-center reveal-on-scroll">Servicios Adicionales</h2>
+        <p class="section-subtitle-center reveal-on-scroll">Todo lo que necesitas para que tu evento sea perfecto</p>
 
-        <div class="services-grid-pro">
+        <div class="services-grid-pro reveal-on-scroll">
             <!-- Card 1 -->
             <div class="service-card-gold-border">
                 <div class="svc-icon-circle-blue"><i class="bi bi-egg-fried"></i></div>

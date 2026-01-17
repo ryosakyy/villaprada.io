@@ -46,6 +46,20 @@ export class LandingComponent implements OnInit {
     this.cargarGaleria();
     this.cargarDisponibilidad();
     this.generateCalendar();
+
+    // Setup Scroll Animation
+    setTimeout(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const hiddenElements = document.querySelectorAll('.reveal-on-scroll');
+      hiddenElements.forEach((el) => observer.observe(el));
+    }, 100);
   }
 
   cargarDisponibilidad() {

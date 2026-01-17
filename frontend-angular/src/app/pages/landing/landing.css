@@ -1660,23 +1660,7 @@ html {
     gap: 5px;
 }
 
-.event-tag {
-    background: var(--azul-villa);
-    color: white;
-    font-size: 0.65rem;
-    padding: 4px 6px;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-.ev-status {
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 0.6rem;
-    color: var(--dorado-villa);
-}
+/* Old styles removed to prevent conflict with new premium styles */
 
 @media (max-width: 768px) {
     .calendar-grid {
@@ -1698,5 +1682,144 @@ html {
 
     .ev-time {
         display: none;
+    }
+}
+
+/* =========================================
+   NUEVOS EFECTOS VISUALES (PREMIUM)
+   ========================================= */
+
+/* 1. Calendario: Estado Ocupado en ROJO */
+.event-tag {
+    background-color: #d32f2f !important;
+    /* Rojo intenso para llamar la atención */
+    color: white !important;
+    font-size: 0.7rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    box-shadow: 0 2px 5px rgba(211, 47, 47, 0.3);
+    animation: fadeIn 0.5s ease;
+}
+
+.ev-status {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    color: #ffeba1;
+    /* Dorado muy claro para contraste sobre rojo */
+    margin-bottom: 2px;
+}
+
+/* 2. Animaciones al hacer Scroll (Scroll Reveal) */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 3. Botones Premium (Efecto Pulse/Hover avanzado) */
+.btn-gold-lg,
+.btn-gold-mockup,
+.nav-login-btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-gold-lg::after,
+.btn-gold-mockup::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: width 0.3s;
+    z-index: -1;
+}
+
+.btn-gold-lg:hover::after,
+.btn-gold-mockup:hover::after {
+    width: 100%;
+}
+
+/* 4. Efecto Flotante sutil para tarjetas */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.service-card-gold-border:hover,
+.event-type-card:hover {
+    animation: float 3s ease-in-out infinite;
+    /* Al hacer hover, ademas de subir, flota suavemente */
+}
+
+/* 5. Títulos con gradiente (Opcional, muy moderno) */
+.section-title-center {
+    background: linear-gradient(45deg, var(--azul-villa), #2a4a7c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    /* Necesario para el gradiente en texto */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* 6. Mejoras en Galería */
+.gallery-item-pro {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-item-pro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.gallery-item-pro:hover::before {
+    opacity: 1;
+}
+
+.gallery-item-pro:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Keyframes simples */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
