@@ -87,7 +87,7 @@ def reporte_ingresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = De
     ws = wb.active
     ws.title = "Ingresos"
 
-    ws.append(["ID", "Fecha pago", "Contrato ID", "Monto", "Método", "Observación"])
+    ws.append(["ID", "Fecha pago", "Contrato ID", "Monto", "Método", "Observación", "Usuario Ref."])
 
     total = 0
     for p in pagos:
@@ -97,7 +97,8 @@ def reporte_ingresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = De
             p.contrato_id,
             float(p.monto),
             p.metodo,
-            p.observacion or ""
+            p.observacion or "",
+            "Sistema" # Placeholder, ya que Pagos no tiene usuario_id
         ])
         total += float(p.monto)
 
@@ -137,17 +138,23 @@ def reporte_egresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = Dep
     ws = wb.active
     ws.title = "Egresos"
 
-    ws.append(["ID", "Fecha", "Descripción", "Categoría", "Monto", "Contrato ID"])
+    ws.append(["ID", "Fecha", "Descripción", "Categoría", "Monto", "Contrato", "Registrado Por"])
 
     total = 0
     for e in egresos:
+        # Obtener nombre de usuario de forma segura
+        usuario_nom = "Desconocido"
+        if e.usuario:
+            usuario_nom = f"{e.usuario.nombres} ({e.usuario.rol})"
+        
         ws.append([
             e.id,
             e.fecha,
             e.descripcion,
             e.categoria,
             float(e.monto),
-            e.contrato_id or ""
+            e.contrato_id or "",
+            usuario_nom
         ])
         total += float(e.monto)
 
