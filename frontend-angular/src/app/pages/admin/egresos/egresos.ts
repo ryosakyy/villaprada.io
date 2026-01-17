@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Egreso, EgresoCreate, EgresosService } from './egresos.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-egresos',
@@ -40,8 +41,6 @@ export class Egresos implements OnInit {
   constructor(
     private egresosService: EgresosService,
     public authService: AuthService,
-import { environment } from '../../../../environments/environment';
-
     private cd: ChangeDetectorRef
   ) { }
 
