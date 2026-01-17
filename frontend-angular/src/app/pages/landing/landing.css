@@ -1314,8 +1314,18 @@ html {
     }
 
     .brand-title {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+    }
+
+    .brand-tagline {
+        font-size: 0.5rem;
         letter-spacing: 1px;
+    }
+
+    .nav-logo {
+        height: 38px;
     }
 
     .hamburger-btn {
@@ -1353,12 +1363,18 @@ html {
     .nav-links a {
         display: block;
         width: 100%;
-        padding: 20px var(--mobile-gutter);
-        font-size: 1.15rem;
+        padding: 15px var(--mobile-gutter);
+        font-size: 1.1rem;
         font-weight: 600;
         color: #1a2b45;
         text-align: left;
         transition: background 0.2s;
+        border-left: 4px solid transparent;
+    }
+
+    .nav-links a:hover {
+        border-left-color: var(--dorado-villa);
+        background: #fdfaf4;
     }
 
     .nav-links a:active {
@@ -1445,43 +1461,41 @@ html {
         margin-bottom: 0;
     }
 
-    /* CAROUSEL GRIDS (Professional Horizontal flow) */
+    /* GRID / CARDS (Aggressive Stack for readability) */
     .event-types-grid,
-    .services-grid-pro,
-    .gallery-grid-pro {
-        display: flex !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory;
-        gap: 12px;
-        padding: 10px var(--mobile-gutter) 25px;
-        margin: 0 calc(-1 * var(--mobile-gutter));
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+    .services-grid-pro {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+        padding: 10px var(--mobile-gutter);
+        margin: 0;
+        overflow: visible;
     }
 
-    .event-types-grid::-webkit-scrollbar {
-        display: none;
+    .gallery-grid-pro {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+        gap: 15px;
+        padding: 10px var(--mobile-gutter);
+        margin: 0;
     }
 
     .event-type-card {
-        flex: 0 0 32%;
-        /* Professional 3-item view */
-        height: 120px;
+        flex: none;
+        width: 100% !important;
+        height: 250px !important;
         border-radius: var(--card-radius);
-        scroll-snap-align: center;
         box-shadow: var(--elev);
-        padding: 12px;
+        padding: 20px;
     }
 
-    .event-type-card h3 {
-        font-size: 0.75rem;
-    }
-
-    .service-card-pro {
-        flex: 0 0 32%;
-        scroll-snap-align: center;
+    .service-card-pro,
+    .service-card-gold-border {
+        flex: none;
+        width: 100% !important;
         text-align: center;
-        padding: 15px 10px;
+        padding: 25px 20px;
         background: #fff;
         border-radius: var(--card-radius);
         box-shadow: var(--elev);
@@ -1498,53 +1512,57 @@ html {
     }
 
     /* GALERIA MAS ANCHA */
+    /* GALERIA MAS ANCHA */
     .gallery-item-pro {
         height: 350px !important;
-        /* Un poco menos alto que 400px para equilibrar */
         width: 100% !important;
-        /* Ancho completo */
-        margin-bottom: 20px;
+        margin-bottom: 0px;
+        /* Gap handled by grid */
     }
 
     .event-type-card {
-        height: 350px !important;
+        height: 300px !important;
         width: 100% !important;
     }
 
-    /* CALENDARIO MOVIL - Reducido */
+    /* CALENDARIO MOVIL - Reducido y Fluido */
+    .calendar-wrapper {
+        padding: 15px 10px;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+    }
+
+    .calendar-grid {
+        gap: 3px;
+        width: 100%;
+    }
+
+    .calendar-day {
+        min-height: 50px;
+        padding: 2px;
+    }
+
+    .weekday {
+        padding: 5px 0;
+        font-size: 0.65rem;
+    }
+
+    .day-num {
+        font-size: 0.7rem;
+    }
+
     .fc-view-harness {
         min-height: 480px !important;
-        /* Reducido de 600px a 480px */
     }
 
     .fc {
         font-size: 0.8rem !important;
-        /* Letra un poco mas chica */
-    }
-
-    /* Contenedor del calendario con scroll si es muy ancho */
-    .calendar-container {
-        overflow-x: auto;
-    }
-
-    .event-types-grid {
-        grid-template-columns: 1fr;
-        /* 1 columna completa */
-    }
-
-    /* CALENDARIO MOVIL */
-    .fc-view-harness {
-        min-height: 500px !important;
-        /* Forzar altura mayor */
-    }
-
-    .fc .fc-toolbar {
-        flex-direction: column;
-        gap: 10px;
     }
 
     .fc .fc-toolbar-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .svc-icon {
