@@ -34,9 +34,10 @@
     border: none;
     color: #D4AC0D;
     /* Dorado */
-    font-size: 1.8rem;
+    font-size: 1.4rem;
+    /* Reducido de 1.8rem */
     cursor: pointer;
-    margin-right: 15px;
+    margin-right: 12px;
 }
 
 .btn-yellow-logout {
