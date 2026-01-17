@@ -67,6 +67,24 @@ def fechas_ocupadas_publico(anio: int = None, mes: int = None, db: Session = Dep
             "hora_fin": str(r.hora_fin) if r.hora_fin else None,
             "estado": "ocupado"
         })
+
+    # Query Contratos
+    from models.contratos import Contrato
+    query_contratos = db.query(Contrato).filter(Contrato.estado.in_(["activo", "confirmado", "pendiente"]))
+    if anio and mes:
+        query_contratos = query_contratos.filter(
+            extract('year', Contrato.fecha_evento) == anio,
+            extract('month', Contrato.fecha_evento) == mes
+        )
+    registros_contratos = query_contratos.all()
+
+    for c in registros_contratos:
+        resultados.append({
+            "fecha": c.fecha_evento,
+            "hora_inicio": str(c.hora_inicio) if c.hora_inicio else None,
+            "hora_fin": str(c.hora_fin) if c.hora_fin else None,
+            "estado": "ocupado"
+        })
     
     # Sort by date
     resultados.sort(key=lambda x: (x['fecha'], x['hora_inicio'] or '00:00:00'))
