@@ -91,6 +91,10 @@ def reporte_ingresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = De
 
     total = 0
     for p in pagos:
+        usuario_nom = "Sistema"
+        if p.usuario:
+            usuario_nom = f"{p.usuario.nombres}"
+            
         ws.append([
             p.id,
             str(p.fecha_pago),
@@ -98,7 +102,7 @@ def reporte_ingresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = De
             float(p.monto),
             p.metodo,
             p.observacion or "",
-            "Sistema" # Placeholder, ya que Pagos no tiene usuario_id
+            usuario_nom
         ])
         total += float(p.monto)
 
@@ -149,7 +153,7 @@ def reporte_egresos_excel(fecha_inicio: date, fecha_fin: date, db: Session = Dep
         
         ws.append([
             e.id,
-            e.fecha,
+            str(e.fecha), # Asegurar que sea string
             e.descripcion,
             e.categoria,
             float(e.monto),

@@ -16,8 +16,12 @@ class Pago(Base):
     
     # --- NUEVO CAMPO ---
     comprobante_url = Column(String(500), nullable=True)
+    
+    # --- Campo para rastrear quién registró el pago ---
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
     # -------------------
 
     fecha_creacion = Column(DateTime, default=datetime.now)
 
     contrato = relationship("Contrato")
+    usuario = relationship("Usuario")
