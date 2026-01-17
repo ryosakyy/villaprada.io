@@ -37,7 +37,7 @@ class UsuarioUpdate(BaseModel):
 # Login Request
 # -------------------------
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 # -------------------------
