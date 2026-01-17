@@ -49,6 +49,19 @@ def eliminar_contrato(id: int, db: Session = Depends(get_db)):
     contrato = db.query(models_contratos.Contrato).filter(models_contratos.Contrato.id == id).first()
     if not contrato:
         raise HTTPException(status_code=404, detail="Contrato no encontrado")
+
+    # --- CASCADE DELETE MANUAL ---
+    # 1. Eliminar Pagos asociados
+    from models.pagos import Pago
+    db.query(Pago).filter(Pago.contrato_id == id).delete()
+
+    # 2. Desvincular o Eliminar Egresos asociados
+    # (En este caso eliminamos la asociación o el egreso completo si es específico del evento. 
+    #  Para evitar dejar basura, los eliminamos si están ligados estrictamente al contrato)
+    from models.egresos import Egreso
+    db.query(Egreso).filter(Egreso.contrato_id == id).delete()
+
+    # 3. Eliminar el contrato
     db.delete(contrato)
     db.commit()
     return None

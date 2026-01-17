@@ -57,6 +57,26 @@ class ClienteService:
         if not cliente:
             return None
 
+        # --- CASCADE DELETE MANUAL ---
+        from models.contratos import Contrato
+        from models.pagos import Pago
+        from models.egresos import Egreso
+
+        # 1. Obtener IDs de contratos asociados
+        contratos = db.query(Contrato).filter(Contrato.cliente_id == id).all()
+        contrato_ids = [c.id for c in contratos]
+
+        if contrato_ids:
+            # 2. Eliminar todos los PAGOS de esos contratos
+            db.query(Pago).filter(Pago.contrato_id.in_(contrato_ids)).delete(synchronize_session=False)
+            
+            # 3. Eliminar todos los EGRESOS de esos contratos
+            db.query(Egreso).filter(Egreso.contrato_id.in_(contrato_ids)).delete(synchronize_session=False)
+            
+            # 4. Eliminar los CONTRATOS
+            db.query(Contrato).filter(Contrato.cliente_id == id).delete(synchronize_session=False)
+
+        # 5. Finalmente eliminar al cliente
         db.delete(cliente)
         db.commit()
         return True
