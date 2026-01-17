@@ -28,6 +28,7 @@ export class Pagos implements OnInit {
   pagosPaginados: Pago[] = [];
 
   apiClientes = environment.apiUrl + '/clientes/';
+  apiUrl = environment.apiUrl;
 
   nuevoPago: PagoCreate = {
     contrato_id: 0,

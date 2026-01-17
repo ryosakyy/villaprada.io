@@ -40,8 +40,23 @@ export class Egresos implements OnInit {
   constructor(
     private egresosService: EgresosService,
     public authService: AuthService,
+import { environment } from '../../../../environments/environment';
+
     private cd: ChangeDetectorRef
   ) { }
+
+  apiUrl = environment.apiUrl;
+
+  getNombreCliente(c: any): string {
+    if (c.cliente && typeof c.cliente === 'object') {
+      return (c.cliente.nombres || c.cliente.nombre || '') + ' ' + (c.cliente.apellidos || c.cliente.apellido || '');
+    }
+    // Si el backend devuelve nombres planos (ej. cliente_nombre)
+    if (c.cliente_nombre) return c.cliente_nombre;
+
+    // Fallback por si solo tenemos ID
+    return 'Cliente #' + (c.cliente_id || c.id);
+  }
 
   ngOnInit(): void {
     const role = this.authService.getUserRole();

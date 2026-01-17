@@ -38,7 +38,7 @@
                         <select class="input" [(ngModel)]="nuevoEgreso.contrato_id">
                             <option [ngValue]="null">-- Gasto General --</option>
                             <option *ngFor="let c of listaContratos" [ngValue]="c.id">
-                                #{{ c.id }} - {{ c.nombre_cliente }}
+                                #{{ c.id }} - {{ getNombreCliente(c) }}
                             </option>
                         </select>
                     </div>
@@ -127,8 +127,8 @@
                     <td><span class="badge">{{ item.categoria }}</span></td>
 
                     <td style="text-align: center;">
-                        <a *ngIf="item.comprobante_url" [href]="'http://127.0.0.1:8000/' + item.comprobante_url"
-                            target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Foto">
+                        <a *ngIf="item.comprobante_url" [href]="apiUrl + '/' + item.comprobante_url" target="_blank"
+                            style="text-decoration: none; font-size: 1.2rem;" title="Ver Foto">
                             🖼️
                         </a>
                         <span *ngIf="!item.comprobante_url" style="color: #ccc;">-</span>
@@ -150,7 +150,8 @@
 
                     <td class="money">- {{ item.monto | currency:'PEN':'S/ ' }}</td>
                     <td>
-                        <button class="icon-btn" style="color:#ef4444;" (click)="eliminarEgreso(item.id)">🗑</button>
+                        <button *ngIf="isAdmin" class="icon-btn" style="color:#ef4444;"
+                            (click)="eliminarEgreso(item.id)" title="Solo Admin">🗑</button>
                     </td>
                 </tr>
             </tbody>

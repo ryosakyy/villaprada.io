@@ -153,8 +153,8 @@
                     </td>
 
                     <td style="text-align: center;">
-                        <a *ngIf="pago.comprobante_url" [href]="'http://127.0.0.1:8000/' + pago.comprobante_url"
-                            target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Comprobante">
+                        <a *ngIf="pago.comprobante_url" [href]="apiUrl + '/' + pago.comprobante_url" target="_blank"
+                            style="text-decoration: none; font-size: 1.2rem;" title="Ver Comprobante">
                             🖼️
                         </a>
                         <span *ngIf="!pago.comprobante_url" style="color: #ccc;">-</span>
