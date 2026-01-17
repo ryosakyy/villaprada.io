@@ -140,8 +140,18 @@ export class LandingComponent implements OnInit {
         console.log('[LANDING] Total de imágenes:', data.length);
         this.imagenesGaleria = data;
 
-        // Filtramos las imágenes que son específicamente para la sección "Galería"
-        this.imagenesSeccionGaleria = data.filter(img => img.categoria?.toLowerCase() === 'galeria');
+        // 1. Intentamos filtrar por la categoría específica "galeria"
+        const fotosGaleria = data.filter(img => img.categoria?.toLowerCase() === 'galeria');
+
+        // 2. Si hay fotos en esa categoría, las usamos.
+        if (fotosGaleria.length > 0) {
+          this.imagenesSeccionGaleria = fotosGaleria;
+        } else {
+          // 3. Fallback: Si no hay categoría "galeria", mostramos las últimas 6 fotos de CUALQUIER categoría
+          // para que la sección no quede vacía.
+          console.warn('[LANDING] No hay fotos en categoría "galeria", mostrando recientes.');
+          this.imagenesSeccionGaleria = data.slice(0, 12);
+        }
 
         console.log('[LANDING] Imágenes para Galería Principal:', this.imagenesSeccionGaleria.length);
 
@@ -183,7 +193,11 @@ export class LandingComponent implements OnInit {
 
   getImagenCategoria(slug: string): string {
     const img = this.imagenesGaleria.find(i => i.categoria?.toLowerCase() === slug.toLowerCase());
-    if (img && img.imagen_url) return img.imagen_url;
+
+    // Check multiple possible keys for safety
+    if (img) {
+      return img.imagen_url || img.imagen || img.secure_url || '';
+    }
 
     // Fallbacks por defecto si no hay imagenes en BD
     const fallbacks: any = {

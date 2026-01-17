@@ -180,7 +180,8 @@
         <div class="gallery-grid-pro">
             <!-- Imágenes dinámicas marcadas con la categoría 'galeria' -->
             <div class="gallery-item-pro" *ngFor="let img of imagenesSeccionGaleria.slice(0, 6)"
-                [style.background-image]="'url(' + img.imagen + ')'" [title]="img.titulo || 'Evento Villa Prada'">
+                [style.background-image]="'url(' + (img.imagen_url || img.imagen) + ')'"
+                [title]="img.titulo || 'Evento Villa Prada'">
             </div>
 
             <!-- Mensaje si no hay imágenes en la categoría Galería -->

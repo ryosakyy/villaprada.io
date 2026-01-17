@@ -113,7 +113,9 @@ class GaleriaService:
             {
                 "id": g.id,
                 "titulo": g.titulo,
-                "imagen": g.imagen_url,
+                "imagen": g.imagen_url, # Legacy
+                "imagen_url": g.imagen_url, # Standard (Consistency)
+                "secure_url": g.imagen_url, # Extra safety
                 "categoria": g.categoria,
             }
             for g in items
