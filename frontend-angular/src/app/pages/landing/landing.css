@@ -1774,6 +1774,7 @@ html {
 }
 
 /* 5. Títulos con gradiente DORADO HERMOSO Y CHISPAS */
+/* CSS Sparkles removed in favor of HTML .sparkle-extra for better control */
 .section-title-center {
     background: linear-gradient(45deg, #b5985a, #ffd700, #b5985a);
     background-size: 200% auto;
@@ -1784,34 +1785,11 @@ html {
     letter-spacing: 2px;
     position: relative;
     animation: shineText 3s linear infinite;
-    padding: 0 50px;
-    /* Espacio para chispas */
+    padding: 0 10px;
+    /* Reduced padding since pseudo-elements are gone */
 }
 
-@keyframes shineText {
-    to {
-        background-position: 200% center;
-    }
-}
-
-.section-title-center::before,
-.section-title-center::after {
-    content: '✨';
-    font-size: 1.5rem;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    -webkit-text-fill-color: initial;
-    animation: pulseSparkle 1.5s infinite alternate;
-}
-
-.section-title-center::before {
-    left: 0;
-}
-
-.section-title-center::after {
-    right: 0;
-}
+/* Pseudo-elements removed to prevent double sparkles */
 
 @keyframes pulseSparkle {
     from {
