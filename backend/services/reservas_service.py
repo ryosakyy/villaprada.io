@@ -10,12 +10,14 @@ class ReservaService:
     @staticmethod
     def crear_reserva(data: ReservaCreate, db: Session):
 
-        # 🔍 Verificar disponibilidad antes de crear
-        disponible = DisponibilidadService.verificar_fecha(data.fecha_evento, db)
+        # 🔍 Verificar disponibilidad antes de crear (con horario)
+        disponible = DisponibilidadService.verificar_fecha(
+            data.fecha_evento, db, data.hora_inicio, data.hora_fin
+        )
         if disponible:
             raise HTTPException(
                 status_code=400,
-                detail=f"La fecha {data.fecha_evento} ya está ocupada ({disponible.estado})"
+                detail=f"El horario {data.hora_inicio}-{data.hora_fin} para la fecha {data.fecha_evento} ya está ocupado."
             )
 
         reserva = Reserva(
@@ -32,9 +34,11 @@ class ReservaService:
         db.commit()
         db.refresh(reserva)
 
-        # Registrar ocupación
+        # Registrar ocupación con horario
         DisponibilidadService.registrar_ocupado(
             fecha=data.fecha_evento,
+            hora_inicio=data.hora_inicio,
+            hora_fin=data.hora_fin,
             motivo=f"Reserva ID {reserva.id}",
             db=db
         )
@@ -66,12 +70,16 @@ class ReservaService:
             db.refresh(reserva)
             return reserva
 
-        # Si la fecha cambia → validar disponibilidad
-        disponible = DisponibilidadService.verificar_fecha(nueva_fecha, db)
+        # Si cambia algo relevante → validar disponibilidad
+        h_ini = data.hora_inicio or reserva.hora_inicio
+        h_fin = data.hora_fin or reserva.hora_fin
+        f_evt = data.fecha_evento or reserva.fecha_evento
+
+        disponible = DisponibilidadService.verificar_fecha(f_evt, db, h_ini, h_fin)
         if disponible:
             raise HTTPException(
                 status_code=400,
-                detail=f"No se puede cambiar. La fecha {nueva_fecha} está ocupada."
+                detail=f"No se puede cambiar. El horario solicitado ya está ocupado."
             )
 
         # Liberar fecha antigua
@@ -80,6 +88,8 @@ class ReservaService:
         # Registrar nueva fecha como ocupada
         DisponibilidadService.registrar_ocupado(
             fecha=nueva_fecha,
+            hora_inicio=h_ini,
+            hora_fin=h_fin,
             motivo=f"Reserva ID {reserva.id}",
             db=db
         )

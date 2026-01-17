@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Depends 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
 from core.database import Base, engine
 
 # Routers
@@ -20,6 +22,11 @@ app = FastAPI(
     title="Sistema Villa Prada",
     version="1.0.0"
 )
+
+# Montar archivos estáticos para comprobantes y galería
+os.makedirs("static/comprobantes", exist_ok=True)
+os.makedirs("static/galeria", exist_ok=True)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 Base.metadata.create_all(bind=engine)
 
@@ -49,11 +56,11 @@ def recreate_tables_preserving_data():
     
     backup_data = {}
     
-    print("\n--- ☢️ INICIANDO REPARACIÓN PROFUNDA DE BASE DE DATOS ☢️ ---")
+    print("\n--- [!] INICIANDO REPARACION PROFUNDA DE BASE DE DATOS [!] ---")
     
     try:
         # 1. RESPALDO DE DATOS
-        print("📥 Respaldando datos...")
+        print("[-] Respaldando datos...")
         for table in tables:
             try:
                 result = db.execute(text(f"SELECT * FROM `{table}`"))
@@ -66,7 +73,7 @@ def recreate_tables_preserving_data():
                 backup_data[table] = []
 
         # 2. DROPEAR TABLAS
-        print("🔥 Eliminando tablas defectuosas...")
+        print("[!] Eliminando tablas defectuosas...")
         db.execute(text("SET FOREIGN_KEY_CHECKS=0;"))
         for table in tables:
             try:
@@ -77,12 +84,12 @@ def recreate_tables_preserving_data():
         db.execute(text("SET FOREIGN_KEY_CHECKS=1;"))
 
         # 3. RECREAR TABLAS
-        print("🏗️ Reconstruyendo esquema correcto...")
+        print("[*] Reconstruyendo esquema correcto...")
         Base.metadata.create_all(bind=engine)
-        print("   ✅ Tablas creadas con AUTO_INCREMENT.")
+        print("   [+] Tablas creadas con AUTO_INCREMENT.")
 
         # 4. RESTAURAR DATOS
-        print("📤 Restaurando datos...")
+        print("[-] Restaurando datos...")
         db.execute(text("SET FOREIGN_KEY_CHECKS=0;"))
         for table in reversed(tables): # Orden inverso para insertar (Padres primero)
             rows = backup_data.get(table, [])
@@ -104,10 +111,10 @@ def recreate_tables_preserving_data():
                     
         db.execute(text("SET FOREIGN_KEY_CHECKS=1;"))
         db.commit()
-        print("--- ✅ REPARACIÓN COMPLETADA CON ÉXITO ---")
+        print("--- [+] REPARACIÓN COMPLETADA CON ÉXITO ---")
 
     except Exception as critical_e:
-        print(f"❌❌ ERROR CRÍTICO DURANTE LA MIGRACIÓN: {critical_e}")
+        print(f"[ERROR] ERROR CRÍTICO DURANTE LA MIGRACIÓN: {critical_e}")
         db.rollback()
     finally:
         db.close()
@@ -130,7 +137,7 @@ from fastapi.responses import JSONResponse
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
     import traceback
-    print(f"❌ ERROR GLOBAL: {str(exc)}")
+    print(f"[ERROR] ERROR GLOBAL: {str(exc)}")
     traceback.print_exc()
     
     response = JSONResponse(
@@ -175,7 +182,7 @@ async def startup_event():
     try:
         recreate_tables_preserving_data()
     except Exception as e:
-        print(f"❌ Error crítico en migración: {e}")
+        print(f"[ERROR] Error crítico en migración: {e}")
 
     # 2. Log de rutas para depuración
     print("\n--- RUTAS REGISTRADAS ---")
@@ -186,4 +193,4 @@ async def startup_event():
 
 @app.get("/")
 def root():
-    return {"message": "API Villa Prada Funcionando 🚀"}
+    return {"message": "API Villa Prada Funcionando"}

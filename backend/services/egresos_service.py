@@ -27,8 +27,15 @@ class EgresoService:
         return egreso
 
     @staticmethod
-    def listar(db: Session):
-        return db.query(Egreso).all()
+    def listar(db: Session, user_id: int = None, rol: str = None):
+        from sqlalchemy.orm import joinedload
+        query = db.query(Egreso).options(joinedload(Egreso.usuario))
+        
+        # Filtro: Si es empleado, solo ve sus propios egresos
+        if rol == 'empleado' and user_id:
+            query = query.filter(Egreso.usuario_id == user_id)
+            
+        return query.all()
 
     @staticmethod
     def obtener(id: int, db: Session):

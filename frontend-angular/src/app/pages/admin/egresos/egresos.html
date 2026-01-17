@@ -1,4 +1,4 @@
-<div class="egresos-page">
+<div class="egresos-page" *ngIf="isAdmin || isEmpleado; else noAccess">
     <div class="page-head">
         <div>
             <h2>Registro de Egresos</h2>
@@ -14,7 +14,8 @@
             <div class="form">
                 <div class="form-group">
                     <label class="label">Descripción del Gasto: *</label>
-                    <input class="input" [(ngModel)]="nuevoEgreso.descripcion" placeholder="Ej: Flores, Pago Personal..." />
+                    <input class="input" [(ngModel)]="nuevoEgreso.descripcion"
+                        placeholder="Ej: Flores, Pago Personal..." />
                 </div>
 
                 <div class="form-row">
@@ -56,7 +57,8 @@
 
                 <div class="form-group">
                     <label class="label">Comprobante (Imagen):</label>
-                    <input type="file" id="fileInput" class="input" (change)="onFileSelected($event)" accept="image/*" />
+                    <input type="file" id="fileInput" class="input" (change)="onFileSelected($event)"
+                        accept="image/*" />
                 </div>
 
                 <div class="form-group">
@@ -71,7 +73,8 @@
             </div>
         </section>
 
-        <section class="card categorias">
+        <!-- SOLO EL ADMIN VE EL RESUMEN GENERAL -->
+        <section class="card categorias" *ngIf="isAdmin">
             <div class="card-title">Resumen del Mes</div>
             <div class="cats">
                 <div class="cat" *ngFor="let item of resumenCategorias">
@@ -94,6 +97,16 @@
             <div class="table-title">Historial de Egresos</div>
         </div>
 
+        <!-- PAGINACIÓN -->
+        <div class="pagination-bar" *ngIf="listaEgresos.length > pageSize"
+            style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 15px; padding: 10px;">
+            <button [disabled]="paginaActual === 1" (click)="cambiarPagina(paginaActual - 1)"
+                style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #dc2626; color: white; border: none;">Anterior</button>
+            <span style="font-weight: bold; color: #dc2626;">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+            <button [disabled]="paginaActual === totalPaginas" (click)="cambiarPagina(paginaActual + 1)"
+                style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #dc2626; color: white; border: none;">Siguiente</button>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>
@@ -102,27 +115,39 @@
                     <th>Categoría</th>
                     <th>Comprobante</th>
                     <th>Contrato</th>
+                    <th>Registrado por</th>
                     <th>Monto</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of listaEgresos">
+                <tr *ngFor="let item of egresosPaginados">
                     <td>{{ item.fecha | date:'dd/MM' }}</td>
                     <td>{{ item.descripcion }}</td>
                     <td><span class="badge">{{ item.categoria }}</span></td>
 
                     <td style="text-align: center;">
-                        <a *ngIf="item.comprobante_url" [href]="'http://127.0.0.1:8000/' + item.comprobante_url" target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Foto">
+                        <a *ngIf="item.comprobante_url" [href]="'http://127.0.0.1:8000/' + item.comprobante_url"
+                            target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Foto">
                             🖼️
                         </a>
                         <span *ngIf="!item.comprobante_url" style="color: #ccc;">-</span>
                     </td>
 
                     <td style="font-size: 0.85rem;">
-                        <span *ngIf="item.contrato_id" style="color:#2563eb; font-weight:bold">#{{ item.contrato_id }}</span>
+                        <span *ngIf="item.contrato_id" style="color:#2563eb; font-weight:bold">#{{ item.contrato_id
+                            }}</span>
                         <span *ngIf="!item.contrato_id" style="color:#94a3b8">Gral.</span>
                     </td>
+
+                    <td style="font-size: 0.85rem;">
+                        <span *ngIf="item.usuario_nombre" style="color:#059669; font-weight:500">
+                            {{ item.usuario_nombre }} <span style="color:#6b7280; font-weight:normal">({{
+                                item.usuario_rol }})</span>
+                        </span>
+                        <span *ngIf="!item.usuario_nombre" style="color:#94a3b8">-</span>
+                    </td>
+
                     <td class="money">- {{ item.monto | currency:'PEN':'S/ ' }}</td>
                     <td>
                         <button class="icon-btn" style="color:#ef4444;" (click)="eliminarEgreso(item.id)">🗑</button>
@@ -132,3 +157,12 @@
         </table>
     </section>
 </div>
+
+<ng-template #noAccess>
+    <div style="padding: 100px; text-align: center;">
+        <h2 style="color: #ef4444;">Acceso Restringido</h2>
+        <p>No tienes permisos para visualizar o gestionar los egresos económicos del local.</p>
+        <p style="color: #64748b; margin-top: 15px;">Por favor contacta con el administrador si crees que esto es un
+            error.</p>
+    </div>
+</ng-template>

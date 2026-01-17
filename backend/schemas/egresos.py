@@ -27,7 +27,12 @@ class EgresoUpdate(BaseModel):
 
 class EgresoResponse(EgresoBase):
     id: int
-    comprobante_url: Optional[str] = None  # <--- ESTE ES EL NUEVO CAMPO
+    comprobante_url: Optional[str] = None
+    
+    # Campos para mostrar quién registró el egreso
+    usuario_id: Optional[int] = None
+    usuario_nombre: Optional[str] = None
+    usuario_rol: Optional[str] = None
     
     class Config:
         from_attributes = True

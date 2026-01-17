@@ -373,11 +373,9 @@ html {
     position: absolute;
     bottom: -15px;
     left: -15px;
-    /* Offset a la izquierda y abajo */
     width: 100%;
     height: 100%;
     background-color: #dcbd77;
-    /* Dorado matte de la imagen */
     border-radius: 20px;
     z-index: 0;
 }
@@ -582,6 +580,19 @@ html {
 
 .event-type-card:hover {
     transform: translateY(-5px);
+}
+
+.event-type-card.dynamic-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f1f1f1;
+    /* Fallback */
+}
+
+.text-white {
+    color: white !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 /* Gradiente gris/plata moderno como en la imagen */
@@ -935,11 +946,23 @@ html {
     width: 30%;
 }
 
-.footer-logo {
-    width: 120px;
+.footer-logo-box {
+    background: white;
+    width: 140px;
+    height: 140px;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
-    /* Invertir color si logo es oscuro */
-    filter: brightness(0) invert(1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footer-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .socials span {
@@ -1495,5 +1518,139 @@ html {
 
     .section-title-center {
         font-size: 1.5rem;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800;900^&display=swap');
+
+/* CALENDAR STYLES */
+.calendar-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.calendar-header h3 {
+    color: var(--azul-villa);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.cal-nav-btn {
+    background: var(--dorado-villa);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.cal-nav-btn:hover {
+    background: var(--azul-villa);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.weekday {
+    text-align: center;
+    font-weight: 800;
+    color: var(--dorado-villa);
+    padding: 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.calendar-day {
+    min-height: 100px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.calendar-day.empty {
+    border: none;
+}
+
+.calendar-day.past {
+    background: #f9f9f9;
+    color: #ccc;
+}
+
+.calendar-day.has-events {
+    background: rgba(181, 152, 90, 0.05);
+    border-color: var(--dorado-villa);
+}
+
+.day-num {
+    font-weight: 700;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.day-events {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.event-tag {
+    background: var(--azul-villa);
+    color: white;
+    font-size: 0.65rem;
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.ev-status {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    color: var(--dorado-villa);
+}
+
+@media (max-width: 768px) {
+    .calendar-grid {
+        gap: 5px;
+    }
+
+    .calendar-day {
+        min-height: 60px;
+        padding: 5px;
+    }
+
+    .day-num {
+        font-size: 0.8rem;
+    }
+
+    .event-tag {
+        font-size: 0.5rem;
+    }
+
+    .ev-time {
+        display: none;
     }
 }

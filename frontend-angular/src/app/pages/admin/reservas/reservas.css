@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :host {
     --primary: #4f46e5;
     --primary-light: #e0e7ff;
@@ -141,6 +142,15 @@
     color: var(--text-dark);
     margin-bottom: 6px;
     display: block;
+}
+
+.day-cell.day-past {
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+}
+
+.day-cell.day-past .day-number {
+    color: #94a3b8;
 }
 
 
@@ -348,6 +358,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -358,6 +369,7 @@
         transform: scale(0.9) translateY(20px);
         opacity: 0;
     }
+
     to {
         transform: scale(1) translateY(0);
         opacity: 1;
@@ -365,9 +377,10 @@
 }
 
 @media (max-width: 600px) {
-     :host {
+    :host {
         padding: 15px;
     }
+
     .day-cell {
         height: 110px;
     }

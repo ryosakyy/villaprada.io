@@ -8,6 +8,16 @@
     <button class="btn-primary" (click)="abrirModal()">+ Nuevo Cliente</button>
 </div>
 
+<!-- PAGINACIÓN -->
+<div class="pagination-bar" *ngIf="clientes.length > pageSize"
+    style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 15px; padding: 10px;">
+    <button [disabled]="paginaActual === 1" (click)="cambiarPagina(paginaActual - 1)"
+        style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #2563eb; color: white; border: none;">Anterior</button>
+    <span style="font-weight: bold; color: #2563eb;">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+    <button [disabled]="paginaActual === totalPaginas" (click)="cambiarPagina(paginaActual + 1)"
+        style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #2563eb; color: white; border: none;">Siguiente</button>
+</div>
+
 <div class="table-container table-responsive">
     <table>
         <thead>
@@ -27,7 +37,7 @@
             <tr *ngIf="!cargando && clientes.length === 0">
                 <td colspan="6" style="text-align:center;">No hay datos.</td>
             </tr>
-            <tr *ngFor="let cliente of clientes">
+            <tr *ngFor="let cliente of clientesPaginados">
                 <td>{{ cliente.dni }}</td>
                 <td>{{ cliente.nombre }}</td>
                 <td>{{ cliente.telefono || '-' }}</td>

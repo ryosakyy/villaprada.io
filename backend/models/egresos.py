@@ -15,11 +15,23 @@ class Egreso(Base):
     fecha = Column(Date, nullable=False)
     observacion = Column(String(255), nullable=True)
 
-    # --- NUEVO CAMPO ---
+    # --- Campo para imagen de comprobante ---
     comprobante_url = Column(String(500), nullable=True) 
-    # -------------------
+
+    # --- Campo para rastrear quién hizo el egreso ---
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
 
     contrato_id = Column(Integer, ForeignKey("contratos.id"), nullable=True)
     fecha_creacion = Column(DateTime, default=datetime.now)
 
+    # Relaciones
     contrato = relationship("Contrato")
+    usuario = relationship("Usuario")
+
+    @property
+    def usuario_nombre(self):
+        return self.usuario.nombres if self.usuario else None
+
+    @property
+    def usuario_rol(self):
+        return self.usuario.rol if self.usuario else "empleado" # Default if not found

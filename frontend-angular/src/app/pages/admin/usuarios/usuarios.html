@@ -4,6 +4,16 @@
         <button class="btn-add" (click)="abrirModalCrear()">+ Nuevo Usuario</button>
     </div>
 
+    <!-- PAGINACIÓN -->
+    <div class="pagination-bar" *ngIf="usuarios.length > pageSize"
+        style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 15px; padding: 10px;">
+        <button [disabled]="paginaActual === 1" (click)="cambiarPagina(paginaActual - 1)"
+            style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #34495e; color: white; border: none;">Anterior</button>
+        <span style="font-weight: bold; color: #34495e;">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+        <button [disabled]="paginaActual === totalPaginas" (click)="cambiarPagina(paginaActual + 1)"
+            style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #34495e; color: white; border: none;">Siguiente</button>
+    </div>
+
     <div class="table-container table-responsive">
         <table>
             <thead>
@@ -16,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let u of usuarios">
+                <tr *ngFor="let u of usuariosPaginados">
                     <td><strong>{{ u.nombres }}</strong></td>
                     <td>{{ u.email }}</td>
                     <td>{{ u.rol }}</td>

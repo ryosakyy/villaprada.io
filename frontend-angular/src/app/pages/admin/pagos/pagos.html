@@ -15,10 +15,12 @@
                 <div class="info-line" *ngIf="!resumen">
                     ℹ️ Seleccione un contrato para ver su deuda.
                 </div>
-                <div class="info-line" *ngIf="resumen && resumen.saldo === 0" style="background-color: #dcfce7; color: #166534;">
+                <div class="info-line" *ngIf="resumen && resumen.saldo === 0"
+                    style="background-color: #dcfce7; color: #166534;">
                     🎉 ¡Contrato pagado en su totalidad!
                 </div>
-                <div class="info-line" *ngIf="resumen && resumen.saldo > 0" style="background-color: #fee2e2; color: #991b1b;">
+                <div class="info-line" *ngIf="resumen && resumen.saldo > 0"
+                    style="background-color: #fee2e2; color: #991b1b;">
                     ⚠️ Deuda Pendiente: <strong>S/ {{ resumen.saldo | number:'1.2-2' }}</strong>
                 </div>
 
@@ -26,9 +28,9 @@
                     <label class="label">Contrato / Cliente: *</label>
                     <select class="input" [(ngModel)]="nuevoPago.contrato_id" (change)="alSeleccionarContrato()">
                         <option [value]="0">Seleccione un contrato existente...</option>
-                        
+
                         <option *ngFor="let c of listaContratos" [value]="c.id">
-                            #{{ c.id }} - {{ getNombreCliente(c) }}  {{ c.paquete ? '(' + c.paquete + ')' : '' }}
+                            #{{ c.id }} - {{ getNombreCliente(c) }} {{ c.paquete ? '(' + c.paquete + ')' : '' }}
                         </option>
                     </select>
                 </div>
@@ -36,7 +38,8 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="label">Monto del Pago: *</label>
-                        <input type="number" class="input" [(ngModel)]="nuevoPago.monto" placeholder="S/ 0.00" [disabled]="!resumen || resumen.saldo === 0" />
+                        <input type="number" class="input" [(ngModel)]="nuevoPago.monto" placeholder="S/ 0.00"
+                            [disabled]="!resumen || resumen.saldo === 0" />
                     </div>
 
                     <div class="form-group">
@@ -58,7 +61,8 @@
 
                 <div class="form-group">
                     <label class="label">Comprobante (Imagen):</label>
-                    <input type="file" id="fileInput" class="input" (change)="onFileSelected($event)" accept="image/*" />
+                    <input type="file" id="fileInput" class="input" (change)="onFileSelected($event)"
+                        accept="image/*" />
                 </div>
 
                 <div class="form-group">
@@ -67,7 +71,9 @@
                 </div>
 
                 <div class="actions">
-                    <button class="btn-save" type="button" (click)="registrarPago()" [disabled]="!resumen || resumen.saldo === 0" [style.opacity]="(!resumen || resumen.saldo === 0) ? 0.5 : 1">
+                    <button class="btn-save" type="button" (click)="registrarPago()"
+                        [disabled]="!resumen || resumen.saldo === 0"
+                        [style.opacity]="(!resumen || resumen.saldo === 0) ? 0.5 : 1">
                         Registrar Pago
                     </button>
                 </div>
@@ -86,7 +92,8 @@
                     <div class="row">
                         <div class="k">Estado:</div>
                         <div class="v">
-                            <span class="pill" [ngClass]="{'ok': resumen.estado==='completo', 'bad': resumen.estado!=='completo'}">
+                            <span class="pill"
+                                [ngClass]="{'ok': resumen.estado==='completo', 'bad': resumen.estado!=='completo'}">
                                 {{ resumen.estado | uppercase }}
                             </span>
                         </div>
@@ -114,6 +121,16 @@
             <div class="table-title">Historial de Pagos</div>
         </div>
 
+        <!-- PAGINACIÓN -->
+        <div class="pagination-bar" *ngIf="listaPagos.length > pageSize"
+            style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 15px; padding: 10px;">
+            <button [disabled]="paginaActual === 1" (click)="cambiarPagina(paginaActual - 1)"
+                style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #22c55e; color: white; border: none;">Anterior</button>
+            <span style="font-weight: bold; color: #22c55e;">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+            <button [disabled]="paginaActual === totalPaginas" (click)="cambiarPagina(paginaActual + 1)"
+                style="padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #22c55e; color: white; border: none;">Siguiente</button>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>
@@ -126,16 +143,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let pago of listaPagos">
+                <tr *ngFor="let pago of pagosPaginados">
                     <td>{{ pago.fecha_pago | date:'dd/MM/yyyy' }}</td>
                     <td>
-                        <span style="font-weight: 500; font-size: 0.9em; padding: 2px 6px; background: #f1f5f9; border-radius: 4px;">
+                        <span
+                            style="font-weight: 500; font-size: 0.9em; padding: 2px 6px; background: #f1f5f9; border-radius: 4px;">
                             {{ pago.metodo }}
                         </span>
                     </td>
 
                     <td style="text-align: center;">
-                        <a *ngIf="pago.comprobante_url" [href]="'http://127.0.0.1:8000/' + pago.comprobante_url" target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Comprobante">
+                        <a *ngIf="pago.comprobante_url" [href]="'http://127.0.0.1:8000/' + pago.comprobante_url"
+                            target="_blank" style="text-decoration: none; font-size: 1.2rem;" title="Ver Comprobante">
                             🖼️
                         </a>
                         <span *ngIf="!pago.comprobante_url" style="color: #ccc;">-</span>
@@ -144,7 +163,8 @@
                     <td>{{ pago.observacion || '-' }}</td>
                     <td class="money">{{ pago.monto | currency:'PEN':'S/ ' }}</td>
                     <td class="actions-td">
-                        <button class="icon-btn gray" style="color:red" (click)="eliminarPago(pago.id)" title="Eliminar">🗑️</button>
+                        <button class="icon-btn gray" style="color:red" (click)="eliminarPago(pago.id)"
+                            title="Eliminar">🗑️</button>
                     </td>
                 </tr>
                 <tr *ngIf="listaPagos.length === 0">

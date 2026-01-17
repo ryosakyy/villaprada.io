@@ -12,8 +12,15 @@ import { Paquete, PaqueteDataService } from './paquete-data';
 })
 export class PaquetesPage implements OnInit {
   paquetes: Paquete[] = [];
+  paquetesOriginales: Paquete[] = [];
   showModal = false;
   modoEditar = false;
+  textoBusqueda: string = '';
+
+  // Paginación
+  paginaActual: number = 1;
+  pageSize: number = 10;
+  paquetesPaginados: Paquete[] = [];
 
   formPaquete: Paquete = {
     nombre: '',
@@ -35,10 +42,29 @@ export class PaquetesPage implements OnInit {
     this.service.listar().subscribe({
       next: (res) => {
         this.paquetes = res;
+        this.paquetesOriginales = res;
+        this.actualizarPaginacion();
         this.cd.detectChanges();
       },
       error: (err) => console.error("Error al cargar", err)
     });
+  }
+
+  // Búsqueda de paquetes
+  buscarPaquete() {
+    if (!this.textoBusqueda || this.textoBusqueda.trim() === '') {
+      this.paquetes = [...this.paquetesOriginales];
+    } else {
+      const texto = this.textoBusqueda.toLowerCase();
+      this.paquetes = this.paquetesOriginales.filter(p => {
+        const nombre = p.nombre ? p.nombre.toLowerCase() : '';
+        const descripcion = p.descripcion ? p.descripcion.toLowerCase() : '';
+        const servicios = p.servicios ? p.servicios.toLowerCase() : '';
+        return nombre.includes(texto) || descripcion.includes(texto) || servicios.includes(texto);
+      });
+    }
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
   }
 
   abrirModalCrear() {
@@ -74,5 +100,22 @@ export class PaquetesPage implements OnInit {
         error: () => alert('Error al eliminar')
       });
     }
+  }
+
+  // Lógica de Paginación
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pageSize;
+    const fin = inicio + this.pageSize;
+    this.paquetesPaginados = this.paquetes.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    this.actualizarPaginacion();
+    this.cd.detectChanges();
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.paquetes.length / this.pageSize) || 1;
   }
 }

@@ -6,6 +6,18 @@ class ClienteService:
 
     @staticmethod
     def crear_cliente(data: ClienteCreate, db: Session):
+        from fastapi import HTTPException
+        # Verificar duplicados por DNI
+        existe_dni = db.query(Cliente).filter(Cliente.dni == data.dni).first()
+        if existe_dni:
+            raise HTTPException(status_code=400, detail=f"Ya existe un cliente con el DNI {data.dni}")
+        
+        # Verificar duplicados por Correo (si se proporciona)
+        if data.correo:
+            existe_correo = db.query(Cliente).filter(Cliente.correo == data.correo).first()
+            if existe_correo:
+                raise HTTPException(status_code=400, detail=f"Ya existe un cliente con el correo {data.correo}")
+
         nuevo = Cliente(
             dni=data.dni,
             nombre=data.nombre,

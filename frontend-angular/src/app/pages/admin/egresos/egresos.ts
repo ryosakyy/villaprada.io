@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Egreso, EgresoCreate, EgresosService } from './egresos.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-egresos',
@@ -14,6 +15,11 @@ export class Egresos implements OnInit {
 
   listaEgresos: Egreso[] = [];
   listaContratos: any[] = [];
+
+  // Paginación
+  paginaActual: number = 1;
+  pageSize: number = 10;
+  egresosPaginados: Egreso[] = [];
 
   resumenCategorias: any[] = [];
   totalGeneral: number = 0;
@@ -28,14 +34,24 @@ export class Egresos implements OnInit {
   };
 
   archivoSeleccionado: File | null = null;
+  isAdmin: boolean = false;
+  isEmpleado: boolean = false;
 
   constructor(
     private egresosService: EgresosService,
+    public authService: AuthService,
     private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.cargarDatosIniciales();
+    const role = this.authService.getUserRole();
+    this.isAdmin = role === 'admin';
+    this.isEmpleado = role === 'empleado';
+
+    // Permitir acceso a admin y empleado
+    if (this.isAdmin || this.isEmpleado) {
+      this.cargarDatosIniciales();
+    }
   }
 
   cargarDatosIniciales() {
@@ -57,6 +73,7 @@ export class Egresos implements OnInit {
     this.egresosService.listarEgresos().subscribe({
       next: (data) => {
         this.listaEgresos = data;
+        this.actualizarPaginacion();
         this.calcularResumen();
         this.cd.detectChanges();
       },
@@ -115,8 +132,10 @@ export class Egresos implements OnInit {
       formData.append('file', this.archivoSeleccionado);
     }
 
+    console.log("Enviando egreso:", this.nuevoEgreso);
     this.egresosService.crearEgreso(formData).subscribe({
-      next: () => {
+      next: (res) => {
+        console.log("Respuesta servidor:", res);
         alert("✅ Gasto registrado correctamente");
         this.limpiarFormulario();
         this.cargarEgresos();
@@ -152,5 +171,22 @@ export class Egresos implements OnInit {
     // Limpiar input visualmente
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
+  }
+
+  // Lógica de Paginación
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pageSize;
+    const fin = inicio + this.pageSize;
+    this.egresosPaginados = this.listaEgresos.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    this.actualizarPaginacion();
+    this.cd.detectChanges();
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.listaEgresos.length / this.pageSize) || 1;
   }
 }

@@ -54,6 +54,8 @@ def fechas_ocupadas_publico(anio: int = None, mes: int = None, db: Session = Dep
     for r in registros_disponibilidad:
         resultados.append({
             "fecha": r.fecha,
+            "hora_inicio": str(r.hora_inicio) if r.hora_inicio else None,
+            "hora_fin": str(r.hora_fin) if r.hora_fin else None,
             "estado": r.estado
         })
 
@@ -61,11 +63,13 @@ def fechas_ocupadas_publico(anio: int = None, mes: int = None, db: Session = Dep
     for r in registros_reservas:
         resultados.append({
             "fecha": r.fecha_evento,
+            "hora_inicio": str(r.hora_inicio) if r.hora_inicio else None,
+            "hora_fin": str(r.hora_fin) if r.hora_fin else None,
             "estado": "ocupado"
         })
     
     # Sort by date
-    resultados.sort(key=lambda x: x['fecha'])
+    resultados.sort(key=lambda x: (x['fecha'], x['hora_inicio'] or '00:00:00'))
 
     return resultados
 

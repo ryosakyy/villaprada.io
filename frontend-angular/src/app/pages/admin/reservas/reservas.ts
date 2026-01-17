@@ -138,10 +138,14 @@ export class Reservas implements OnInit {
         };
       });
 
+      const hoyStr = new Date().toISOString().split('T')[0];
+      const esPasado = fechaStr < hoyStr;
+
       this.daysInMonth.push({
         num: i,
         fechaCompleta: fechaStr,
-        eventos: eventosMapeados
+        eventos: eventosMapeados,
+        esPasado: esPasado
       });
     }
   }

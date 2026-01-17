@@ -33,7 +33,8 @@
         </div>
 
         <div class="calendar-grid">
-            <div *ngFor="let dia of daysInMonth" [class]="dia.num ? 'day-cell' : 'day-cell other-month'">
+            <div *ngFor="let dia of daysInMonth" [class]="dia.num ? 'day-cell' : 'day-cell other-month'"
+                [class.day-past]="dia.esPasado">
 
                 <ng-container *ngIf="dia.num">
                     <span class="day-number">{{ dia.num }}</span>

@@ -4,11 +4,12 @@ import { ChangeDetectorRef, Component, OnInit, inject } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { GaleriaService } from "../admin/galeria/galeria.service";
 import { DisponibilidadService, DisponibilidadPublica } from "../../core/services/disponibilidad.service";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: "app-landing",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: "./landing.html",
   styleUrls: ["./landing.css"],
 })
@@ -18,26 +19,117 @@ export class LandingComponent implements OnInit {
   private disponibilidadService = inject(DisponibilidadService);
   private cdr = inject(ChangeDetectorRef);
   imagenesGaleria: any[] = [];
+  imagenesSeccionGaleria: any[] = []; // Imágenes exclusivas para la sección Galería
   fechasOcupadas: DisponibilidadPublica[] = [];
   mobileMenuOpen: boolean = false;
+
+  // Propiedades para el Calendario
+  hoy = new Date();
+  currentMonth = this.hoy.getMonth();
+  currentYear = this.hoy.getFullYear();
+  daysInMonth: { day: number, fullDate: string, isPast: boolean, events: any[] }[] = [];
+  weekDays = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+  monthNames = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
+
+  // Formulario de contacto
+  contactoForm = {
+    nombre: '',
+    email: '',
+    telefono: '',
+    mensaje: ''
+  };
 
   ngOnInit() {
     this.cargarGaleria();
     this.cargarDisponibilidad();
+    this.generateCalendar();
   }
 
   cargarDisponibilidad() {
-    // Cargar próximos 6 meses por ejemplo, o simplemente todo lo que devuelva el back (filtro por año/mes opcional)
-    // Para simplificar, pedimos todo lo que el back mande (el back ya filtra ocupados)
     this.disponibilidadService.getFechasOcupadasPublico().subscribe({
       next: (data) => {
-        // Filtrar fechas pasadas si el back no lo hace
-        const hoy = new Date().toISOString().split('T')[0];
-        this.fechasOcupadas = data.filter(d => d.fecha >= hoy).slice(0, 10); // Mostrar solo las próximas 10 ocupaciones
+        const hoyIso = new Date().toISOString().split('T')[0];
+        // Conservamos todo para el calendario, pero filtramos para la lista rápida
+        this.fechasOcupadas = data.filter(d => d.fecha >= hoyIso).slice(0, 10);
+
+        // Mapeamos los datos para facilitar la búsqueda por fecha en el calendario
+        this.eventosPorFecha = data;
+        this.generateCalendar();
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error cargando disponibilidad', err)
     });
+  }
+
+  eventosPorFecha: any[] = [];
+
+  generateCalendar() {
+    this.daysInMonth = [];
+    const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    const totalDays = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+
+    // Rellenar días vacíos al inicio (offset)
+    for (let i = 0; i < firstDay; i++) {
+      this.daysInMonth.push({ day: 0, fullDate: '', isPast: true, events: [] });
+    }
+
+    const hoyStr = new Date().toISOString().split('T')[0];
+
+    for (let day = 1; day <= totalDays; day++) {
+      const dateObj = new Date(this.currentYear, this.currentMonth, day);
+      const dateStr = dateObj.toISOString().split('T')[0];
+      const isPast = dateStr < hoyStr;
+
+      // Buscar eventos para este día
+      const events = this.eventosPorFecha.filter(e => e.fecha === dateStr);
+
+      this.daysInMonth.push({
+        day,
+        fullDate: dateStr,
+        isPast,
+        events
+      });
+    }
+  }
+
+  prevMonth() {
+    this.currentMonth--;
+    if (this.currentMonth < 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
+    }
+    this.generateCalendar();
+  }
+
+  nextMonth() {
+    this.currentMonth++;
+    if (this.currentMonth > 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
+    }
+    this.generateCalendar();
+  }
+
+  enviarMensaje() {
+    const { nombre, email, telefono, mensaje } = this.contactoForm;
+    if (!nombre || !mensaje) {
+      alert("Por favor, ingresa al menos tu nombre y el mensaje.");
+      return;
+    }
+
+    const texto = `*Nuevo Mensaje desde Web Villa Prada*\n\n` +
+      `👤 *Nombre:* ${nombre}\n` +
+      `📧 *Email:* ${email || 'No proporcionado'}\n` +
+      `📞 *Teléfono:* ${telefono || 'No proporcionado'}\n` +
+      `💬 *Mensaje:* ${mensaje}`;
+
+    const phoneNumber = "51927577215"; // Tu número real
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(texto)}`;
+
+    window.open(whatsappUrl, '_blank');
   }
 
   cargarGaleria() {
@@ -47,6 +139,12 @@ export class LandingComponent implements OnInit {
         console.log('[LANDING] ✅ Imágenes recibidas:', data);
         console.log('[LANDING] Total de imágenes:', data.length);
         this.imagenesGaleria = data;
+
+        // Filtramos las imágenes que son específicamente para la sección "Galería"
+        this.imagenesSeccionGaleria = data.filter(img => img.categoria?.toLowerCase() === 'galeria');
+
+        console.log('[LANDING] Imágenes para Galería Principal:', this.imagenesSeccionGaleria.length);
+
         this.cdr.detectChanges(); // 🔥 FORZAR actualización de UI
 
         if (data.length === 0) {
@@ -74,8 +172,22 @@ export class LandingComponent implements OnInit {
     this.mobileMenuOpen = false;
   }
 
+  tiposEventos = [
+    { title: 'Bodas', icon: '🍸', desc: 'Tu historia de amor comienza aquí', slug: 'bodas' },
+    { title: 'Matrimonios', icon: '👑', desc: 'Momentos únicos e irrepetibles', slug: 'matrimonios' },
+    { title: 'Graduaciones', icon: '🎓', desc: 'Celebra tus logros a lo grande', slug: 'graduaciones' },
+    { title: 'Cumpleaños', icon: '🎂', desc: 'Festeja un año más de vida', slug: 'cumpleaños' },
+    { title: 'Baby Showers', icon: '👶', desc: 'La bienvenida más dulce', slug: 'babyshower' },
+    { title: 'Corporativos', icon: '💼', desc: 'Eventos empresariales de nivel', slug: 'corporativo' }
+  ];
+
+  getImagenCategoria(slug: string): string {
+    const img = this.imagenesGaleria.find(i => i.categoria?.toLowerCase() === slug.toLowerCase());
+    return img ? img.imagen : '';
+  }
+
   abrirWhatsapp() {
-    const phoneNumber = "51987654321"; // Tu número
+    const phoneNumber = "51927577215"; // Tu número
     const message = "Hola! Me interesa conocer más sobre los servicios de Eventos Villa Prada y reservar mi evento.";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

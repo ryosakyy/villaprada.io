@@ -24,6 +24,11 @@ export class ClientesComponent implements OnInit {
   mostrarModal: boolean = false;
   textoBusqueda: string = '';
 
+  // Paginación
+  paginaActual: number = 1;
+  pageSize: number = 10;
+  clientesPaginados: any[] = [];
+
   nuevoCliente: any = {
     id: null,
     dni: '',
@@ -53,6 +58,7 @@ export class ClientesComponent implements OnInit {
         }));
         this.clientes = datosMapeados;
         this.clientesOriginales = datosMapeados;
+        this.actualizarPaginacion();
         this.cargando = false;
         this.cd.detectChanges(); // Forzamos actualización de la vista
       },
@@ -67,14 +73,16 @@ export class ClientesComponent implements OnInit {
   buscarCliente() {
     if (!this.textoBusqueda || this.textoBusqueda.trim() === '') {
       this.clientes = [...this.clientesOriginales];
-      return;
+    } else {
+      const texto = this.textoBusqueda.toLowerCase();
+      this.clientes = this.clientesOriginales.filter(c => {
+        const dni = c.dni ? c.dni.toString().toLowerCase() : '';
+        const nombre = c.nombre ? c.nombre.toLowerCase() : '';
+        return dni.includes(texto) || nombre.includes(texto);
+      });
     }
-    const texto = this.textoBusqueda.toLowerCase();
-    this.clientes = this.clientesOriginales.filter(c => {
-      const dni = c.dni ? c.dni.toString().toLowerCase() : '';
-      const nombre = c.nombre ? c.nombre.toLowerCase() : '';
-      return dni.includes(texto) || nombre.includes(texto);
-    });
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
   }
 
   abrirModal() {
@@ -142,5 +150,22 @@ export class ClientesComponent implements OnInit {
         next: () => this.cargarClientes()
       });
     }
+  }
+
+  // Lógica de Paginación
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pageSize;
+    const fin = inicio + this.pageSize;
+    this.clientesPaginados = this.clientes.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    this.actualizarPaginacion();
+    this.cd.detectChanges();
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.clientes.length / this.pageSize) || 1;
   }
 }

@@ -15,6 +15,11 @@ export class Usuarios implements OnInit {
   showCrear = false;
   showEditar = false;
 
+  // Paginación
+  paginaActual: number = 1;
+  pageSize: number = 10;
+  usuariosPaginados: Usuario[] = [];
+
   nuevo: any = { nombres: '', email: '', password: '', rol: 'admin' };
   edit: any = { id: null, nombres: '', email: '', rol: 'admin', estado: true };
 
@@ -29,6 +34,7 @@ export class Usuarios implements OnInit {
     this.service.listar().subscribe({
       next: (res) => {
         this.usuarios = res.filter(u => u.estado === true);
+        this.actualizarPaginacion();
         this.cd.detectChanges();
       },
       error: (err) => console.error("Error al cargar lista")
@@ -77,5 +83,22 @@ export class Usuarios implements OnInit {
         error: (e) => alert('No se pudo eliminar')
       });
     }
+  }
+
+  // Lógica de Paginación
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pageSize;
+    const fin = inicio + this.pageSize;
+    this.usuariosPaginados = this.usuarios.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    this.actualizarPaginacion();
+    this.cd.detectChanges();
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.usuarios.length / this.pageSize) || 1;
   }
 }

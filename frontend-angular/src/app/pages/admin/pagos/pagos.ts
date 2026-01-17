@@ -22,6 +22,11 @@ export class Pagos implements OnInit {
 
   cargando: boolean = false;
 
+  // Paginación
+  paginaActual: number = 1;
+  pageSize: number = 10;
+  pagosPaginados: Pago[] = [];
+
   apiClientes = environment.apiUrl + '/clientes/';
 
   nuevoPago: PagoCreate = {
@@ -113,6 +118,8 @@ export class Pagos implements OnInit {
     this.pagosService.listarPagosPorContrato(id).subscribe({
       next: (pagos) => {
         this.listaPagos = pagos;
+        this.paginaActual = 1;
+        this.actualizarPaginacion();
         this.cargando = false;
       },
       error: (e) => this.cargando = false
@@ -183,5 +190,22 @@ export class Pagos implements OnInit {
         error: () => alert('Error al eliminar')
       });
     }
+  }
+
+  // Lógica de Paginación
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pageSize;
+    const fin = inicio + this.pageSize;
+    this.pagosPaginados = this.listaPagos.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    this.actualizarPaginacion();
+    this.cd.detectChanges();
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.listaPagos.length / this.pageSize) || 1;
   }
 }

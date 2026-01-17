@@ -37,9 +37,16 @@ def login(email: str, password: str, db: Session = Depends(get_db)):
     # Usamos la lógica centralizada
     usuario = UsuarioService.autenticar(db, email, password)
 
+    if not usuario:
+        from fastapi import status
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciales incorrectas"
+        )
+
     # Incluimos info útil en el token
     token = create_access_token({
-        "sub": usuario.id,
+        "sub": str(usuario.id),
         "email": usuario.email,
         "rol": usuario.rol
     })

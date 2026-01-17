@@ -19,7 +19,7 @@
             <ul class="nav-links" [class.mobile-open]="mobileMenuOpen">
                 <li><a href="#inicio" (click)="closeMobileMenu()">INICIO</a></li>
                 <li><a href="#acerca" (click)="closeMobileMenu()">NOSOTROS</a></li>
-                <li><a href="#paquetes" (click)="closeMobileMenu()">PAQUETES</a></li>
+
                 <li><a href="#servicios" (click)="closeMobileMenu()">SERVICIOS</a></li>
                 <li><a href="#galeria" (click)="closeMobileMenu()">GALERÍA</a></li>
                 <li><a href="#contacto" (click)="closeMobileMenu()">CONTACTO</a></li>
@@ -33,18 +33,13 @@
             <div class="hero-content">
                 <h1 class="hero-title">EL LUGAR PERFECTO...<br><span class="hero-highlight">PARA TU EVENTO</span></h1>
                 <p class="hero-subtitle">Celebra momentos inolvidables en nuestro exclusivo espacio</p>
-                <button class="btn-wa-main" (click)="abrirWhatsapp()">
-                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png"
-                        class="btn-icon-wa">
-                    RESERVA POR WHATSAPP
-                </button>
+
             </div>
         </div>
+        <div class="wa-float" (click)="abrirWhatsapp()">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon">
+        </div>
     </header>
-
-    <div class="wa-float" (click)="abrirWhatsapp()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon">
-    </div>
 
     <section class="section-white" id="acerca">
         <h2 class="section-title-center">Acerca de Villa Prada</h2>
@@ -107,52 +102,12 @@
         <p class="section-subtitle-center">Llevamos todo tipo de celebración al siguiente nivel</p>
 
         <div class="event-types-grid">
-            <!-- Card 1 -->
-            <div class="event-type-card gradient-gray">
-                <div class="card-icon-top">🍸</div>
+            <div *ngFor="let item of tiposEventos" class="event-type-card dynamic-bg"
+                [style.background-image]="getImagenCategoria(item.slug) ? 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(' + getImagenCategoria(item.slug) + ')' : ''">
+                <div class="card-icon-top">{{ item.icon }}</div>
                 <div class="card-content-bottom">
-                    <h3>Bodas</h3>
-                    <p>Tu historia de amor comienza aquí</p>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="event-type-card gradient-gray">
-                <div class="card-icon-top">👑</div>
-                <div class="card-content-bottom">
-                    <h3>Matrimonios</h3>
-                    <p>Momentos únicos e irrepetibles</p>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="event-type-card gradient-gray">
-                <div class="card-icon-top">🎓</div>
-                <div class="card-content-bottom">
-                    <h3>Graduaciones</h3>
-                    <p>Celebra tus logros a lo grande</p>
-                </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="event-type-card gradient-gray">
-                <div class="card-icon-top">🎂</div>
-                <div class="card-content-bottom">
-                    <h3>Cumpleaños</h3>
-                    <p>Festeja un año más de vida</p>
-                </div>
-            </div>
-            <!-- Card 5 -->
-            <div class="event-type-card gradient-gray">
-                <div class="card-icon-top">👶</div>
-                <div class="card-content-bottom">
-                    <h3>Baby Showers</h3>
-                    <p>La bienvenida más dulce</p>
-                </div>
-            </div>
-            <!-- Card 6 -->
-            <div class="event-type-card gradient-gray">
-                <div class="card-icon-top">💼</div>
-                <div class="card-content-bottom">
-                    <h3>Corporativos</h3>
-                    <p>Eventos empresariales de nivel</p>
+                    <h3 [class.text-white]="getImagenCategoria(item.slug)">{{ item.title }}</h3>
+                    <p [class.text-white]="getImagenCategoria(item.slug)">{{ item.desc }}</p>
                 </div>
             </div>
         </div>
@@ -215,15 +170,7 @@
         </div>
     </section>
 
-    <!-- PAQUETES PERSONALIZADOS (Mockup Nuevo) -->
-    <section class="section-white" id="paquetes">
-        <div class="banner-blue-rounded">
-            <h2 class="title-paquetes">Paquetes Personalizados</h2>
-            <p class="desc-paquetes">Combinamos nuestros servicios para crear el paquete perfecto según tus necesidades
-                y presupuesto.</p>
-            <button class="btn-gold-mockup" (click)="abrirWhatsapp()">Solicita tu Cotización</button>
-        </div>
-    </section>
+
 
     <!-- GALERIA -->
     <section class="section-white" id="galeria">
@@ -231,96 +178,49 @@
         <p class="section-subtitle-center">Vive la experiencia Villa Prada</p>
 
         <div class="gallery-grid-pro">
-            <!-- Imágenes dinámicas desde el backend -->
-            <div class="gallery-item-pro" *ngFor="let img of imagenesGaleria.slice(0, 6)"
+            <!-- Imágenes dinámicas marcadas con la categoría 'galeria' -->
+            <div class="gallery-item-pro" *ngFor="let img of imagenesSeccionGaleria.slice(0, 6)"
                 [style.background-image]="'url(' + img.imagen + ')'" [title]="img.titulo || 'Evento Villa Prada'">
             </div>
 
-            <!-- Mensaje si no hay imágenes -->
-            <div *ngIf="imagenesGaleria.length === 0"
+            <!-- Mensaje si no hay imágenes en la categoría Galería -->
+            <div *ngIf="imagenesSeccionGaleria.length === 0"
                 style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #64748b;">
                 <p>Las imágenes de la galería se cargarán pronto...</p>
             </div>
         </div>
     </section>
 
-    <!-- DISPONIBILIDAD -->
+    <!-- DISPONIBILIDAD (CALENDARIO) -->
     <section class="section-white" id="disponibilidad">
-        <h2 class="section-title-center">Próximas Fechas Reservadas</h2>
-        <p class="section-subtitle-center">Consulta aquí los días que ya están ocupados. Si tu fecha está libre,
-            ¡escríbenos!</p>
+        <h2 class="section-title-center">Verifica Disponibilidad</h2>
+        <p class="section-subtitle-center">Consulta los horarios ocupados. ¡Las fechas en blanco están libres!</p>
 
-        <div class="availability-container">
-            <div *ngFor="let item of fechasOcupadas" class="avail-card">
-                <div class="avail-date">
-                    <span class="day">{{ item.fecha | date:'dd' }}</span>
-                    <span class="month">{{ item.fecha | date:'MMM' | uppercase }}</span>
-                </div>
-                <div class="avail-info">
-                    <span class="status-badge occupied">RESERVADO</span>
-                    <span class="time" *ngIf="item.hora_inicio">{{ item.hora_inicio.substring(0,5) }} - {{
-                        item.hora_fin?.substring(0,5) }}</span>
-                </div>
+        <div class="calendar-wrapper">
+            <div class="calendar-header">
+                <button (click)="prevMonth()" class="cal-nav-btn">&lt;</button>
+                <h3>{{ monthNames[currentMonth] }} {{ currentYear }}</h3>
+                <button (click)="nextMonth()" class="cal-nav-btn">&gt;</button>
             </div>
-
-            <div *ngIf="fechasOcupadas.length === 0" class="no-events">
-                <p>Agenda completamente libre por ahora. ¡Aprovecha!</p>
+            <div class="calendar-grid">
+                <div class="weekday" *ngFor="let day of weekDays">{{ day }}</div>
+                <div class="calendar-day" *ngFor="let d of daysInMonth" [class.empty]="d.day === 0"
+                    [class.past]="d.isPast" [class.has-events]="d.events.length > 0">
+                    <span class="day-num" *ngIf="d.day !== 0">{{ d.day }}</span>
+                    <div class="day-events" *ngIf="d.events.length > 0">
+                        <div class="event-tag" *ngFor="let ev of d.events">
+                            <span class="ev-time">{{ ev.hora_inicio?.substring(0,5) || 'Todo el día' }}</span>
+                            <span class="ev-status">Ocupado</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- VERIFICA TU FECHA (CTA Azul) -->
-    <section class="banner-cta-gradient">
-        <div class="cta-content">
-            <h2 class="cta-title">Verifica la fecha de tu evento</h2>
-            <p class="cta-subtitle">Si tienes una fecha pensada, consúltanos ahora y asegura tu día especial.</p>
-            <button class="btn-whatsapp-lg" (click)="abrirWhatsapp()">
-                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png"
-                    class="btn-icon-wa-lg">
-                CONSULTAR WHATSAPP
-            </button>
-        </div>
-    </section>
 
-    <!-- TESTIMONIOS (Mencionado por usuario "Las Rallitas") -->
-    <section class="section-testimonials">
-        <h2 class="section-title-center">Testimonios</h2>
-        <div class="testimonials-grid-new">
-            <div class="testimonial-card-new">
-                <div class="stars-gold">★★★★★</div>
-                <p class="testimonio-text">
-                    "Nuestra boda fue perfecta. Decoración espectacular, servicio impecable."
-                </p>
-                <div class="testimonio-line"></div>
-                <div class="testimonio-info">
-                    <h4 class="author-name">María García</h4>
-                    <span class="event-date">Boda</span>
-                </div>
-            </div>
-            <div class="testimonial-card-new">
-                <div class="stars-gold">★★★★★</div>
-                <p class="testimonio-text">
-                    "Los XV años de mi hija fueron mágicos. Todo salió perfecto."
-                </p>
-                <div class="testimonio-line"></div>
-                <div class="testimonio-info">
-                    <h4 class="author-name">Juan Pérez</h4>
-                    <span class="event-date">XV Años</span>
-                </div>
-            </div>
-            <div class="testimonial-card-new">
-                <div class="stars-gold">★★★★★</div>
-                <p class="testimonio-text">
-                    "Instalaciones de primera y servicio profesional. Volveremos."
-                </p>
-                <div class="testimonio-line"></div>
-                <div class="testimonio-info">
-                    <h4 class="author-name">Ana López</h4>
-                    <span class="event-date">Corporativo</span>
-                </div>
-            </div>
-        </div>
-    </section>
+
+
 
     <!-- ESTADISTICAS BARRA -->
     <section class="stats-bar-blue">
@@ -347,10 +247,10 @@
             <div class="info-column">
                 <h3>Información de Contacto</h3>
                 <div class="info-row"><span>📍</span>
-                    <p>Av. La Cultura 450, Cusco</p>
+                    <p>Av. La Cultura 450, Abancay</p>
                 </div>
                 <div class="info-row"><span>📞</span>
-                    <p>+51 984 123 456</p>
+                    <p>+51 927 577 215</p>
                 </div>
                 <div class="info-row"><span>✉️</span>
                     <p>info&#64;villaprada.com</p>
@@ -361,12 +261,16 @@
             </div>
             <div class="form-column">
                 <h3>Envíanos un Mensaje</h3>
-                <form class="contact-form">
-                    <input type="text" placeholder="Nombre" class="form-input">
-                    <input type="email" placeholder="Email" class="form-input">
-                    <input type="tel" placeholder="Teléfono" class="form-input">
-                    <textarea placeholder="Mensaje" class="form-textarea"></textarea>
-                    <button type="button" class="btn-gold-block" (click)="abrirWhatsapp()">ENVIAR MENSAJE</button>
+                <form class="contact-form" (submit)="enviarMensaje(); $event.preventDefault()">
+                    <input type="text" placeholder="Nombre" class="form-input" [(ngModel)]="contactoForm.nombre"
+                        name="nombre" required>
+                    <input type="email" placeholder="Email" class="form-input" [(ngModel)]="contactoForm.email"
+                        name="email">
+                    <input type="tel" placeholder="Teléfono" class="form-input" [(ngModel)]="contactoForm.telefono"
+                        name="telefono">
+                    <textarea placeholder="Mensaje" class="form-textarea" [(ngModel)]="contactoForm.mensaje"
+                        name="mensaje" required></textarea>
+                    <button type="submit" class="btn-gold-block">ENVIAR MENSAJE</button>
                 </form>
             </div>
         </div>
@@ -376,8 +280,10 @@
     <footer class="footer-navy">
         <div class="footer-inner">
             <div class="footer-brand-col">
-                <img src="assets/logo-villa.png" class="footer-logo">
-                <p>Tu evento perfecto en Cusco.</p>
+                <div class="footer-logo-box">
+                    <img src="assets/logo-villa.png" class="footer-logo">
+                </div>
+                <p>Tu evento perfecto en Abancay.</p>
                 <div class="socials">
                     <span>f</span> <span>in</span> <span>ig</span>
                 </div>
@@ -397,7 +303,7 @@
             </div>
             <div class="footer-contact-col">
                 <h4>Contacto</h4>
-                <p>+51 984 123 456</p>
+                <p>+51 927 577 215</p>
                 <p>info&#64;villaprada.com</p>
             </div>
         </div>

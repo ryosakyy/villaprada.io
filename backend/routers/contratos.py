@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from typing import List
 import io
+import os
 from datetime import date
 
 # Librerías para PDF
@@ -85,10 +86,19 @@ def descargar_pdf_contrato(id: int, db: Session = Depends(get_db)):
     c = canvas.Canvas(buffer, pagesize=A4)
     w, h = A4
 
-    # --- ENCABEZADO ---
+    # --- LOGO Y ENCABEZADO ---
+    logo_path = "static/logo.png"
+    if os.path.exists(logo_path):
+        try:
+            # Dibujar logo (ajusta tamaño y posición)
+            c.drawImage(logo_path, 2.5*cm, h - 3.5*cm, width=2.5*cm, preserveAspectRatio=True, mask='auto')
+        except:
+            pass
+
     c.setFont("Times-Bold", 14)
-    c.drawCentredString(w/2, h - 2.5*cm, "CONTRATO DE PRESTACIÓN DE")
-    c.drawCentredString(w/2, h - 3.2*cm, "SERVICIOS DE PRODUCCIÓN DE EVENTO")
+    # Movemos el título un poco a la derecha/abajo si hay logo
+    c.drawCentredString(w/2 + 1*cm, h - 2.5*cm, "CONTRATO DE PRESTACIÓN DE")
+    c.drawCentredString(w/2 + 1*cm, h - 3.2*cm, "SERVICIOS DE PRODUCCIÓN DE EVENTO")
 
     # --- TEXTO PRINCIPAL ---
     c.setFont("Times-Roman", 11)

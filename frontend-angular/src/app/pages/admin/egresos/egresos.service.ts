@@ -12,6 +12,11 @@ export interface Egreso {
   observacion?: string;
   contrato_id?: number;
   comprobante_url?: string; // Nuevo campo para la imagen
+
+  // Campos para mostrar quién registró el egreso
+  usuario_id?: number;
+  usuario_nombre?: string;
+  usuario_rol?: string;
 }
 
 // Para crear, usamos una interfaz base, pero el envío será via FormData
@@ -32,7 +37,7 @@ export class EgresosService {
   private apiUrl = environment.apiUrl + '/egresos/';
   private apiContratos = environment.apiUrl + '/contratos/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getHeaders() {
     const token = localStorage.getItem('token');

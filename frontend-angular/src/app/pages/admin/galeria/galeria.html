@@ -14,23 +14,29 @@
     <section class="card upload-box" *ngIf="mostrarFormulario">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
             <div class="form-group">
-                <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 5px;">Título de la imagen *</label>
-                <input class="input" style="width: 100%;" [(ngModel)]="tituloNuevo" placeholder="Ej: Mesa Principal Boda" />
+                <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 5px;">Título de la
+                    imagen *</label>
+                <input class="input" style="width: 100%;" [(ngModel)]="tituloNuevo"
+                    placeholder="Ej: Mesa Principal Boda" />
             </div>
             <div class="form-group">
                 <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 5px;">Categoría</label>
                 <select class="input" style="width: 100%;" [(ngModel)]="categoriaNueva">
                     <option value="">Sin categoría</option>
-                    <option value="boda">Boda</option>
-                    <option value="xv">XV Años</option>
+                    <option value="bodas">Bodas</option>
+                    <option value="matrimonios">Matrimonios</option>
+                    <option value="graduaciones">Graduaciones</option>
+                    <option value="cumpleaños">Cumpleaños</option>
+                    <option value="babyshower">Baby Shower</option>
                     <option value="corporativo">Corporativo</option>
-                    <option value="decoracion">Decoración</option>
+                    <option value="galeria">Galería Principal</option>
                 </select>
             </div>
         </div>
 
         <div class="drop-zone" style="position: relative; cursor: pointer; background: #f8fafc;">
-            <input type="file" (change)="onFileSelected($event)" style="position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;">
+            <input type="file" (change)="onFileSelected($event)"
+                style="position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;">
             <div class="icon">📁</div>
             <p *ngIf="!archivoSeleccionado">Haga clic o arrastre para seleccionar una imagen</p>
             <p *ngIf="archivoSeleccionado" style="color: #2563eb;">
@@ -39,14 +45,16 @@
             <span>Formatos: JPG, PNG, WEBP (Máx 5MB)</span>
         </div>
 
-        <button class="btn-purple" style="width: 100%; margin-top: 15px; padding: 12px;" (click)="subirImagen()" [disabled]="!archivoSeleccionado || !tituloNuevo">
+        <button class="btn-purple" style="width: 100%; margin-top: 15px; padding: 12px;" (click)="subirImagen()"
+            [disabled]="!archivoSeleccionado || !tituloNuevo">
             🚀 Confirmar y subir a la Nube
         </button>
     </section>
 
     <section class="card">
         <div class="filters">
-            <input class="input search" [(ngModel)]="terminoBusqueda" (input)="onSearchChange(terminoBusqueda)" placeholder="Buscar por título, categoría o descripción..." />
+            <input class="input search" [(ngModel)]="terminoBusqueda" (input)="onSearchChange(terminoBusqueda)"
+                placeholder="Buscar por título, categoría o descripción..." />
 
             <select class="input small" (change)="obtenerImagenes()">
                 <option value="">Todas las fechas</option>
@@ -74,8 +82,10 @@
                 <div class="date">Publicado: {{ item.fecha_creacion | date:'dd/MM/yyyy' }}</div>
 
                 <div class="actions">
-                    <button class="icon blue" (click)="verImagen(item.imagen_url)" title="Ver pantalla completa">👁</button>
-                    <button class="icon red" (click)="borrarImagen(item.id)" title="Eliminar permanentemente">🗑</button>
+                    <button class="icon blue" (click)="verImagen(item.imagen_url)"
+                        title="Ver pantalla completa">👁</button>
+                    <button class="icon red" (click)="borrarImagen(item.id)"
+                        title="Eliminar permanentemente">🗑</button>
 
                     <span style="margin-left: auto; font-size: 10px; color: #94a3b8;">ID: #{{item.id}}</span>
                 </div>
@@ -84,7 +94,8 @@
     </section>
 
     <div class="note">
-        ℹ️ <strong>Consejo:</strong> Las imágenes subidas aquí se sincronizan automáticamente con la base de datos de <strong>Villa Prada</strong> y se almacenan de forma segura en <strong>Cloudinary</strong>.
+        ℹ️ <strong>Consejo:</strong> Las imágenes subidas aquí se sincronizan automáticamente con la base de datos de
+        <strong>Villa Prada</strong> y se almacenan de forma segura en <strong>Cloudinary</strong>.
     </div>
 
 </div>

@@ -24,17 +24,29 @@ export class ContratosComponent implements OnInit {
 
   // --- DATOS ---
   contratos: any[] = [];
+  contratosOriginales: any[] = [];
   listaClientes: any[] = [];
   listaPaquetes: any[] = [];
   listaServicios: any[] = [];
   cargando: boolean = false;
+  textoBusqueda: string = '';
+  textoBusquedaCliente: string = '';
+  listaClientesFiltrados: any[] = [];
+
+  // Paginación
+  paginaActual: number = 1;
+  pageSize: number = 10;
+  contratosPaginados: any[] = [];
 
   // --- MODALES (FLAGS) ---
   mostrarModalCliente: boolean = false;
   mostrarModalPaquete: boolean = false;
   mostrarModalServicio: boolean = false;
 
+  hoy: string = '';
+
   ngOnInit() {
+    this.hoy = new Date().toISOString().split('T')[0];
     this.cargarContratos();
     this.cargarListaClientes();
     this.cargarListaPaquetes();
@@ -52,6 +64,8 @@ export class ContratosComponent implements OnInit {
     this.http.get<any[]>(API_URL_CONTRATOS, this.getHeaders()).subscribe({
       next: (data) => {
         this.contratos = data;
+        this.contratosOriginales = data;
+        this.actualizarPaginacion();
         this.cargando = false;
         this.cd.detectChanges();
       },
@@ -67,6 +81,7 @@ export class ContratosComponent implements OnInit {
     this.http.get<any[]>(API_URL_CLIENTES, this.getHeaders()).subscribe({
       next: (data) => {
         this.listaClientes = data;
+        this.listaClientesFiltrados = data;
         this.cd.detectChanges();
       },
       error: (e) => console.error(e)
@@ -103,6 +118,66 @@ export class ContratosComponent implements OnInit {
       return `${nom} ${ape}`;
     }
     return 'Cliente ID: ' + id;
+  }
+
+  obtenerDniCliente(id: any): string {
+    if (!id) return '---';
+    const cliente = this.listaClientes.find(c => c.id == id);
+    return cliente ? cliente.dni : '---';
+  }
+
+  limpiarClienteSeleccionado() {
+    this.nuevoContrato.clienteId = '';
+    this.textoBusquedaCliente = '';
+    this.listaClientesFiltrados = [...this.listaClientes];
+    this.cd.detectChanges();
+  }
+
+  // Búsqueda de contratos
+  buscarContrato() {
+    if (!this.textoBusqueda || this.textoBusqueda.trim() === '') {
+      this.contratos = [...this.contratosOriginales];
+    } else {
+      const texto = this.textoBusqueda.toLowerCase();
+      this.contratos = this.contratosOriginales.filter(c => {
+        const nombreCliente = this.obtenerNombreCliente(c.cliente_id).toLowerCase();
+        const paquete = c.paquete ? c.paquete.toLowerCase() : '';
+        const contratoId = c.id ? c.id.toString() : '';
+        return nombreCliente.includes(texto) || paquete.includes(texto) || contratoId.includes(texto);
+      });
+    }
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
+  }
+
+  // Búsqueda de clientes
+  buscarCliente() {
+    const texto = (this.textoBusquedaCliente || '').trim().toLowerCase();
+
+    // FILTRADO INSTANTÁNEO DESDE EL 1er CARACTER
+    if (!texto) {
+      this.listaClientesFiltrados = [...this.listaClientes];
+      this.nuevoContrato.clienteId = '';
+      return;
+    }
+
+    this.listaClientesFiltrados = this.listaClientes.filter(c => {
+      const dni = c.dni ? c.dni.toLowerCase() : '';
+      const nombres = (c.nombres || c.nombre || '').toLowerCase();
+      const apellidos = (c.apellidos || c.apellido || '').toLowerCase();
+      // Buscamos coincidencias que EMPIECEN con el texto para mayor precisión
+      return dni.includes(texto) || nombres.includes(texto) || apellidos.includes(texto);
+    });
+
+    // AUTO-SELECCIÓN SI HAY UNA COINCIDENCIA ÚNICA
+    this.selectFirstMatch();
+    this.cd.detectChanges();
+  }
+
+  private selectFirstMatch() {
+    if (this.listaClientesFiltrados.length === 1) {
+      this.nuevoContrato.clienteId = this.listaClientesFiltrados[0].id;
+    }
   }
 
   // ==================== LÓGICA DE NEGOCIO ====================
@@ -175,6 +250,12 @@ export class ContratosComponent implements OnInit {
       return;
     }
 
+    // Validación de fecha pasada
+    if (fecha < this.hoy) {
+      alert('⚠️ No puedes registrar un contrato en una fecha que ya pasó.');
+      return;
+    }
+
     const payload = {
       cliente_id: parseInt(clienteId),
       paquete: paqueteStr,
@@ -229,15 +310,27 @@ export class ContratosComponent implements OnInit {
   abrirModalCliente() { this.mostrarModalCliente = true; }
   cerrarModalCliente() { this.mostrarModalCliente = false; }
 
-  guardarClienteRapido(dni: string, nombre: string, tel: string, email: string) {
+  guardarClienteRapido(dni: string, nombre: string, tel: string, email: string, direccion: string) {
     if (!dni || !nombre) return alert('DNI y Nombre obligatorios');
-    const nuevo = { dni, nombres: nombre, nombre: nombre, telefono: tel, correo: email, direccion: 'Sin direccion' };
+
+    // VALIDACIONES SOLICITADAS
+    if (dni.length !== 8) {
+      return alert('⚠️ El DNI debe tener exactamente 8 dígitos.');
+    }
+
+    const existe = this.listaClientes.some(c => c.dni === dni);
+    if (existe) {
+      return alert('⚠️ Ya existe un cliente registrado con este DNI.');
+    }
+
+    const nuevo = { dni, nombres: nombre, nombre: nombre, telefono: tel, correo: email, direccion: direccion || 'Sin dirección' };
     this.http.post(API_URL_CLIENTES, nuevo, this.getHeaders()).subscribe({
       next: () => {
-        alert('Cliente creado');
+        alert('✅ Cliente creado con éxito');
         this.cerrarModalCliente();
         this.cargarListaClientes();
-      }
+      },
+      error: (err) => alert('Error al guardar cliente')
     });
   }
 
@@ -304,5 +397,22 @@ export class ContratosComponent implements OnInit {
         alert('❌ Error al guardar el servicio: ' + (e.error?.detail || e.message));
       }
     });
+  }
+
+  // Lógica de Paginación
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.pageSize;
+    const fin = inicio + this.pageSize;
+    this.contratosPaginados = this.contratos.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    this.actualizarPaginacion();
+    this.cd.detectChanges();
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.contratos.length / this.pageSize) || 1;
   }
 }
