@@ -22,20 +22,12 @@ export interface LoginResponse {
 export class AuthService {
   private http = inject(HttpClient);
 
-  // 1. LOGIN (Corregido para OAuth2 de FastAPI)
+  // 1. LOGIN (Corregido a JSON estándar)
   login(email: string, pass: string): Observable<LoginResponse> {
-    const url = `${API_URL}/usuarios/login`; // Ruta exacta según tu router
+    const url = `${API_URL}/usuarios/login`;
 
-    // FastAPI espera 'username' (no email) y 'password' como Form Data
-    const body = new HttpParams()
-      .set('username', email)
-      .set('password', pass);
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-
-    return this.http.post<LoginResponse>(url, body.toString(), { headers });
+    // Enviamos como JSON (más robusto)
+    return this.http.post<LoginResponse>(url, { email, password: pass });
   }
 
   // 2. GUARDAR SESIÓN

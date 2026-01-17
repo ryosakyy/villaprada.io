@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from core.database import get_db
 from core.security import create_access_token, get_current_user
-from schemas.usuarios import UsuarioCreate, UsuarioResponse, UsuarioUpdate
+from schemas.usuarios import UsuarioCreate, UsuarioResponse, UsuarioUpdate, LoginRequest
 from services.usuario_service import UsuarioService
 
 router = APIRouter(
@@ -94,24 +94,23 @@ def eliminar_usuario(
 
 
 # ============================================================
-# LOGIN (FORM DATA OFICIAL)
+# LOGIN (JSON STANDARD)
 # ============================================================
 @router.post("/login")
 def login(
-    form: OAuth2PasswordRequestForm = Depends(),
+    data: LoginRequest,
     db: Session = Depends(get_db)
 ):
-    email = form.username  # OAuth usa "username"
-    password = form.password
-
-    user = UsuarioService.autenticar(db, email, password)
+    user = UsuarioService.autenticar(db, data.email, data.password)
 
     if not user:
         raise HTTPException(status_code=400, detail="Credenciales inválidas")
 
     # generar JWT
+    # IMPORTANTE: El 'sub' DEBE SER EL ID PARA EL TOKEN
     token = create_access_token({
-        "sub": user.email,
+        "sub": str(user.id),
+        "email": user.email,
         "rol": user.rol
     })
 

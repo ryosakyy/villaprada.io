@@ -34,6 +34,13 @@ class UsuarioUpdate(BaseModel):
 
 
 # -------------------------
+# Login Request
+# -------------------------
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+# -------------------------
 # Respuesta final
 # -------------------------
 class UsuarioResponse(UsuarioBase):

@@ -27,43 +27,6 @@ def crear_admin(data: UsuarioCreate, db: Session = Depends(get_db)):
 
 
 # ============================================================
-# LOGIN
-#   Se llama así desde el front:
-#   POST /auth/login?email=admin@villa.com&password=123456
-# ============================================================
-@router.post("/login")
-def login(email: str, password: str, db: Session = Depends(get_db)):
-
-    # Usamos la lógica centralizada
-    usuario = UsuarioService.autenticar(db, email, password)
-
-    if not usuario:
-        from fastapi import status
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciales incorrectas"
-        )
-
-    # Incluimos info útil en el token
-    token = create_access_token({
-        "sub": str(usuario.id),
-        "email": usuario.email,
-        "rol": usuario.rol
-    })
-
-    return {
-        "access_token": token,
-        "token_type": "bearer",
-        "usuario": {
-            "id": usuario.id,
-            "nombres": usuario.nombres,
-            "email": usuario.email,
-            "rol": usuario.rol,
-        }
-    }
-
-
-# ============================================================
 # PERFIL (PROTEGIDO CON JWT)
 # ============================================================
 @router.get("/perfil")
