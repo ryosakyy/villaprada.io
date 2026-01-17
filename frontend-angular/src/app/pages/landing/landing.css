@@ -1487,56 +1487,39 @@ html {
         box-shadow: var(--elev);
     }
 
-    .hero-title {
-        font-size: 2.5rem;
+    /* TITULOS CENTRADOS EN MOVIL */
+    .hero-title,
+    .title-gold,
+    .title-white,
+    .section-title-center,
+    .section-title-center-white,
+    .pro-subtitle {
+        text-align: center !important;
     }
 
-    .about-container-pro {
-        flex-direction: column;
-        gap: 40px;
-    }
-
-    .about-image-wrapper {
-        width: 100%;
-        height: 300px;
-    }
-
-    .pro-features-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .services-grid-pro {
-        grid-template-columns: 1fr 1fr;
-        /* 2 columnas en movil */
-    }
-
-    .gallery-grid-pro {
-        grid-template-columns: 1fr;
-        /* 1 columna */
-        grid-template-rows: auto;
-        /* Altura automatica */
-    }
-
+    /* GALERIA MAS ANCHA */
     .gallery-item-pro {
-        height: 400px !important;
-        /* Aumentado mas agresivo para celular */
+        height: 350px !important;
+        /* Un poco menos alto que 400px para equilibrar */
+        width: 100% !important;
+        /* Ancho completo */
         margin-bottom: 20px;
     }
 
     .event-type-card {
         height: 350px !important;
-        /* Más grande */
+        width: 100% !important;
     }
 
-    /* CALENDARIO MOVIL */
+    /* CALENDARIO MOVIL - Reducido */
     .fc-view-harness {
-        min-height: 600px !important;
-        /* Mucho más espacio vertical */
+        min-height: 480px !important;
+        /* Reducido de 600px a 480px */
     }
 
-    /* Ajuste de fuente en calendario movil */
     .fc {
-        font-size: 0.9rem !important;
+        font-size: 0.8rem !important;
+        /* Letra un poco mas chica */
     }
 
     /* Contenedor del calendario con scroll si es muy ancho */
