@@ -183,12 +183,12 @@ export class LandingComponent implements OnInit {
   }
 
   tiposEventos = [
-    { title: 'Bodas', icon: '🍸', desc: 'Tu historia de amor comienza aquí', slug: 'bodas' },
-    { title: 'Matrimonios', icon: '👑', desc: 'Momentos únicos e irrepetibles', slug: 'matrimonios' },
-    { title: 'Graduaciones', icon: '🎓', desc: 'Celebra tus logros a lo grande', slug: 'graduaciones' },
-    { title: 'Cumpleaños', icon: '🎂', desc: 'Festeja un año más de vida', slug: 'cumpleaños' },
-    { title: 'Baby Showers', icon: '👶', desc: 'La bienvenida más dulce', slug: 'babyshower' },
-    { title: 'Corporativos', icon: '💼', desc: 'Eventos empresariales de nivel', slug: 'corporativo' }
+    { title: 'Bodas', icon: 'bi bi-heart-fill', desc: 'Tu historia de amor comienza aquí', slug: 'bodas' },
+    { title: 'Matrimonios', icon: 'bi bi-gem', desc: 'Momentos únicos e irrepetibles', slug: 'matrimonios' },
+    { title: 'Graduaciones', icon: 'bi bi-mortarboard-fill', desc: 'Celebra tus logros a lo grande', slug: 'graduaciones' },
+    { title: 'Cumpleaños', icon: 'bi bi-cake2-fill', desc: 'Festeja un año más de vida', slug: 'cumpleaños' },
+    { title: 'Baby Showers', icon: 'bi bi-balloon-fill', desc: 'La bienvenida más dulce', slug: 'babyshower' },
+    { title: 'Corporativos', icon: 'bi bi-briefcase-fill', desc: 'Eventos empresariales de nivel', slug: 'corporativo' }
   ];
 
   getImagenCategoria(slug: string): string {

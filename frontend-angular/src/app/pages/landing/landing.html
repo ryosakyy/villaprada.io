@@ -62,28 +62,28 @@
 
                 <div class="pro-features-grid">
                     <div class="feature-item">
-                        <div class="feat-icon-circle">👥</div>
+                        <div class="feat-icon-circle"><i class="bi bi-people-fill"></i></div>
                         <div class="feat-info">
                             <strong>Aforo 200+</strong>
                             <span>Capacidad Ideal</span>
                         </div>
                     </div>
                     <div class="feature-item">
-                        <div class="feat-icon-circle">✨</div>
+                        <div class="feat-icon-circle"><i class="bi bi-stars"></i></div>
                         <div class="feat-info">
                             <strong>Decoración</strong>
                             <span>Estilo Personalizado</span>
                         </div>
                     </div>
                     <div class="feature-item">
-                        <div class="feat-icon-circle">📍</div>
+                        <div class="feat-icon-circle"><i class="bi bi-geo-alt-fill"></i></div>
                         <div class="feat-info">
                             <strong>Ubicación</strong>
                             <span>Zona Exclusiva</span>
                         </div>
                     </div>
                     <div class="feature-item">
-                        <div class="feat-icon-circle">💎</div>
+                        <div class="feat-icon-circle"><i class="bi bi-shield-check"></i></div>
                         <div class="feat-info">
                             <strong>Garantía</strong>
                             <span>Calidad Total</span>
@@ -104,7 +104,8 @@
         <div class="event-types-grid">
             <div *ngFor="let item of tiposEventos" class="event-type-card dynamic-bg"
                 [style.background-image]="getImagenCategoria(item.slug) ? 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(' + getImagenCategoria(item.slug) + ')' : ''">
-                <div class="card-icon-top">{{ item.icon }}</div>
+                <!-- Change: Use <i> tag with class binding -->
+                <div class="card-icon-top"><i [class]="item.icon"></i></div>
                 <div class="card-content-bottom">
                     <h3 [class.text-white]="getImagenCategoria(item.slug)">{{ item.title }}</h3>
                     <p [class.text-white]="getImagenCategoria(item.slug)">{{ item.desc }}</p>
@@ -121,49 +122,49 @@
         <div class="services-grid-pro">
             <!-- Card 1 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">🍽️</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-egg-fried"></i></div>
                 <h4>Catering Premium</h4>
                 <p>Menús personalizados con ingredientes de primera calidad y presentación impecable.</p>
             </div>
             <!-- Card 2 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">🎵</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-music-note-beamed"></i></div>
                 <h4>Música y DJ</h4>
                 <p>Equipos de sonido profesionales y DJs experimentados para amenizar tu evento.</p>
             </div>
             <!-- Card 3 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">📷</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-camera-video-fill"></i></div>
                 <h4>Fotografía y Video</h4>
                 <p>Captura cada momento especial con nuestros fotógrafos y videógrafos profesionales.</p>
             </div>
             <!-- Card 4 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">🌸</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-flower1"></i></div>
                 <h4>Decoración Floral</h4>
                 <p>Arreglos florales exclusivos y decoración personalizada según tu estilo.</p>
             </div>
             <!-- Card 5 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">💡</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-lightbulb-fill"></i></div>
                 <h4>Iluminación Ambiental</h4>
                 <p>Iluminación para crear la atmósfera perfecta en tu evento.</p>
             </div>
             <!-- Card 6 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">🍸</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-cup-straw"></i></div>
                 <h4>Barra de Bebidas</h4>
                 <p>Servicio de bartenders profesionales y variedad de bebidas premium.</p>
             </div>
             <!-- Card 7 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">🚗</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-car-front-fill"></i></div>
                 <h4>Valet Parking</h4>
                 <p>Servicio de estacionamiento para la comodidad de tus invitados.</p>
             </div>
             <!-- Card 8 -->
             <div class="service-card-gold-border">
-                <div class="svc-icon-circle-blue">🎤</div>
+                <div class="svc-icon-circle-blue"><i class="bi bi-mic-fill"></i></div>
                 <h4>Animación</h4>
                 <p>Maestros de ceremonia y entretenimiento profesional para tu evento.</p>
             </div>
@@ -247,16 +248,16 @@
         <div class="contact-form-layout">
             <div class="info-column">
                 <h3>Información de Contacto</h3>
-                <div class="info-row"><span>📍</span>
+                <div class="info-row"><span><i class="bi bi-geo-alt-fill"></i></span>
                     <p>Av. La Cultura 450, Abancay</p>
                 </div>
-                <div class="info-row"><span>📞</span>
+                <div class="info-row"><span><i class="bi bi-telephone-fill"></i></span>
                     <p>+51 927 577 215</p>
                 </div>
-                <div class="info-row"><span>✉️</span>
+                <div class="info-row"><span><i class="bi bi-envelope-fill"></i></span>
                     <p>info&#64;villaprada.com</p>
                 </div>
-                <div class="info-row"><span>⏰</span>
+                <div class="info-row"><span><i class="bi bi-clock-fill"></i></span>
                     <p>Lun - Sab: 9am - 7pm</p>
                 </div>
             </div>
@@ -286,7 +287,11 @@
                 </div>
                 <p>Tu evento perfecto en Abancay.</p>
                 <div class="socials">
-                    <span>f</span> <span>in</span> <span>ig</span>
+                    <a href="#"><i class="bi bi-facebook"
+                            style="color: white; margin-right: 10px; font-size: 1.2rem;"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"
+                            style="color: white; margin-right: 10px; font-size: 1.2rem;"></i></a>
+                    <a href="#"><i class="bi bi-instagram" style="color: white; font-size: 1.2rem;"></i></a>
                 </div>
             </div>
             <div class="footer-links-col">
